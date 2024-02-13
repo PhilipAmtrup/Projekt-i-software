@@ -179,7 +179,13 @@ public class GameController {
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
                 if (card != null) {
                     Command command = card.command;
-                    executeCommand(currentPlayer, command);
+                    if (!command.isInteractive()) {
+                        executeCommand(currentPlayer, command);
+                    } else {
+                        board.setPhase(Phase.PLAYER_INTERACTION);
+                        return;
+                    }
+                    
                 }
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
                 if (nextPlayerNumber < board.getPlayersNumber()) {
