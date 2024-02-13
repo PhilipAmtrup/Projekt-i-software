@@ -66,10 +66,18 @@ public class Player extends Subject {
         }
     }
 
+   /**
+     * Get the name of the player
+     * @return the player name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the name of the player
+     * @param name gets matched to a player object
+     */       
     public void setName(String name) {
         if (name != null && !name.equals(this.name)) {
             this.name = name;
@@ -80,10 +88,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * Get the color of the player
+     * @return Player color
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * Gives a player their specific color
+     * @param color gets matched to a player
+     */
     public void setColor(String color) {
         this.color = color;
         notifyChange();
@@ -91,7 +107,10 @@ public class Player extends Subject {
             space.playerChanged();
         }
     }
-
+    /**
+     * Checks the availability of the space 
+     * @return current space 
+     */
     public Space getSpace() {
         return space;
     }
@@ -114,7 +133,10 @@ public class Player extends Subject {
             notifyChange();
         }
     }
-
+    /**
+     * Define the heading of the player
+     * @return The heading of the player
+     */
     public Heading getHeading() {
         return heading;
     }
@@ -128,6 +150,7 @@ public class Player extends Subject {
             }
         }
     }
+
 
     public CommandCardField getProgramField(int i) {
         return program[i];
