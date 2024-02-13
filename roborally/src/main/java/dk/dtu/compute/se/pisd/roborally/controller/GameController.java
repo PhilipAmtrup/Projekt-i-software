@@ -229,7 +229,10 @@ public class GameController {
             }
         }
     }
-
+    /**
+     *Change and set the heading of the player to move one space forward
+     * @param player referring to the player 
+     */
     // TODO Assignment V2
     public void moveForward(@NotNull Player player) {
         Space space = player.getSpace();
@@ -242,6 +245,10 @@ public class GameController {
         }
     }
 
+    /**
+     *Change and set the heading of the player to move two spaces forward
+     * @param player referring to the player 
+     */
     // TODO Assignment V2
     public void fastForward(@NotNull Player player) {
         Space space = player.getSpace();
@@ -256,7 +263,10 @@ public class GameController {
         }
 
     }
-
+    /**
+     * Change and set the heading of the player to turn right
+     * @param player referring to the player
+     */
     // TODO Assignment V2
     public void turnRight(@NotNull Player player) {
         Heading heading = player.getHeading();
@@ -264,6 +274,10 @@ public class GameController {
         player.setHeading(nextHeading);
     }
 
+    /**
+     * Heading to describe the heading of the player, and then to turn left
+     * @param player the variable player, referring to the player
+     */
     // TODO Assignment V2
     public void turnLeft(@NotNull Player player) {
         Heading heading = player.getHeading();
@@ -271,6 +285,12 @@ public class GameController {
         player.setHeading(prevHeading);
     }
 
+    /**
+     * In this section, it makes it possible to make the action "move cards"
+     * @param source, retrieves the cards from source, and stores it in the variable sourceCard
+     * @param target, retrieves the cards from target, and stores it in targetCard
+     * @return true if the card was moved succesfully, and if the move was not possible, it returns false 
+     */
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
         CommandCard sourceCard = source.getCard();
         CommandCard targetCard = target.getCard();
