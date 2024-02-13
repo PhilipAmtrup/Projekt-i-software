@@ -230,6 +230,12 @@ public class GameController {
         }
     }
 
+
+    /**
+     * Moves the current player one space forward
+     * @param player moves forward
+     */
+
     // TODO Assignment V2
     public void moveForward(@NotNull Player player) {
         Space space = player.getSpace();
@@ -242,6 +248,11 @@ public class GameController {
         }
     }
 
+
+    /**
+     * Moves the current player two spaces foward
+     * @param player moves the player
+     */
     // TODO Assignment V2
     public void fastForward(@NotNull Player player) {
         Space space = player.getSpace();
@@ -257,6 +268,12 @@ public class GameController {
 
     }
 
+
+    /**
+     * It makes the current player's heading turns right
+     * @param player turns right
+     */
+
     // TODO Assignment V2
     public void turnRight(@NotNull Player player) {
         Heading heading = player.getHeading();
@@ -264,6 +281,11 @@ public class GameController {
         player.setHeading(nextHeading);
     }
 
+    /**
+     * It makes the current player's heading turns left
+     * @param player turns left
+     */
+    
     // TODO Assignment V2
     public void turnLeft(@NotNull Player player) {
         Heading heading = player.getHeading();
@@ -271,6 +293,13 @@ public class GameController {
         player.setHeading(prevHeading);
     }
 
+    /**
+     * In the programming phase you can use the command cards to program your robot to do a command
+     * @param source Where you have the collection of your command cards given
+     * @param target Which commands your robot should do
+     * @return When finish programming your robot executes the commands given.
+     */
+    
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
         CommandCard sourceCard = source.getCard();
         CommandCard targetCard = target.getCard();
