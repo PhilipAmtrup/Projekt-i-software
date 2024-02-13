@@ -57,6 +57,7 @@ public class GameController {
 
         // tekst skrevet i undervisningen
         
+        
         Player current = board.getCurrentPlayer();
         if (current != null && space.getPlayer() == null) {
             current.setSpace(space);
