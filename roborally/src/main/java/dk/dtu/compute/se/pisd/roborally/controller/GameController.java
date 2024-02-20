@@ -160,7 +160,7 @@ public class GameController {
     // XXX: V2
     private void continuePrograms() {
         do {
-            executeNextStep();
+            executeNextStep(null);
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
     }
 
@@ -171,7 +171,7 @@ public class GameController {
      * phase.activation = phase er om spillet er startet eller om spillet er igang
      * 
      */
-    private void executeNextStep() {
+    private void executeNextStep(Command option) {
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
             int step = board.getStep();
@@ -179,13 +179,18 @@ public class GameController {
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
                 if (card != null) {
                     Command command = card.command;
-                    if (!command.isInteractive()) {
-                        executeCommand(currentPlayer, command);
-                    } else {
-                        board.setPhase(Phase.PLAYER_INTERACTION);
+                    if (command.isInteractive()) {
+                        if(option == null){
+                            board.setPhase(Phase.PLAYER_INTERACTION);
                         return;
+                        } else {
+                            executeCommand(currentPlayer, option);
+                        }
+                        
+                    } 
+                    else {
+                        executeCommand(currentPlayer, command); // left or right
                     }
-                    
                 }
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
                 if (nextPlayerNumber < board.getPlayersNumber()) {
@@ -210,6 +215,20 @@ public class GameController {
         }
     }
 
+
+
+    public void executeOptionsAndContinue(@NotNull Command option){
+        assert board.getPhase() == Phase.PLAYER_INTERACTION;
+        board.setPhase(Phase.ACTIVATION);
+        executeNextStep(option);
+        
+
+        while(board.getPhase() == Phase.ACTIVATION && !board.isStepMode()){
+            executeNextStep(null);
+        }
+        
+    }
+
     // XXX: V2
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
@@ -230,6 +249,7 @@ public class GameController {
                 case FAST_FORWARD:
                     this.fastForward(player);
                     break;
+
                 default:
                     // DO NOTHING (for now)
             }
@@ -299,6 +319,15 @@ public class GameController {
         player.setHeading(prevHeading);
     }
 
+
+    public void OptionLeftRight(@NotNull Player player) {
+        
+    }
+// Skal være en left or right method her (måske) som gør at når man trykker på left og right så bliver det udført. Ligesom ovenover
+
+
+
+
     /**
      * In the programming phase you can use the command cards to program your robot to do a command
      * @param source Where you have the collection of your command cards given
@@ -326,5 +355,7 @@ public class GameController {
         // XXX just for now to indicate that the actual method is not yet implemented
         assert false;
     }
+
+   
 
 }

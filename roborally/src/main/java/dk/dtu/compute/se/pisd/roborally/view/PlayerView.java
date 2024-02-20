@@ -208,10 +208,11 @@ public class PlayerView extends Tab implements ViewObserver {
                     CommandCard card = field.getCard();
                     if (card != null) {
                         Command command = card.command;
+                        // CommandCard commandCard = player.getProgramField(player.board.getStep()).getCard();
                         for (Command option: command.getOptions()){
 
                             Button optionButton = new Button(option.displayName);
-                            optionButton.setOnAction( e -> gameController.notImplemented()); // skal implementeres funktionen left or right (fra command.java)
+                            optionButton.setOnAction( e -> gameController.executeOptionsAndContinue(option)); // skal implementeres funktionen left or right (fra command.java)
                             optionButton.setDisable(false);
                             playerInteractionPanel.getChildren().add(optionButton);
 
