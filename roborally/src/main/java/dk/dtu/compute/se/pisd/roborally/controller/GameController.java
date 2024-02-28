@@ -121,7 +121,7 @@ public class GameController {
         return new CommandCard(commands[random]);
     }
 
-    // XXX: V2 
+    // XXX: V2 a
 
  
     public void finishProgrammingPhase() {
