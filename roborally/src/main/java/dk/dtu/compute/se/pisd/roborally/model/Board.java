@@ -95,6 +95,12 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Metode til at hente et space på spillebrættet. Det kan være en spillers current space man vil hente.
+     * @param x
+     * @param y
+     * @return Space
+     */
     public Space getSpace(int x, int y) {
         if (x >= 0 && x < width &&
                 y >= 0 && y < height) {
@@ -142,10 +148,18 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Metode til at hente hvilken fase vi er i.
+     * @return phase
+     */
     public Phase getPhase() {
         return phase;
     }
 
+    /**
+     * Metode til at sætte fasen til hvad man ønsker.
+     * @param phase
+     */
     public void setPhase(Phase phase) {
         if (phase != this.phase) {
             this.phase = phase;
@@ -153,10 +167,19 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Metode til at hente hvilket step man er på.
+     * "Step" er rækkefølgen for de udførte kommandoer man kan udfører i sit program.
+     * @return step
+     */
     public int getStep() {
         return step;
     }
 
+    /**
+     * Metode til at vælge hvilket step man skal være på.
+     * @param step
+     */
     public void setStep(int step) {
         if (step != this.step) {
             this.step = step;
@@ -164,6 +187,10 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Går ud fra det er hvilket step man er på i forhold til fasen. (Prgramming eller activation phase). Er dog ikke sikker.
+     * @return StepMode
+     */
     public boolean isStepMode() {
         return stepMode;
     }
