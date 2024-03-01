@@ -121,7 +121,7 @@ public class GameController {
         return new CommandCard(commands[random]);
     }
 
-    // XXX: V2 
+    // XXX: V2 a
 
  
     public void finishProgrammingPhase() {
@@ -176,9 +176,10 @@ public class GameController {
 
     // XXX: V2
 
-    /* 
-     * phase.activation = phase er om spillet er startet eller om spillet er igang
-     * 
+    /**
+     * Makes the different buttons work, where it makes the buttons execute the cards.
+     * @param option the different options of actions, type of cards (option card), defined in section with optionbutton in Playerview
+     * @author s235459
      */
     private void executeNextStep(Command option) {
         Player currentPlayer = board.getCurrentPlayer();
