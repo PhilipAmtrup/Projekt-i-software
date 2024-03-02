@@ -5,6 +5,13 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
+/**
+ * Fil til Menubaren, hvor der er blevet tilføjet de 4 muligheder i menubjælken. 
+ */
+
+
+
+
 
 /**
  * @author s235459
