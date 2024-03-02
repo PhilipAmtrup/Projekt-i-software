@@ -48,12 +48,16 @@ public class Player extends Subject {
     private CommandCardField[] program;
     private CommandCardField[] cards;
 
-    public Player(@NotNull Board board, String color, @NotNull String name) {
+    private Health health;
+
+    public Player(@NotNull Board board, String color, @NotNull String name , Health health) {
         this.board = board;
         this.name = name;
         this.color = color;
 
         this.space = null;
+
+        this.health = health;
 
         program = new CommandCardField[NO_REGISTERS];
         for (int i = 0; i < program.length; i++) {
@@ -158,6 +162,17 @@ public class Player extends Subject {
 
     public CommandCardField getCardField(int i) {
         return cards[i];
+    }
+
+    public Health getHealth(int H){ 
+        return health;
+    }
+
+    public void setHealth(Health health){
+        if (health != this.health){
+            this.health = health;
+            notifyChange();
+        }
     }
 
 }
