@@ -53,7 +53,7 @@ public class Space extends Subject {
             walls.put(position, false);
         }
     }
-    }
+    
 
     /**
      * Denne metoden henter player.
