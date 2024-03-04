@@ -26,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
@@ -56,6 +57,8 @@ public class Board extends Subject {
     private int step = 0;
 
     private boolean stepMode;
+
+    private final List<Wall> walls = new ArrayList<>();
 
     /* 
      * counter for the number of moves (but only for assigment v1)
@@ -92,6 +95,64 @@ public class Board extends Subject {
             if (!this.gameId.equals(gameId)) {
                 throw new IllegalStateException("A game with a set id may not be assigned a new id!");
             }
+        }
+    }
+/**
+ * checks if there is a specified wall on a space on the game board
+ * @param x the x-cordinate of the space
+ * @param y the y-cordinate of the space 
+ * @return (true) if there is a wall in the specified space (false) if not 
+ * @author Julius s235462 
+ */
+
+    public boolean hasWall(int x,int y) {
+        for(Wall wall : walls) {
+            if (wall.getRow() == x && wall.getCol() == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Place tilfældige vægge på gameboarded.
+     * Denne metode kommer også til at kalde en metode som laver en vægge rundt om hele gameboarded. 
+     * random.nextInt() kan ændres hvis man vil have flere eller færre vægge på gameboarded.
+     * @author Julius s235462
+     */
+    private void placeRandomWalls() {
+
+            createBorderWalls();;
+
+        Random random = new Random();
+
+        for (int x =1; x<width - 1; x++){
+            for (int y =1; y< height -1; y++) {
+                if (random.nextInt(4) == 0) {
+                    Wall wall = new Wall(x,y);
+                        walls.add(wall);
+                }
+            }
+        }
+    }
+
+    /**
+     * denne metode laver vægge omkring hele gameborded 
+     * @author Julius s235462
+     */
+    private void createBorderWalls() {
+
+        for (int x = 0; x<width; x++){
+            Wall topBorder = new Wall(x,0);
+            Wall bottomBorder = new Wall(x, height -1);
+            walls.add(topBorder);
+            walls.add(bottomBorder);
+        }
+        for (int y = 1; y < height -1; y++ ) {
+            Wall leftBorder = new Wall(0,y);
+            Wall rightBorder = new Wall(width -1, y);
+            walls.add(leftBorder);
+            walls.add(rightBorder);
         }
     }
 
