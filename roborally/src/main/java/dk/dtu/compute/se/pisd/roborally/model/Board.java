@@ -77,7 +77,10 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
+            placeRandomWalls();
+
         this.stepMode = false;
+
     }
 
     public Board(int width, int height) {
@@ -137,7 +140,7 @@ public class Board extends Subject {
     }
 
     /**
-     * denne metode laver vægge omkring hele gameborded 
+     * denne metode laver vægge omkring hele gameboarded 
      * @author Julius s235462
      */
     private void createBorderWalls() {
