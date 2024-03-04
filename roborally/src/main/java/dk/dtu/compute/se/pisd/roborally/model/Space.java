@@ -21,6 +21,8 @@
  */
 package dk.dtu.compute.se.pisd.roborally.model;
 
+import java.util.EnumMap;
+
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 /**
@@ -37,12 +39,20 @@ public class Space extends Subject {
     public final int y;
 
     private Player player;
+    private EnumMap<WallPosition, Boolean> walls;
 
     public Space(Board board, int x, int y) {
         this.board = board;
         this.x = x;
         this.y = y;
         player = null;
+
+        //initialisere wall positions
+        walls = new EnumMap<>(WallPosition.class);
+        for (WallPosition position : WallPosition.values()) {
+            walls.put(position, false);
+        }
+    }
     }
 
     /**
@@ -53,6 +63,14 @@ public class Space extends Subject {
         return player;
     }
 
+/**
+ * enum hjælper os her med at se de mulige lokationer af en wall på et space 
+ * siden at walls kan anses for at måtte være på en top, bottom, left, right position
+ * @author Julius s235462
+ */
+    public enum WallPosition {
+        TOP, BOTTOM, LEFT, RIGHT
+    }
 
     // skal måske laves en public player?
    
@@ -73,11 +91,32 @@ public class Space extends Subject {
         }
     }
 
+    /**
+     * checke om en væg er på en specifik position
+     * @param position den position på væggen der skal checkes 
+     * @return true hvis der er en væg ellers falsk
+     * @author Julius S235462
+     */
+    public boolean hasWall(WallPosition position) {
+        return walls.get(position);
+    }
+
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
         // also need to update when some player attributes change, the player can
         // notify the space of these changes by calling this method.
         notifyChange();
+    }
+
+    /**
+     * sæt tilstedeværelse af en væg på specificeret position 
+     * @param position væg position der skal sættes
+     * @param hasWall true for at tilføje væg false for at fjerne
+     * @author Julius s235462
+     */
+    public void setWall(WallPosition position, boolean hasWall) {
+        walls.put(position, hasWall);
+        notifyChange(); // Notify change efter updatering af væg position
     }
 
 }
