@@ -376,13 +376,13 @@ public class GameController {
     
     public void reduceHealth(@NotNull Health health , @NotNull Player player){
         //Hvordan sætter jeg funktionen til at reducere health
-        Health playerHealth = player.getHealth();
+        int playerHealth = player.getHealth();
         Space space = player.getSpace();
         Heading heading = player.getHeading();
 
         if (board.getNeighbour(space, heading) != null){
         
-            playerHealth  -= 10;
+            playerHealth -= 10;
             player.setHealth(playerHealth);
 
         }
