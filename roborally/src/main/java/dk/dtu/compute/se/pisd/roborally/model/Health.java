@@ -11,7 +11,12 @@ public class Health {
         this.player = player;
     }
 
-
+    /*
+    public Health (int health , Player player){
+        this.health = health;
+        this.player = player;
+    } 
+    */
     /**
      * Makes it determin which player is in play
      * @return the active player

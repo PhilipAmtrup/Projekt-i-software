@@ -48,16 +48,16 @@ public class Player extends Subject {
     private CommandCardField[] program;
     private CommandCardField[] cards;
 
-    public Health health;
+    private int health;
 
-    public Player(@NotNull Board board, String color, @NotNull String name ) {
+    public Player(@NotNull Board board, String color, @NotNull String name, @NotNull int health ) {
         this.board = board;
         this.name = name;
         this.color = color;
 
         this.space = null;
 
-        //this.health = health;
+        this.health = health;
 
         program = new CommandCardField[NO_REGISTERS];
         for (int i = 0; i < program.length; i++) {
@@ -163,28 +163,30 @@ public class Player extends Subject {
     public CommandCardField getCardField(int i) {
         return cards[i];
     }
-
+    
     /**
      * Funktion der giver spillerens liv/Damage token
      * @param health Parameter som værende spillerens liv i mængde
      * @return Returnere spillerens health/liv
      */
-    public Health getHealth(){ 
+    
+    public int getHealth(){ 
         return health;
     }
-
+    
     /**
      * Sætter/definere spillerens liv/health, samt opdatere spillerens health hvis det er blevet ændret.
      * @param health  Parameter som værende spillerens liv i mængde
      */
-    public void setHealth(@NotNull Health health){
+    
+    public void setHealth(@NotNull int health){
         //Hvordan sætter jeg health til fx at være 30, og at health kan variere og ændres
         if (health != this.health){
             this.health = health;
             notifyChange();
         }
     }
-
+    
     
 
 }

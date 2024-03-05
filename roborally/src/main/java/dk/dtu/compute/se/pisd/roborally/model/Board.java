@@ -56,6 +56,7 @@ public class Board extends Subject {
     private int step = 0;
 
     private boolean stepMode;
+    private int health;
 
     /* 
      * counter for the number of moves (but only for assigment v1)
@@ -253,7 +254,7 @@ public class Board extends Subject {
 
         // XXX: V1 add the move count to the status message
         // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
-        return "Player = " + getCurrentPlayer().getName() + ", number of moves " + getCounter() + ", current phase: " + getPhase();
+        return "Player = " + getCurrentPlayer().getName() + "Player's health: " + getCurrentPlayer().getHealth()+ ", number of moves " + getCounter() + ", current phase: " + getPhase();
     }
 
 
@@ -271,7 +272,7 @@ public class Board extends Subject {
         
     }
 
-
+    
     
 
 }
