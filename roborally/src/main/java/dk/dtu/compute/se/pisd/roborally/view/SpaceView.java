@@ -21,15 +21,19 @@
  */
 package dk.dtu.compute.se.pisd.roborally.view;
 
+import javafx.scene.shape.Line;
+
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
@@ -100,18 +104,63 @@ public class SpaceView extends StackPane implements ViewObserver {
             
         }
 
-    Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+        // if (space.x == 7 || space.x == (SPACE_WIDTH - 1) || space.y == 7 || space.y == (SPACE_HEIGHT - 1)) {
+        //     drawWalls();
+        // }
+    // Hele vejen rundt om et space, men om alle spaces...
+    // Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
 
-    GraphicsContext gc = canvas.getGraphicsContext2D();
-    gc.setStroke(Color.RED);
-    gc.setLineWidth(2);
-    gc.setLineCap(StrokeLineCap.ROUND);
-
-    gc.strokeLine(2, SPACE_HEIGHT-1, SPACE_WIDTH-1, SPACE_HEIGHT-1);
-    this.getChildren().add(canvas);
+    // GraphicsContext gc = canvas.getGraphicsContext2D();
+    // gc.setStroke(Color.RED);
+    // gc.setLineWidth(2);
+    // gc.setLineCap(StrokeLineCap.ROUND);
     
+    // // Draw lines for the walls around the whole canvas
+    // gc.strokeLine(2, 0, 0, 0); // Top wall
+    // gc.strokeLine(0, 0, 0, SPACE_HEIGHT); // Left wall
+    // gc.strokeLine(0, SPACE_HEIGHT, SPACE_WIDTH, SPACE_HEIGHT); // Bottom wall
+    // gc.strokeLine(SPACE_WIDTH, 0, SPACE_WIDTH, SPACE_HEIGHT); // Right wall
+    
+    // this.getChildren().add(canvas);
+    Pane pane = new Pane();
+    Rectangle rectangle =
+    new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
+    rectangle.setFill(Color.TRANSPARENT);
+    pane.getChildren().add(rectangle);
+    // SOUTH
+    Line line =
+    new Line(2, SPACE_HEIGHT-2, SPACE_WIDTH-2,
+    SPACE_HEIGHT-2);
+    line.setStroke(Color.RED);
+    line.setStrokeWidth(5);
+    pane.getChildren().add(line);
+    this.getChildren().add(pane);
+
     }
 
-   
+    // private void drawWalls() {
+    //     // Clear previous walls if any
+    //     this.getChildren().removeIf(node -> node instanceof Canvas);
+    
+    //     // Draw walls only around the current space
+    //     Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+    
+    //     GraphicsContext gc = canvas.getGraphicsContext2D();
+    //     gc.setStroke(Color.RED);
+    //     gc.setLineWidth(2);
+    //     gc.setLineCap(StrokeLineCap.ROUND);
+    
+    //     gc.strokeLine(2, 0, 0, SPACE_HEIGHT);
+    //     this.getChildren().add(canvas);
+    // }
+//    Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+
+//     GraphicsContext gc = canvas.getGraphicsContext2D();
+//     gc.setStroke(Color.RED);
+//     gc.setLineWidth(2);
+//     gc.setLineCap(StrokeLineCap.ROUND);
+
+//     gc.strokeLine(2, SPACE_HEIGHT-1, SPACE_WIDTH-1, SPACE_HEIGHT-1);
+//     this.getChildren().add(canvas);
     
 }
