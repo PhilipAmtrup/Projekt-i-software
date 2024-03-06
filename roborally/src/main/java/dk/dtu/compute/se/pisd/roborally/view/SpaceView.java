@@ -104,55 +104,48 @@ public class SpaceView extends StackPane implements ViewObserver {
             
         }
 
-        // if (space.x == 7 || space.x == (SPACE_WIDTH - 1) || space.y == 7 || space.y == (SPACE_HEIGHT - 1)) {
-        //     drawWalls();
-        // }
-    // Hele vejen rundt om et space, men om alle spaces...
-    // Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+    
+    Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
 
-    // GraphicsContext gc = canvas.getGraphicsContext2D();
-    // gc.setStroke(Color.RED);
-    // gc.setLineWidth(2);
-    // gc.setLineCap(StrokeLineCap.ROUND);
-    
-    // // Draw lines for the walls around the whole canvas
-    // gc.strokeLine(2, 0, 0, 0); // Top wall
-    // gc.strokeLine(0, 0, 0, SPACE_HEIGHT); // Left wall
-    // gc.strokeLine(0, SPACE_HEIGHT, SPACE_WIDTH, SPACE_HEIGHT); // Bottom wall
-    // gc.strokeLine(SPACE_WIDTH, 0, SPACE_WIDTH, SPACE_HEIGHT); // Right wall
-    
-    // this.getChildren().add(canvas);
-    Pane pane = new Pane();
-    Rectangle rectangle =
-    new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
-    rectangle.setFill(Color.TRANSPARENT);
-    pane.getChildren().add(rectangle);
-    // SOUTH
-    Line line =
-    new Line(2, SPACE_HEIGHT-2, SPACE_WIDTH-2,
-    SPACE_HEIGHT-2);
-    line.setStroke(Color.RED);
-    line.setStrokeWidth(5);
-    pane.getChildren().add(line);
-    this.getChildren().add(pane);
+    GraphicsContext gc = canvas.getGraphicsContext2D();
+    gc.setStroke(Color.RED);
+    gc.setLineWidth(2);
+    gc.setLineCap(StrokeLineCap.ROUND);
+    gc.strokeLine(2, SPACE_HEIGHT-1, SPACE_WIDTH-1, SPACE_HEIGHT-1);
+    gc.strokeLine(2, 2, 2, SPACE_HEIGHT-2);
+    gc.strokeLine(SPACE_HEIGHT-2, SPACE_WIDTH-2, SPACE_HEIGHT-2, 2);
+    gc.strokeLine(SPACE_HEIGHT-2, 2, 2, 2);
+    this.getChildren().add(canvas);
+   
+   
+/* dette er fra ekkerts video dog har jeg gættede lidt til sidst da han ikke viste det hele. Der er stadug en del der mangler i koden går jeg ud fra */   
+    // for(Heading wall: space.getWalls()){
+    //     switch(wall){
+            
+    //         case SOUTH:
+    //         gc.strokeLine(2, SPACE_HEIGHT-2, SPACE_WIDTH-2, SPACE_HEIGHT-2);
+    //         break;
+            
+    //         case WEST:
+    //         gc.strokeLine(2, 2, 2, SPACE_HEIGHT-2);
+    //         break;
 
-    }
+    //         case NORTH:
+    //         gc.strokeLine(SPACE_HEIGHT-2, SPACE_WIDTH-2, SPACE_HEIGHT-2, 2);
+    //         break;
 
-    // private void drawWalls() {
-    //     // Clear previous walls if any
-    //     this.getChildren().removeIf(node -> node instanceof Canvas);
-    
-    //     // Draw walls only around the current space
-    //     Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-    
-    //     GraphicsContext gc = canvas.getGraphicsContext2D();
-    //     gc.setStroke(Color.RED);
-    //     gc.setLineWidth(2);
-    //     gc.setLineCap(StrokeLineCap.ROUND);
-    
-    //     gc.strokeLine(2, 0, 0, SPACE_HEIGHT);
+    //         case EAST:
+    //         gc.strokeLine(SPACE_HEIGHT-2, 2, 2, 2);
+    //         break;
+    //     }
     //     this.getChildren().add(canvas);
     // }
+    
+    
+    }
+
+    
+    
 //    Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
 
 //     GraphicsContext gc = canvas.getGraphicsContext2D();

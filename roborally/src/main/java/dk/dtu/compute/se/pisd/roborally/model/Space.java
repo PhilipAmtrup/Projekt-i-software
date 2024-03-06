@@ -119,4 +119,7 @@ public class Space extends Subject {
         notifyChange(); // Notify change efter updatering af væg position
     }
 
+
+    
+
 }
