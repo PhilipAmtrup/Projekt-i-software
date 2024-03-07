@@ -165,6 +165,7 @@ public class Player extends Subject {
     }
     
     /**
+     * @author s235459
      * Funktion der giver spillerens liv/Damage token
      * @param health Parameter som værende spillerens liv i mængde
      * @return Returnere spillerens health/liv
@@ -177,6 +178,7 @@ public class Player extends Subject {
     /**
      * Sætter/definere spillerens liv/health, samt opdatere spillerens health hvis det er blevet ændret.
      * @param health  Parameter som værende spillerens liv i mængde
+     * @author s235459
      */
     
     public void setHealth(@NotNull int health){

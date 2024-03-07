@@ -263,7 +263,7 @@ public class Board extends Subject {
     public int getCounter() {
         return counter;
     }
-
+    
     public void setCounter(int counter) {
         if (counter != this.counter){
             this.counter = counter;
