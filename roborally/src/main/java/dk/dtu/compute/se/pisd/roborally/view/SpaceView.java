@@ -91,10 +91,26 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    private void drawCheckpoint(){
+        Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+
+        javafx.scene.canvas.GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        if (space.getCheckPoint() != null){
+            double checkPointx = SPACE_WIDTH /2 ;
+            double checkPointy = SPACE_HEIGHT /2 ;
+
+            gc.setFill(Color.BLUEVIOLET);
+            gc.fillOval(checkPointx - 5, checkPointy - 5, 10, 10);
+        }
+        this.getChildren();
+    }
+
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
             updatePlayer();
+            drawCheckpoint();
         }
     }
 
