@@ -37,6 +37,7 @@ public class Space extends Subject {
     public final int y;
 
     private Player player;
+    private CheckPoint checkPoint;
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -73,6 +74,16 @@ public class Space extends Subject {
         }
     }
 
+    public CheckPoint getCheckPoint(){
+        return checkPoint;
+
+    }
+
+    public void setRandomCheckPointCoordinates(){
+        checkPoint.setRandomCoordinates();
+        notifyChange();
+    }
+    
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
         // also need to update when some player attributes change, the player can
