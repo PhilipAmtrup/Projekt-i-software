@@ -22,13 +22,16 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.model.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
@@ -92,19 +95,26 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     private void drawCheckpoint(){
+
+        //Hvordan får jeg så de her checkpoints til at dukke op på spillebrættet? 
+
+
         
+            Canvas canvas = new Canvas(SPACE_WIDTH , SPACE_HEIGHT);
+            GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.clearRect(0, 0, SPACE_WIDTH, SPACE_HEIGHT);
-        if (space.getCheckPoint() != null){
-            double checkPointx = SPACE_WIDTH /2 ;
-            double checkPointy = SPACE_HEIGHT /2 ;
+            double checkPointX = SPACE_WIDTH / 2.0;
+            double checkPointY = SPACE_HEIGHT / 2.0;
 
-            gc.setFill(Color.BLUEVIOLET);
-            gc.fillOval(checkPointx - 5, checkPointy - 5, 10, 10);
-        }
+            gc.setFill(Color.BLUE);
+            gc.fillOval(checkPointX - 5, checkPointY - 5, 10, 10);
+
+            getChildren().add(canvas);
+            
+        
         
     }
+
 
     @Override
     public void updateView(Subject subject) {
