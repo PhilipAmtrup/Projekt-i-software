@@ -22,7 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.model.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -99,18 +99,18 @@ public class SpaceView extends StackPane implements ViewObserver {
         //Hvordan får jeg så de her checkpoints til at dukke op på spillebrættet? 
 
 
-        
+        if (space.getCheckPoint() != null){
             Canvas canvas = new Canvas(SPACE_WIDTH , SPACE_HEIGHT);
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
-            double checkPointX = SPACE_WIDTH / 2.0;
-            double checkPointY = SPACE_HEIGHT / 2.0;
+            double checkPointX = SPACE_WIDTH / 2.0 ;
+            double checkPointY = SPACE_HEIGHT / 2.0 ;
 
-            gc.setFill(Color.BLUE);
-            gc.fillOval(checkPointX - 5, checkPointY - 5, 10, 10);
+            gc.setFill(Color.TURQUOISE);
+            gc.fillOval(checkPointX - 5, checkPointY - 5, 15, 15);
 
             getChildren().add(canvas);
-            
+        }    
         
         
     }
@@ -119,8 +119,10 @@ public class SpaceView extends StackPane implements ViewObserver {
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
+            
             updatePlayer();
             drawCheckpoint();
+            
         }
     }
 

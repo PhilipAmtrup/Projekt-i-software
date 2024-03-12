@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 
 /**
  * ...
@@ -44,6 +45,7 @@ public class Space extends Subject {
         this.x = x;
         this.y = y;
         player = null;
+       
     }
 
     /**
@@ -56,7 +58,7 @@ public class Space extends Subject {
 
 
     // skal måske laves en public player?
-   
+    
 
     public void setPlayer(Player player) {
         Player oldPlayer = this.player;
@@ -76,13 +78,14 @@ public class Space extends Subject {
 
     public CheckPoint getCheckPoint(){
         return checkPoint;
-
     }
 
-    public void setRandomCheckPointCoordinates(){
-        checkPoint.setRandomCoordinates();
+    public void setCheckPoint(){
+        this.checkPoint = checkPoint;
         notifyChange();
     }
+
+    
     
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
