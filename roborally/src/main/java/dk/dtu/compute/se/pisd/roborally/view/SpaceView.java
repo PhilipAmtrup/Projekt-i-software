@@ -27,9 +27,12 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
@@ -70,6 +73,8 @@ public class SpaceView extends StackPane implements ViewObserver {
         // This space view should listen to changes of the space
         space.attach(this);
         update(space);
+
+        addTestWalls();
     }
 
     private void updatePlayer() {
@@ -91,11 +96,43 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    /**
+     * indtil videre test metode til at lave en enkelt wall. 
+     * @author Julius s235462
+     */
+    private void addTestWalls(){
+        // specificere hvilket space wall skal laves på kan gøres meget mere elegant (formentligt lave en metode som creater wallpanes
+        // og senere senere kan vi bruge addTestwalls() til at bare at specificere hvor)
+        if (space.x == 2 && space.y == 3){
+        Pane wallPane = new Pane();
+
+        // laver en usyntligt rectangle rundt om space
+        Rectangle backgroundRect = new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
+        backgroundRect.setFill(Color.TRANSPARENT);
+        wallPane.getChildren().add(backgroundRect);
+    
+        // Laver en rød linje på syd siden af space (wall)
+        Line wallLine = new Line(2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+        wallLine.setStroke(Color.RED);
+        wallLine.setStrokeWidth(5);
+        wallLine.setStrokeLineCap(StrokeLineCap.ROUND);
+        wallPane.getChildren().add(wallLine);
+    
+        this.getChildren().add(wallPane);
+        }
+        
+    }
+
+
+
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
             updatePlayer();
+
         }
     }
+
+
 
 }
