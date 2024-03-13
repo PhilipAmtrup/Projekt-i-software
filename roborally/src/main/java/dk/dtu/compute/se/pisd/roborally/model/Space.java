@@ -80,7 +80,7 @@ public class Space extends Subject {
         return checkPoint;
     }
 
-    public void setCheckPoint(){
+    public void setCheckPoint(CheckPoint checkPoint){
         this.checkPoint = checkPoint;
         notifyChange();
     }

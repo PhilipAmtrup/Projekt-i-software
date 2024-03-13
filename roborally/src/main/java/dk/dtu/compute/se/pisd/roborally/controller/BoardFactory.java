@@ -83,12 +83,17 @@ public class BoardFactory {
         */
     
         Space space = board.getSpace(1, 5);
-        CheckPoint check1 = new CheckPoint(1,5);
-        space.getCheckPoint().add(check1);
-            
-        space.setCheckPoint();
-    
+        CheckPoint check1 = new CheckPoint(1,5);    
+        space.setCheckPoint(check1);
+        
+        space = board.getSpace(3, 7);
+        check1 = new CheckPoint(3, 7);
+        space.setCheckPoint(check1);
 
+
+        space = board.getSpace(4, 4);
+        check1 = new CheckPoint(4, 4);
+        space.setCheckPoint(check1);
         return board;
     }
 
