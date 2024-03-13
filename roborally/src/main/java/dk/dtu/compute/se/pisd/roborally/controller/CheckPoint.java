@@ -20,19 +20,25 @@ public class CheckPoint  {
     /**
      * Giver rækker og felter tilfældige koordinater, så checkpoints opstår forskellige steder for hver gang. 
      */
-    /* 
+    
 
     public int getCheckrow(){
         
         return this.Crow;
     
     }
-    */
-
-    /* 
+    
+    public void setCrow(int Crow){
+        this.Crow = Crow;
+    }
+    
     public int getCheckCol(){
         return this.Ccol;
     }
-    */
+
+    public void setCcol(int Ccol){
+        this.Ccol = Ccol;
+    }
+    
 
 }

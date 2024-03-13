@@ -96,11 +96,11 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     private void drawCheckpoint(){
 
-        //Hvordan får jeg så de her checkpoints til at dukke op på spillebrættet? 
-
         
 
-        if (space.getCheckPoint() != null){
+        CheckPoint checkPoint = space.getCheckPoint();
+
+        if (checkPoint != null){
             Canvas canvas = new Canvas(SPACE_WIDTH , SPACE_HEIGHT);
             GraphicsContext gc = canvas.getGraphicsContext2D();
 

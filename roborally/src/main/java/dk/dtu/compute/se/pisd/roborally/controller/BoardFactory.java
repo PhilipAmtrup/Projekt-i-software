@@ -90,9 +90,16 @@ public class BoardFactory {
         check1 = new CheckPoint(3, 7);
         space.setCheckPoint(check1);
 
-
         space = board.getSpace(4, 4);
         check1 = new CheckPoint(4, 4);
+        space.setCheckPoint(check1);
+
+        space = board.getSpace(6, 6);
+        check1 = new CheckPoint(6, 7);
+        space.setCheckPoint(check1);
+
+        space = board.getSpace(8, 3);
+        check1 = new CheckPoint(8, 3);
         space.setCheckPoint(check1);
         return board;
     }
