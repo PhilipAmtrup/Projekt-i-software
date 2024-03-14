@@ -21,7 +21,11 @@
  */
 package dk.dtu.compute.se.pisd.roborally.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 
 /**
  * ...
@@ -37,6 +41,7 @@ public class Space extends Subject {
     public final int y;
 
     private Player player;
+    private List<FieldAction> actions = new ArrayList<>();
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -71,6 +76,10 @@ public class Space extends Subject {
             }
             notifyChange();
         }
+    }
+
+    public List<FieldAction> getActions(){
+        return actions;
     }
 
     void playerChanged() {
