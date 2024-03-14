@@ -1,9 +1,5 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
-import java.util.Random;
-
-import org.jetbrains.annotations.NotNull;
-
 public class CheckPoint  {
     
     private int Crow;
@@ -21,7 +17,7 @@ public class CheckPoint  {
      * Giver rækker og felter tilfældige koordinater, så checkpoints opstår forskellige steder for hver gang. 
      */
     
-
+     
     public int getCheckrow(){
         
         return this.Crow;
@@ -40,5 +36,5 @@ public class CheckPoint  {
         this.Ccol = Ccol;
     }
     
-
+    
 }

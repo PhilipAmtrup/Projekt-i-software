@@ -94,13 +94,8 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-    private void drawCheckpoint(){
-
-        
-
-        CheckPoint checkPoint = space.getCheckPoint();
-
-        if (checkPoint != null){
+    private void drawCheckpoint(){  
+        if (space.getCheckPoint() != null){
             Canvas canvas = new Canvas(SPACE_WIDTH , SPACE_HEIGHT);
             GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -111,9 +106,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             gc.fillOval(checkPointX - 5, checkPointY - 5, 15, 15);
 
             getChildren().add(canvas);
-        }    
-        
-        
+        }         
     }
 
 

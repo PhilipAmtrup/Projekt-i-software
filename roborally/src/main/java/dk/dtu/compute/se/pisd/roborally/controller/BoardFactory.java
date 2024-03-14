@@ -82,7 +82,7 @@ public class BoardFactory {
         space.getActions().add(action);
         */
     
-        Space space = board.getSpace(1, 5);
+        Space space = board.getSpace(0, 0);
         CheckPoint check1 = new CheckPoint(1,5);    
         space.setCheckPoint(check1);
         
