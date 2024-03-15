@@ -77,7 +77,14 @@ public class Space extends Subject {
             notifyChange();
         }
     }
-
+    /**
+     * Returns the list of field actions on this space.
+     * Note that clients may change this list; this should, however,
+     * be done only during the setup of the game (not while the game
+     * is running).
+     *
+     * @return the list of field actions on this space
+     */
     public List<FieldAction> getActions(){
         return actions;
     }
