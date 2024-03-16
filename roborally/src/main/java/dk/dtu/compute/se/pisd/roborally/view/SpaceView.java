@@ -111,7 +111,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         backgroundRect.setFill(Color.TRANSPARENT);
         wallPane.getChildren().add(backgroundRect);
     
-        // Laver en rød linje på syd siden af space (wall)
+        // Laver en rød linje på SYD siden af space (wall)
         Line wallLine = new Line(2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
         wallLine.setStroke(Color.RED);
         wallLine.setStrokeWidth(5);
