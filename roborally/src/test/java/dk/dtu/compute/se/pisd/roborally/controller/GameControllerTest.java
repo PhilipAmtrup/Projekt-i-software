@@ -4,6 +4,11 @@ import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,8 +52,8 @@ class GameControllerTest {
         Assertions.assertEquals(player, board.getSpace(0, 4).getPlayer(), "Player " + player.getName() + " should beSpace (0,4)!");
     }
 
-    /*
-        The following tests should be used later for assignment V2
+    
+        //The following tests should be used later for assignment V2
 
     @Test
     void moveCurrentPlayerToSpace() {
@@ -75,6 +80,25 @@ class GameControllerTest {
         Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
     }
 
+    /**
+     * @author s235459
+     * Test for at se om checkpoints bliver sat
      */
+    @Test
+    void testsetCheckpoint(){
+
+        Board board = new Board(8, 8);
+        Space space = board.getSpace(1, 5);
+        CheckPoint checkpoint = new CheckPoint(1, 5);
+        
+        
+        assertNull(space.getCheckPoint());
+
+        space.setCheckPoint(checkpoint);
+
+        assertNotNull(space.getCheckPoint());
+        assertEquals(checkpoint, space.getCheckPoint());
+    }
+     
 
 }

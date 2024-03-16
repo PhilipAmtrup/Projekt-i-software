@@ -1,4 +1,9 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
+/**
+ * @author s235459
+ * Her bliver typen CheckPoint defineret, som herefter bliver brugt og kaldt til checkpoint funktioner
+ */
+
 
 public class CheckPoint  {
     
