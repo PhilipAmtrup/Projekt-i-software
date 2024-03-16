@@ -4,6 +4,10 @@ import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -76,5 +80,18 @@ class GameControllerTest {
     }
 
      */
+
+    @Test
+    void testConveyorBelt(){
+        Board board = new Board(8, 8);
+        Space space = board.getSpace(1, 5);
+        ConveyorBelt con = new ConveyorBelt();
+
+        assertNull(con.getHeading());
+
+        con.setHeading(Heading.EAST);
+        assertEquals(con, con.getHeading());
+    }
+
 
 }
