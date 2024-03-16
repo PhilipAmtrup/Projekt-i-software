@@ -6,6 +6,9 @@ module roborally {
 
     requires javafx.controls;
     requires org.jetbrains.annotations;
+    
+    requires com.google.gson;
+    requires com.google.common;
 
     exports dk.dtu.compute.se.pisd.roborally;
 
