@@ -7,6 +7,7 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -84,7 +85,7 @@ class GameControllerTest {
     
     /**
      * @author s235459
-     * Test til at tjekke hvorvidt Conveyor beltsne har en retning og får skiftet retning
+     * Test til at tjekke hvorvidt Conveyor belts har en retning og får skiftet retning
      */
     @Test
     void testConveyorBelt(){
@@ -98,5 +99,29 @@ class GameControllerTest {
         assertEquals(Heading.EAST, con.getHeading());
     }
 
+    /**
+     * @author s235459
+     * Test til at tjekke om ConveyorBelts rykker spilleren.
+     */
+    @Test
+    void testPlayerMovesOnConveyorBelt(){
+        Board board = new Board(8, 8);
+        Space Ispace = board.getSpace(3, 3);
+        Player player = new Player(board, null, null);
+        Ispace.setPlayer(player);
+        ConveyorBelt ConveyorSpace = new ConveyorBelt();
+
+        ConveyorSpace.setHeading(Heading.SOUTH);
+
+        Space targetSp = board.getSpace(4, 3);
+
+
+        boolean result = ConveyorSpace.doAction(gameController, Ispace);
+
+        assertTrue(result);
+        //assertEquals(targetSp, player.getSpace());
+        Assertions.assertEquals(player, board.getSpace(3, 3).getPlayer(), "Player " + player.getName() + " should beSpace (3,4)!");
+
+    }
 
 }

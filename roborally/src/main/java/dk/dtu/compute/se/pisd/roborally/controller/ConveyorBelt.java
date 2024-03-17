@@ -55,6 +55,10 @@ public class ConveyorBelt extends FieldAction {
         // TODO A3: needs to be implemented
         // ...
         
+        /**
+         * makes the player to move a space in the direction of the heading of the conveyor belt
+         * @author s235459
+         */
         Player player = space.getPlayer();
         Board board = gameController.board;
 
