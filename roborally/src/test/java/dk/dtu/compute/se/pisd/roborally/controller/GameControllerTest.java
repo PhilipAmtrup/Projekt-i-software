@@ -81,6 +81,11 @@ class GameControllerTest {
 
      */
 
+    
+    /**
+     * @author s235459
+     * Test til at tjekke hvorvidt Conveyor beltsne har en retning og får skiftet retning
+     */
     @Test
     void testConveyorBelt(){
         Board board = new Board(8, 8);
@@ -90,7 +95,7 @@ class GameControllerTest {
         assertNull(con.getHeading());
 
         con.setHeading(Heading.EAST);
-        assertEquals(con, con.getHeading());
+        assertEquals(Heading.EAST, con.getHeading());
     }
 
 

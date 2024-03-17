@@ -14,4 +14,7 @@ module roborally {
     exports dk.dtu.compute.se.pisd.roborally.controller;
 
     exports dk.dtu.compute.se.pisd.designpatterns.observer;
+
+    requires com.google.gson;
+    requires com.google.common;
 }

@@ -97,7 +97,7 @@ public class LoadBoard {
             Space space = result.getSpace(spaceTemplate.x, spaceTemplate.y);
             if (space != null) {
                 space.getActions().addAll(convert(spaceTemplate.actions));
-                space.getWalls().addAll(spaceTemplate.walls);
+                //space.getWalls().addAll(spaceTemplate.walls);
             }
         }
         return result;
@@ -190,12 +190,12 @@ public class LoadBoard {
         for (int x = 0; x < board.width; x++) {
             for (int y= 0; y < board.height; y++) {
                 Space space = board.getSpace(x,y);
-                if (space != null && ( !space.getActions().isEmpty() || !space.getWalls().isEmpty()) ) {
+                if (space != null && ( !space.getActions().isEmpty() /*!space.getWalls().isEmpty()*/) ) {
                     SpaceTemplate spaceTemplate = new SpaceTemplate();
                     spaceTemplate.x = x;
                     spaceTemplate.y = y;
                     spaceTemplate.actions = convertToTemplate(space.getActions());
-                    spaceTemplate.walls = new ArrayList<>(space.getWalls());
+                    //spaceTemplate.walls = new ArrayList<>(space.getWalls());
                 }
             }
         }
