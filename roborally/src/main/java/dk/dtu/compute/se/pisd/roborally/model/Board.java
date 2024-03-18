@@ -81,8 +81,21 @@ public class Board extends Subject {
 
         // Adding checkpoints during board initialization
         addCheckPoints();
+        addWalls();
     }
+    
+private void addWalls() {
+    getSpace(1,3).addWall(Heading.SOUTH);
+    getSpace(2,3).addWall(Heading.SOUTH);
+    getSpace(2,4).addWall(Heading.SOUTH);
+    getSpace(1,5).addWall(Heading.EAST);
+    getSpace(1,6).addWall(Heading.WEST);
+    getSpace(6,2).addWall(Heading.SOUTH);
+    getSpace(6,2).addWall(Heading.WEST);
+    getSpace(6,3).addWall(Heading.NORTH);
 
+
+}
 private void addCheckPoints() {
     // Specifying checkpoints with x and y coordinates
     getSpace(0, 5).setCheckPoint(new CheckPoint(0, 5));

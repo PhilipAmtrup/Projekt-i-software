@@ -26,6 +26,7 @@ import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
@@ -99,32 +100,37 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-    /**
-     * indtil videre test metode til at lave en enkelt wall. 
-     * @author Julius s235462
-     */
-    private void addWalls(){
-        // specificere hvilket space wall skal laves på kan gøres meget mere elegant (formentligt lave en metode som creater wallpanes
-        // og senere senere kan vi bruge addTestwalls() til at bare at specificere hvor)
-        if (space.x == 2 && space.y == 3 || space.x == 4 && space.y == 5){
-        Pane wallPane = new Pane();
-
-        // laver en usyntligt rectangle rundt om space
-        Rectangle backgroundRect = new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
-        backgroundRect.setFill(Color.TRANSPARENT);
-        wallPane.getChildren().add(backgroundRect);
+    private void addWalls() {
+        this.getChildren().removeIf(node -> node instanceof Line);
     
-        // Laver en rød linje på SYD siden af space (wall)
-        Line wallLine = new Line(2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
-        wallLine.setStroke(Color.RED);
-        wallLine.setStrokeWidth(5);
-        wallLine.setStrokeLineCap(StrokeLineCap.ROUND);
-        wallPane.getChildren().add(wallLine);
-    
-        this.getChildren().add(wallPane);
+        for (Heading heading : Heading.values()) {
+            if (space.hasWall(heading)) {
+                Line wall = null;
+                switch (heading) {
+                    case NORTH:
+                        wall = new Line(0, 0, SPACE_WIDTH, 0);
+                        break;
+                    case SOUTH:
+                        wall = new Line(0, SPACE_HEIGHT, SPACE_WIDTH, SPACE_HEIGHT);
+                        break;
+                    case EAST:
+                        wall = new Line(SPACE_WIDTH, 0, SPACE_WIDTH, SPACE_HEIGHT);
+                        break;
+                    case WEST:
+                        wall = new Line(0, 0, 0, SPACE_HEIGHT);
+                        break;
+                }
+                if (wall != null) {
+    wall.setStroke(Color.RED);
+    wall.setStrokeWidth(5);
+    wall.setStrokeLineCap(StrokeLineCap.ROUND);
+    StackPane.setAlignment(wall, Pos.TOP_LEFT); // Positioning the wall
+    this.getChildren().add(wall);
+}
+            }
         }
-        
     }
+    
 
     private void drawCheckpoint() {
         if (space.getCheckPoint() != null) {
