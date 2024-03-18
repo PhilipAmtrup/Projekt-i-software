@@ -4,6 +4,11 @@ import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,35 +52,30 @@ class GameControllerTest {
         Assertions.assertEquals(player, board.getSpace(0, 4).getPlayer(), "Player " + player.getName() + " should beSpace (0,4)!");
     }
 
-    /*
-        The following tests should be used later for assignment V2
+    
+        //The following tests should be used later for assignment V2
 
-    @Test
-    void moveCurrentPlayerToSpace() {
-        Board board = gameController.board;
-        Player player1 = board.getPlayer(0);
-        Player player2 = board.getPlayer(1);
-
-        gameController.moveCurrentPlayerToSpace(board.getSpace(0, 4));
-
-        Assertions.assertEquals(player1, board.getSpace(0, 4).getPlayer(), "Player " + player1.getName() + " should beSpace (0,4)!");
-        Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
-        Assertions.assertEquals(player2, board.getCurrentPlayer(), "Current player should be " + player2.getName() +"!");
-    }
-
-    @Test
-    void moveForward() {
-        Board board = gameController.board;
-        Player current = board.getCurrentPlayer();
-
-        gameController.moveForward(current);
-
-        Assertions.assertEquals(current, board.getSpace(0, 1).getPlayer(), "Player " + current.getName() + " should beSpace (0,1)!");
-        Assertions.assertEquals(Heading.SOUTH, current.getHeading(), "Player 0 should be heading SOUTH!");
-        Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
-    }
-
+   
+    /**
+     * @author s235459
+     * Test for at se om checkpoints bliver sat
      */
+    @Test
+    void testsetCheckpoint(){
+
+        Board board = new Board(8, 8);
+        Space space = board.getSpace(1, 5);
+        CheckPoint checkpoint = new CheckPoint(1, 5);
+        
+        
+        assertNull(space.getCheckPoint());
+
+        space.setCheckPoint(checkpoint);
+
+        assertNotNull(space.getCheckPoint());
+        assertEquals(checkpoint, space.getCheckPoint());
+    }
+     
 
      /**
       * Testing whether it is possible to move the current player to another space

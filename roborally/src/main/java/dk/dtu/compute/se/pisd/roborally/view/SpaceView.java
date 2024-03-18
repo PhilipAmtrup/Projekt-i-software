@@ -22,14 +22,17 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -123,11 +126,30 @@ public class SpaceView extends StackPane implements ViewObserver {
         
     }
 
+    private void drawCheckpoint(){  
+        if (space.getCheckPoint() != null){
+            Canvas canvas = new Canvas(SPACE_WIDTH , SPACE_HEIGHT);
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+
+            double checkPointX = SPACE_WIDTH / 2.0 ;
+            double checkPointY = SPACE_HEIGHT / 2.0 ;
+
+            gc.setFill(Color.TURQUOISE);
+            gc.fillOval(checkPointX - 5, checkPointY - 5, 15, 15);
+
+            getChildren().add(canvas);
+        }         
+    }
+
+
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
+            
             updatePlayer();
             addWalls();
+            
+            drawCheckpoint();
             
         }
     }
