@@ -74,7 +74,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         space.attach(this);
         update(space);
 
-        addTestWalls();
+        addWalls();
     }
 
     private void updatePlayer() {
@@ -100,10 +100,10 @@ public class SpaceView extends StackPane implements ViewObserver {
      * indtil videre test metode til at lave en enkelt wall. 
      * @author Julius s235462
      */
-    private void addTestWalls(){
+    private void addWalls(){
         // specificere hvilket space wall skal laves på kan gøres meget mere elegant (formentligt lave en metode som creater wallpanes
         // og senere senere kan vi bruge addTestwalls() til at bare at specificere hvor)
-        if (space.x == 2 && space.y == 3){
+        if (space.x == 2 && space.y == 3 || space.x == 4 && space.y == 5){
         Pane wallPane = new Pane();
 
         // laver en usyntligt rectangle rundt om space
@@ -127,7 +127,8 @@ public class SpaceView extends StackPane implements ViewObserver {
     public void updateView(Subject subject) {
         if (subject == this.space) {
             updatePlayer();
-
+            addWalls();
+            
         }
     }
 
