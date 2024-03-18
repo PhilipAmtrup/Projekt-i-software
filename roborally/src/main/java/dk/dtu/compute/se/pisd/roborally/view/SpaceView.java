@@ -91,13 +91,14 @@ public class SpaceView extends StackPane implements ViewObserver {
 
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
+            arrow.toFront();
+
         }
     }
-
     private void drawCheckpoint() {
         if (space.getCheckPoint() != null) {
-            // Clear previous checkpoint drawing if any
-            getChildren().removeIf(node -> node instanceof Circle);
+            // Remove only checkpoint visuals if they exist
+            getChildren().removeIf(node -> node instanceof Circle && "checkpoint".equals(node.getUserData()));
     
             // Define the center points for drawing the checkpoint
             double centerX = getWidth() / 2.0;
@@ -105,10 +106,11 @@ public class SpaceView extends StackPane implements ViewObserver {
     
             // Create a visual representation for the checkpoint
             Circle checkpointVisual = new Circle(centerX, centerY, 10);
-            checkpointVisual.setFill(Color.TURQUOISE); // Assuming checkpoint color is yellow
+            checkpointVisual.setFill(Color.TURQUOISE);
+            checkpointVisual.setUserData("checkpoint");  // Tag this node as "checkpoint"
     
             // Add the checkpoint to the pane
-            this.getChildren().add(checkpointVisual);
+            getChildren().add(0, checkpointVisual);  // Add at the beginning to ensure it's below other elements
         }
     }
 
@@ -117,7 +119,11 @@ public class SpaceView extends StackPane implements ViewObserver {
     public void updateView(Subject subject) {
         if (subject == this.space) {
             
+            
+    
+            // Then draw the player
             updatePlayer();
+            // First draw the checkpoint
             drawCheckpoint();
             
         }
