@@ -45,8 +45,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class SpaceView extends StackPane implements ViewObserver {
 
-    final public static int SPACE_HEIGHT = 45; // 60; // 75;
-    final public static int SPACE_WIDTH = 45;  // 60; // 75;
+    final public static int SPACE_HEIGHT = 60; // 60; // 75;
+    final public static int SPACE_WIDTH = 60;  // 60; // 75;
 
     public final Space space;
 
@@ -100,20 +100,23 @@ public class SpaceView extends StackPane implements ViewObserver {
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
-            updatePlayer();
             
+                updatePlayer();
+
+        
+              Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
+
+                GraphicsContext gc = canvas.getGraphicsContext2D();
+                    gc.setStroke(Color.RED);
+                    gc.setLineWidth(2);
+                    gc.setLineCap(StrokeLineCap.ROUND);
+                
+                gc.strokeLine(2, SPACE_HEIGHT-1, SPACE_WIDTH-1, SPACE_HEIGHT-1);
+                this.getChildren().add(canvas);
         }
 
     
-    Canvas canvas = new Canvas(SPACE_WIDTH, SPACE_HEIGHT);
-
-    GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setStroke(Color.RED);
-        gc.setLineWidth(2);
-        gc.setLineCap(StrokeLineCap.ROUND);
-    
-    gc.strokeLine(2, SPACE_HEIGHT-1, SPACE_WIDTH-1, SPACE_HEIGHT-1);
-    this.getChildren().add(canvas);
+  
    
    
 /* dette er fra ekkerts video dog har jeg gættede lidt til sidst da han ikke viste det hele. Der er stadug en del der mangler i koden går jeg ud fra */   
