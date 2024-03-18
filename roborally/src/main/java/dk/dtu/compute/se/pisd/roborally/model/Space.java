@@ -21,8 +21,12 @@
  */
 package dk.dtu.compute.se.pisd.roborally.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 
 /**
  * ...
@@ -39,6 +43,7 @@ public class Space extends Subject {
 
     private Player player;
     private CheckPoint checkPoint;
+    private List<FieldAction> actions = new ArrayList<>();
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -86,7 +91,18 @@ public class Space extends Subject {
     }
 
     
-    
+        /**
+     * Returns the list of field actions on this space.
+     * Note that clients may change this list; this should, however,
+     * be done only during the setup of the game (not while the game
+     * is running).
+     *
+     * @return the list of field actions on this space
+     */
+    public List<FieldAction> getActions(){
+        return actions;
+    }
+
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
         // also need to update when some player attributes change, the player can

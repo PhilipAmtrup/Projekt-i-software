@@ -50,28 +50,28 @@ public class BoardFactory {
         } else {
             board = new Board(8,8, name);
         }
-        /* 
+
         // add some walls, actions and checkpoints to some spaces
         Space space = board.getSpace(0,0);
-        space.getWalls().add(Heading.SOUTH);
+        //space.getWalls().add(Heading.SOUTH);
         ConveyorBelt action  = new ConveyorBelt();
         action.setHeading(Heading.WEST);
         space.getActions().add(action);
 
         space = board.getSpace(1,0);
-        space.getWalls().add(Heading.NORTH);
+        //space.getWalls().add(Heading.NORTH);
         action  = new ConveyorBelt();
         action.setHeading(Heading.WEST);
         space.getActions().add(action);
 
         space = board.getSpace(1,1);
-        space.getWalls().add(Heading.WEST);
+        //space.getWalls().add(Heading.WEST);
         action  = new ConveyorBelt();
         action.setHeading(Heading.NORTH);
         space.getActions().add(action);
 
         space = board.getSpace(5,5);
-        space.getWalls().add(Heading.SOUTH);
+        //space.getWalls().add(Heading.SOUTH);
         action  = new ConveyorBelt();
         action.setHeading(Heading.WEST);
         space.getActions().add(action);
@@ -80,27 +80,7 @@ public class BoardFactory {
         action  = new ConveyorBelt();
         action.setHeading(Heading.WEST);
         space.getActions().add(action);
-        */
-    
-        Space space = board.getSpace(0, 0);
-        CheckPoint check1 = new CheckPoint(1,5);    
-        space.setCheckPoint(check1);
-        
-        space = board.getSpace(3, 7);
-        check1 = new CheckPoint(3, 7);
-        space.setCheckPoint(check1);
 
-        space = board.getSpace(4, 4);
-        check1 = new CheckPoint(4, 4);
-        space.setCheckPoint(check1);
-
-        space = board.getSpace(6, 6);
-        check1 = new CheckPoint(6, 7);
-        space.setCheckPoint(check1);
-
-        space = board.getSpace(8, 3);
-        check1 = new CheckPoint(8, 3);
-        space.setCheckPoint(check1);
         return board;
     }
 

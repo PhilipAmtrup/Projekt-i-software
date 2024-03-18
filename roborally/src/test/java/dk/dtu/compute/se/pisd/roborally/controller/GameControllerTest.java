@@ -9,6 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -174,6 +179,47 @@ class GameControllerTest {
     //      Assertions.assertEquals(Heading.EAST, player.getHeading(), "Player" + player.getName() + "should be heading East!" );
     //  }
 
+    /**
+     * @author s235459
+     * Test til at tjekke hvorvidt Conveyor belts har en retning og får skiftet retning
+     */
+    @Test
+    void testConveyorBelt(){
+        Board board = new Board(8, 8);
+        Space space = board.getSpace(1, 5);
+        ConveyorBelt con = new ConveyorBelt();
+
+        assertNull(con.getHeading());
+
+        con.setHeading(Heading.EAST);
+        assertEquals(Heading.EAST, con.getHeading());
+    }
+
+    /**
+     * @author s235459
+     * Test til at tjekke om ConveyorBelts rykker spilleren.
+     * Hvis outputtet er true, så virker funktionen doAction og spilleren derfor rykkes
+     */
+    @Test
+    void testPlayerMovesOnConveyorBelt(){
+        Board board = new Board(8, 8);
+        Space Ispace = board.getSpace(3, 3);
+        Player player = new Player(board, null, null, 30);
+        Ispace.setPlayer(player);
+        ConveyorBelt ConveyorSpace = new ConveyorBelt();
+
+        ConveyorSpace.setHeading(Heading.SOUTH);
+
+        Space targetSp = board.getSpace(3, 4);
 
 
+        boolean result = ConveyorSpace.doAction(gameController, Ispace);
+
+        assertTrue(result);
+        
+        
+
+    }
 }
+
+
