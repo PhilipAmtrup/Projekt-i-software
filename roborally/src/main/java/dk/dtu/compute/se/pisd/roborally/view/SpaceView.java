@@ -126,21 +126,24 @@ public class SpaceView extends StackPane implements ViewObserver {
         
     }
 
-    private void drawCheckpoint(){  
-        if (space.getCheckPoint() != null){
-            Canvas canvas = new Canvas(SPACE_WIDTH , SPACE_HEIGHT);
-            GraphicsContext gc = canvas.getGraphicsContext2D();
-
-            double checkPointX = SPACE_WIDTH / 2.0 ;
-            double checkPointY = SPACE_HEIGHT / 2.0 ;
-
-            gc.setFill(Color.TURQUOISE);
-            gc.fillOval(checkPointX - 5, checkPointY - 5, 15, 15);
-
-            getChildren().add(canvas);
-        }         
+    private void drawCheckpoint() {
+        if (space.getCheckPoint() != null) {
+            // Remove only checkpoint visuals if they exist
+            getChildren().removeIf(node -> node instanceof Circle && "checkpoint".equals(node.getUserData()));
+    
+            // Define the center points for drawing the checkpoint
+            double centerX = getWidth() / 2.0;
+            double centerY = getHeight() / 2.0;
+    
+            // Create a visual representation for the checkpoint
+            Circle checkpointVisual = new Circle(centerX, centerY, 10);
+            checkpointVisual.setFill(Color.TURQUOISE);
+            checkpointVisual.setUserData("checkpoint");  // Tag this node as "checkpoint"
+    
+            // Add the checkpoint to the pane
+            getChildren().add(0, checkpointVisual);  // Add at the beginning to ensure it's below other elements
+        }
     }
-
 
     @Override
     public void updateView(Subject subject) {

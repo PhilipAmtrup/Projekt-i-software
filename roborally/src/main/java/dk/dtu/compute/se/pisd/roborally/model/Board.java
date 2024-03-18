@@ -22,6 +22,8 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -76,7 +78,17 @@ public class Board extends Subject {
             }
         }
         this.stepMode = false;
+
+        // Adding checkpoints during board initialization
+        addCheckPoints();
     }
+
+private void addCheckPoints() {
+    // Specifying checkpoints with x and y coordinates
+    getSpace(0, 5).setCheckPoint(new CheckPoint(0, 5));
+    getSpace(6, 2).setCheckPoint(new CheckPoint(6, 2));
+    // Add additional checkpoints as needed
+}
 
     public Board(int width, int height) {
         this(width, height, "defaultboard");

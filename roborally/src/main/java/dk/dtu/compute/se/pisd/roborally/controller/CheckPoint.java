@@ -5,41 +5,30 @@ package dk.dtu.compute.se.pisd.roborally.controller;
  */
 
 
-public class CheckPoint  {
-    
-    private int Crow;
-    private int Ccol;
+ public class CheckPoint {
 
+    private int x;
+    private int y;
 
-
-    public CheckPoint(int Crow , int Ccol){
-        this.Crow = Crow;
-        this.Ccol = Ccol;
-
+    public CheckPoint(int x, int y){
+        this.x = x;
+        this.y = y;
     }
 
-    /**
-     * Giver rækker og felter tilfældige koordinater, så checkpoints opstår forskellige steder for hver gang. 
-     */
-    
-     
-    public int getCheckrow(){
-        
-        return this.Crow;
-    
-    }
-    
-    public void setCrow(int Crow){
-        this.Crow = Crow;
-    }
-    
-    public int getCheckCol(){
-        return this.Ccol;
+    public int getX(){
+        return this.x;
     }
 
-    public void setCcol(int Ccol){
-        this.Ccol = Ccol;
+    public void setX(int x){
+        this.x = x;
     }
-    
-    
+
+    public int getY(){
+        return this.y;
+    }
+
+    public void setY(int y){
+        this.y = y;
+    }
 }
+
