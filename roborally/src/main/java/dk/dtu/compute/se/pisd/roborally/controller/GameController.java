@@ -299,9 +299,14 @@ public class GameController {
 
     /**
      * Moves the current player two spaces foward
+     * Now also checks for walls
      * @param player moves the player
      */
     // TODO Assignment V2
+    /**
+ * @author s230577
+ * Now checks if there is any walls blocking the player
+ */
     public void fastForward(@NotNull Player player) {
         Space currentSpace = player.getSpace();
         if (currentSpace != null) {
@@ -397,23 +402,34 @@ public class GameController {
         }
 
     }
-    
-    public void moveForward(@NotNull Player player) {
-        if (player.board == board) {
-            Space currentSpace = player.getSpace();
+    /**
+ * @author s230577
+ * Now checks if there is any walls blocking the player
+ */
+    public void moveForward(Player player) {
+        Space currentSpace = player.getSpace();
+        if (currentSpace != null) {
             Heading heading = player.getHeading();
+            // Get the next space in the direction the player is facing
+            Space nextSpace = board.getNeighbour(currentSpace, heading);
     
-            // Get the target space, considering board limits.
-            Space targetSpace = board.getNeighbour(currentSpace, heading);
-            if (targetSpace != null) {
-                try {
-                    moveToSpace(player, targetSpace, heading);
-                } catch (ImpossibleMoveException e) {
-                    // Log the exception or inform the player that move is not possible.
-                }
+            // Check for walls in the current space and the next space.
+            if (!currentSpace.hasWall(heading) && nextSpace != null && !nextSpace.hasWall(heading) && nextSpace.getPlayer() == null) {
+                // No walls and the next space is not occupied by any player
+                player.setSpace(nextSpace); // Move the player to the next space
+                currentSpace.setPlayer(null); // Clear the player from the current space
+                // This ensures the player's position is updated correctly in the Space object
+                nextSpace.setPlayer(player); 
             }
+            // Else the player does not move because of walls or the space being occupied
         }
     }
+    
+    
+    
+    
+    
+    // Isn't being used. Had troubles making this work for both fastForward and moveForward
     void moveToSpace(@NotNull Player player, @NotNull Space targetSpace, @NotNull Heading heading) throws ImpossibleMoveException {
         Space currentSpace = player.getSpace();
     
@@ -422,10 +438,10 @@ public class GameController {
             throw new ImpossibleMoveException(player, targetSpace, heading);
         }
     
-        // Check for walls in both current and target spaces.
-        if (currentSpace.hasWall(heading) || targetSpace.hasWall(heading.prev())) {
-            throw new ImpossibleMoveException(player, targetSpace, heading);
-        }
+       // Check for walls in both current and target spaces.
+       if (currentSpace.hasWall(heading) || targetSpace.hasWall(heading.opposite())) {
+        throw new ImpossibleMoveException(player, targetSpace, heading);
+    }
     
         // Check if the target space is occupied by another player.
         if (targetSpace.getPlayer() != null) {
@@ -434,7 +450,7 @@ public class GameController {
     
         // All checks passed, move the player.
         player.setSpace(targetSpace);
-        player.setHeading(heading); // Update the player's heading if needed.
+        player.setHeading(heading); 
     }
     
     class ImpossibleMoveException extends Exception {
