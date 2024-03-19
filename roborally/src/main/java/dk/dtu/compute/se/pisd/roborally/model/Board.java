@@ -84,7 +84,7 @@ public class Board extends Subject {
         addWalls();
     }
     /**
- * @author s230577
+ * @author s230577, s235462
  * Walls being added during board initialization with their specific coordinates
  * Can also add more if needed
  */

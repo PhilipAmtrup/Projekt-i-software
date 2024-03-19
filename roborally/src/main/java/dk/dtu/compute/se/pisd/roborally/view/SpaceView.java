@@ -100,7 +100,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 /**
- * @author s230577
+ * @author s230577, s235462
  * Visuals of the walls and their position on a space
  */
     private void addWalls() {
