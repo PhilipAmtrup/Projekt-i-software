@@ -99,7 +99,10 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(arrow);
         }
     }
-
+/**
+ * @author s230577
+ * Visuals of the walls and their position on a space
+ */
     private void addWalls() {
         this.getChildren().removeIf(node -> node instanceof Line);
     

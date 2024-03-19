@@ -79,11 +79,15 @@ public class Board extends Subject {
         }
         this.stepMode = false;
 
-        // Adding checkpoints during board initialization
+        // Adding checkpoints and walls during board initialization
         addCheckPoints();
         addWalls();
     }
-    
+    /**
+ * @author s230577
+ * Walls being added during board initialization with their specific coordinates
+ * Can also add more if needed
+ */
 private void addWalls() {
     getSpace(1,3).addWall(Heading.SOUTH);
     getSpace(2,3).addWall(Heading.SOUTH);
