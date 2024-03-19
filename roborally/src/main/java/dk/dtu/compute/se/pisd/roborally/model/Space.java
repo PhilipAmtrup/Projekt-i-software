@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
@@ -41,6 +42,7 @@ public class Space extends Subject {
     public final int x;
     public final int y;
 
+    private EnumSet<Heading> walls = EnumSet.noneOf(Heading.class);
     private Player player;
     private CheckPoint checkPoint;
     private List<FieldAction> actions = new ArrayList<>();
@@ -62,8 +64,13 @@ public class Space extends Subject {
     }
 
 
-    // skal måske laves en public player?
-    
+    public boolean hasWall(Heading direction) {
+        return walls.contains(direction);
+    }
+
+    public void addWall(Heading direction) {
+        walls.add(direction);
+    }    
 
     public void setPlayer(Player player) {
         Player oldPlayer = this.player;

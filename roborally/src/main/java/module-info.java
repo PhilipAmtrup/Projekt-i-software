@@ -8,8 +8,8 @@ module roborally {
     requires org.jetbrains.annotations;
 
     exports dk.dtu.compute.se.pisd.roborally;
-
     exports dk.dtu.compute.se.pisd.roborally.model;
+
     exports dk.dtu.compute.se.pisd.roborally.view;
     exports dk.dtu.compute.se.pisd.roborally.controller;
 
