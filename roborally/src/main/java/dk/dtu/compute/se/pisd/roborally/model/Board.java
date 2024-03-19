@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.controller.Wall;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -57,6 +58,8 @@ public class Board extends Subject {
 
     private int step = 0;
 
+    private final List<Wall> walls = new ArrayList<>();
+
     private boolean stepMode;
     private int health;
 
@@ -81,6 +84,29 @@ public class Board extends Subject {
 
         // Adding checkpoints during board initialization
         addCheckPoints();
+
+        // tilføjer walls i board initialization
+        addWalls();
+    }
+    /** Denne metode retunerer en liste af walls.
+     * @author Julius s235462
+     * @return liste af walls
+     */
+    public List<Wall> getWalls() {
+        return walls;
+    }
+
+    /**
+     * Tilføjer vægge til spillepladen disse vægge specificeres her i X,Y position og Heading.
+     * @author Julius s235462
+     */
+    private void addWalls() {
+        
+        walls.add(new Wall(2, 3, Heading.SOUTH));
+        walls.add(new Wall(4, 5, Heading.SOUTH));
+        walls.add(new Wall(1, 3, Heading.NORTH));
+        walls.add(new Wall(5, 5, Heading.WEST));
+        walls.add(new Wall(7, 3, Heading.EAST));
     }
 
 private void addCheckPoints() {

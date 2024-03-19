@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.controller.Wall;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -77,7 +78,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         space.attach(this);
         update(space);
 
-        addWalls();
     }
 
     private void updatePlayer() {
@@ -100,32 +100,39 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * indtil videre test metode til at lave en enkelt wall. 
+     * Metode til at tegne walls som kan være på nord syd øst vest af et space. 
      * @author Julius s235462
      */
-    private void addWalls(){
-        // specificere hvilket space wall skal laves på kan gøres meget mere elegant (formentligt lave en metode som creater wallpanes
-        // og senere senere kan vi bruge addTestwalls() til at bare at specificere hvor)
-        if (space.x == 2 && space.y == 3 || space.x == 4 && space.y == 5){
-        Pane wallPane = new Pane();
+   private void displayWalls() {
+        for (Wall wall : space.getBoard().getWalls()) {
+            if (wall.getX() == space.getX() && wall.getY() == space.getY()) {
+                Pane wallPane = new Pane();
+                Line wallLine;
 
-        // laver en usyntligt rectangle rundt om space
-        Rectangle backgroundRect = new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
-        backgroundRect.setFill(Color.TRANSPARENT);
-        wallPane.getChildren().add(backgroundRect);
-    
-        // Laver en rød linje på SYD siden af space (wall)
-        Line wallLine = new Line(2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
-        wallLine.setStroke(Color.RED);
-        wallLine.setStrokeWidth(5);
-        wallLine.setStrokeLineCap(StrokeLineCap.ROUND);
-        wallPane.getChildren().add(wallLine);
-    
-        this.getChildren().add(wallPane);
+                switch (wall.getHeading()) {
+                    case NORTH:
+                        wallLine = new Line(2, 2, SPACE_WIDTH - 2, 2);
+                        break;
+                    case EAST:
+                        wallLine = new Line(SPACE_WIDTH - 2, 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+                        break;
+                    case SOUTH:
+                        wallLine = new Line(2, SPACE_HEIGHT - 2, SPACE_WIDTH - 2, SPACE_HEIGHT - 2);
+                        break;
+                    case WEST:
+                        wallLine = new Line(2, 2, 2, SPACE_HEIGHT - 2);
+                        break;
+                    default:
+                        wallLine = new Line(); 
+                }
+
+                wallLine.setStroke(Color.RED);
+                wallLine.setStrokeWidth(5);
+                wallPane.getChildren().add(wallLine);
+                this.getChildren().add(wallPane);
+            }
         }
-        
     }
-
     private void drawCheckpoint() {
         if (space.getCheckPoint() != null) {
             // Remove only checkpoint visuals if they exist
@@ -150,8 +157,8 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (subject == this.space) {
             
             updatePlayer();
-            addWalls();
-            
+            displayWalls();
+
             drawCheckpoint();
             
         }

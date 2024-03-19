@@ -63,6 +63,20 @@ public class Space extends Subject {
 
 
     // skal måske laves en public player?
+
+    // lavet til at kunne få boarded og kordinater i spaceview
+    public Board getBoard() {
+        return board;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     
 
     public void setPlayer(Player player) {
