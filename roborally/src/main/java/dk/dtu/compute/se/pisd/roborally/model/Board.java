@@ -59,6 +59,7 @@ public class Board extends Subject {
 
     private boolean stepMode;
     private int health;
+    private List<ConveyorBeltLocation> conveyorBeltLocations;
 
     /* 
      * counter for the number of moves (but only for assigment v1)
@@ -82,6 +83,7 @@ public class Board extends Subject {
         // Adding checkpoints and walls during board initialization
         addCheckPoints();
         addWalls();
+        addConveyorBelts();
     }
     /**
  * @author s230577, s235462
@@ -100,12 +102,19 @@ private void addWalls() {
 
 
 }
+    private void addConveyorBelts() {
+        // Add conveyor belts with their specific coordinates and direction
+        getSpace(3, 6).addConveyorBelt(Heading.NORTH);
+        getSpace(1, 2).addConveyorBelt(Heading.NORTH);
+    }
+
 private void addCheckPoints() {
     // Specifying checkpoints with x and y coordinates
     getSpace(0, 5).setCheckPoint(new CheckPoint(0, 5));
     getSpace(6, 2).setCheckPoint(new CheckPoint(6, 2));
     // Add additional checkpoints as needed
 }
+
 
     public Board(int width, int height) {
         this(width, height, "defaultboard");

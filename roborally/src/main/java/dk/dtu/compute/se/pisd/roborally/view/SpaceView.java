@@ -79,6 +79,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         update(space);
 
         addWalls();
+        drawConveyorBelts();
     }
 
     private void updatePlayer() {
@@ -133,7 +134,52 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
     }
-    
+
+    private void drawConveyorBelts() {
+        this.getChildren().removeIf(node -> node instanceof Polygon && "conveyorBelt".equals(node.getUserData()));
+
+        for (Heading heading : Heading.values()) {
+            if (board.addConveyorBelts(heading)) {
+                Polygon conveyorBelt = null;
+                switch (heading) {
+                    case NORTH:
+                        conveyorBelt = new Polygon(
+                                0, SPACE_HEIGHT,
+                                SPACE_WIDTH / 2.0, 0,
+                                SPACE_WIDTH, SPACE_HEIGHT
+                        );
+                        break;
+                    case SOUTH:
+                        conveyorBelt = new Polygon(
+                                0, 0,
+                                SPACE_WIDTH / 2.0, SPACE_HEIGHT,
+                                SPACE_WIDTH, 0
+                        );
+                        break;
+                    case EAST:
+                        conveyorBelt = new Polygon(
+                                0, 0,
+                                SPACE_WIDTH, SPACE_HEIGHT / 2.0,
+                                0, SPACE_HEIGHT
+                        );
+                        break;
+                    case WEST:
+                        conveyorBelt = new Polygon(
+                                SPACE_WIDTH, 0,
+                                0, SPACE_HEIGHT / 2.0,
+                                SPACE_WIDTH, SPACE_HEIGHT
+                        );
+                        break;
+                }
+                if (conveyorBelt != null) {
+                    conveyorBelt.setFill(Color.GREY);
+                    conveyorBelt.setUserData("conveyorBelt"); // Tag this node as "conveyorBelt"
+                    StackPane.setAlignment(conveyorBelt, Pos.TOP_LEFT); // Positioning the conveyor belt
+                    this.getChildren().add(conveyorBelt);
+                }
+            }
+        }
+    }
 
     private void drawCheckpoint() {
         if (space.getCheckPoint() != null) {
@@ -160,7 +206,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             
             updatePlayer();
             addWalls();
-            
+            drawConveyorBelts();
             drawCheckpoint();
             
         }

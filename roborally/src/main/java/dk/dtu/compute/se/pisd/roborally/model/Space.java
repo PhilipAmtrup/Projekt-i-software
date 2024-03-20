@@ -46,6 +46,7 @@ public class Space extends Subject {
     private Player player;
     private CheckPoint checkPoint;
     private List<FieldAction> actions = new ArrayList<>();
+    private boolean hasConveyorBelt;
 
     public Space(Board board, int x, int y) {
         this.board = board;
@@ -115,6 +116,23 @@ public class Space extends Subject {
         // also need to update when some player attributes change, the player can
         // notify the space of these changes by calling this method.
         notifyChange();
+    }
+
+    /** boolean til at checke om et felt har conveyorbelt.
+     * @author Julius s235462
+     * @return true hvis et space har conveyorbelt ellers false.
+     */
+    public boolean hasConveyorBelt() {
+        return hasConveyorBelt;
+    }
+
+    /** setter om et space har indeholder conveyorbelt.
+     * @author Julius s235462
+     * @param hasConveyorBelt true for at indikere faltet indeholder et conveyorbelt, ellers false
+     */
+    public void setConveyorBelt(boolean hasConveyorBelt) {
+        this.hasConveyorBelt = hasConveyorBelt;
+        notifyChange(); // Notify observers about the change
     }
 
 }
