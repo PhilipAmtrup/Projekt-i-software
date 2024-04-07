@@ -22,6 +22,8 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -56,6 +58,7 @@ public class Board extends Subject {
     private int step = 0;
 
     private boolean stepMode;
+    private int health;
 
     /* 
      * counter for the number of moves (but only for assigment v1)
@@ -75,7 +78,34 @@ public class Board extends Subject {
             }
         }
         this.stepMode = false;
+
+        // Adding checkpoints and walls during board initialization
+        addCheckPoints();
+        addWalls();
     }
+    /**
+ * @author s230577, s235462
+ * Walls being added during board initialization with their specific coordinates
+ * Can also add more if needed
+ */
+private void addWalls() {
+    getSpace(1,3).addWall(Heading.SOUTH);
+    getSpace(2,3).addWall(Heading.SOUTH);
+    getSpace(2,4).addWall(Heading.SOUTH);
+    getSpace(1,5).addWall(Heading.EAST);
+    getSpace(1,6).addWall(Heading.WEST);
+    getSpace(6,2).addWall(Heading.SOUTH);
+    getSpace(6,2).addWall(Heading.WEST);
+    getSpace(6,3).addWall(Heading.NORTH);
+
+
+}
+private void addCheckPoints() {
+    // Specifying checkpoints with x and y coordinates
+    getSpace(0, 5).setCheckPoint(new CheckPoint(0, 5));
+    getSpace(6, 2).setCheckPoint(new CheckPoint(6, 2));
+    // Add additional checkpoints as needed
+}
 
     public Board(int width, int height) {
         this(width, height, "defaultboard");
@@ -253,7 +283,7 @@ public class Board extends Subject {
 
         // XXX: V1 add the move count to the status message
         // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
-        return "Player = " + getCurrentPlayer().getName() + ", number of moves " + getCounter() + ", current phase: " + getPhase();
+        return "Player = " + getCurrentPlayer().getName() + "Player's health: " + getCurrentPlayer().getHealth()+ ", number of moves " + getCounter() + ", current phase: " + getPhase();
     }
 
 
@@ -262,7 +292,7 @@ public class Board extends Subject {
     public int getCounter() {
         return counter;
     }
-
+    
     public void setCounter(int counter) {
         if (counter != this.counter){
             this.counter = counter;
@@ -271,7 +301,7 @@ public class Board extends Subject {
         
     }
 
-
+    
     
 
 }

@@ -21,7 +21,13 @@
  */
 package dk.dtu.compute.se.pisd.roborally.model;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 
 /**
  * ...
@@ -36,13 +42,17 @@ public class Space extends Subject {
     public final int x;
     public final int y;
 
+    private EnumSet<Heading> walls = EnumSet.noneOf(Heading.class);
     private Player player;
+    private CheckPoint checkPoint;
+    private List<FieldAction> actions = new ArrayList<>();
 
     public Space(Board board, int x, int y) {
         this.board = board;
         this.x = x;
         this.y = y;
         player = null;
+       
     }
 
     /**
@@ -54,8 +64,13 @@ public class Space extends Subject {
     }
 
 
-    // skal måske laves en public player?
-   
+    public boolean hasWall(Heading direction) {
+        return walls.contains(direction);
+    }
+
+    public void addWall(Heading direction) {
+        walls.add(direction);
+    }    
 
     public void setPlayer(Player player) {
         Player oldPlayer = this.player;
@@ -71,6 +86,28 @@ public class Space extends Subject {
             }
             notifyChange();
         }
+    }
+
+    public CheckPoint getCheckPoint(){
+        return checkPoint;
+    }
+
+    public void setCheckPoint(CheckPoint checkPoint){
+        this.checkPoint = checkPoint;
+        notifyChange();
+    }
+
+    
+        /**
+     * Returns the list of field actions on this space.
+     * Note that clients may change this list; this should, however,
+     * be done only during the setup of the game (not while the game
+     * is running).
+     *
+     * @return the list of field actions on this space
+     */
+    public List<FieldAction> getActions(){
+        return actions;
     }
 
     void playerChanged() {

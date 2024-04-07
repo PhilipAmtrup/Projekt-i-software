@@ -22,14 +22,21 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
@@ -70,6 +77,8 @@ public class SpaceView extends StackPane implements ViewObserver {
         // This space view should listen to changes of the space
         space.attach(this);
         update(space);
+
+        addWalls();
     }
 
     private void updatePlayer() {
@@ -90,12 +99,73 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(arrow);
         }
     }
+/**
+ * @author s230577, s235462
+ * Visuals of the walls and their position on a space
+ */
+    private void addWalls() {
+        this.getChildren().removeIf(node -> node instanceof Line);
+    
+        for (Heading heading : Heading.values()) {
+            if (space.hasWall(heading)) {
+                Line wall = null;
+                switch (heading) {
+                    case NORTH:
+                        wall = new Line(0, 0, SPACE_WIDTH, 0);
+                        break;
+                    case SOUTH:
+                        wall = new Line(0, SPACE_HEIGHT, SPACE_WIDTH, SPACE_HEIGHT);
+                        break;
+                    case EAST:
+                        wall = new Line(SPACE_WIDTH, 0, SPACE_WIDTH, SPACE_HEIGHT);
+                        break;
+                    case WEST:
+                        wall = new Line(0, 0, 0, SPACE_HEIGHT);
+                        break;
+                }
+                if (wall != null) {
+    wall.setStroke(Color.RED);
+    wall.setStrokeWidth(5);
+    wall.setStrokeLineCap(StrokeLineCap.ROUND);
+    StackPane.setAlignment(wall, Pos.TOP_LEFT); // Positioning the wall
+    this.getChildren().add(wall);
+}
+            }
+        }
+    }
+    
+
+    private void drawCheckpoint() {
+        if (space.getCheckPoint() != null) {
+            // Remove only checkpoint visuals if they exist
+            getChildren().removeIf(node -> node instanceof Circle && "checkpoint".equals(node.getUserData()));
+    
+            // Define the center points for drawing the checkpoint
+            double centerX = getWidth() / 2.0;
+            double centerY = getHeight() / 2.0;
+    
+            // Create a visual representation for the checkpoint
+            Circle checkpointVisual = new Circle(centerX, centerY, 10);
+            checkpointVisual.setFill(Color.TURQUOISE);
+            checkpointVisual.setUserData("checkpoint");  // Tag this node as "checkpoint"
+    
+            // Add the checkpoint to the pane
+            getChildren().add(0, checkpointVisual);  // Add at the beginning to ensure it's below other elements
+        }
+    }
 
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
+            
             updatePlayer();
+            addWalls();
+            
+            drawCheckpoint();
+            
         }
     }
+
+
 
 }
