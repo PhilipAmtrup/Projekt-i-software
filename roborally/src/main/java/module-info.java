@@ -17,4 +17,5 @@ module roborally {
 
     requires com.google.gson;
     requires com.google.common;
+    requires java.sql;
 }
