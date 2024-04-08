@@ -105,6 +105,7 @@ class Repository implements IRepository {
 				// statement.close();
 
 				createPlayersInDB(game);
+
 				/* TODO V4a: this method needs to be implemented first
 				createCardFieldsInDB(game);
 				 */
@@ -291,6 +292,21 @@ class Repository implements IRepository {
 
 		rs.close();
 	}
+
+	/*
+	private void createCardFieldsInDB(Board game) throws SQLException{
+		List<CardField> cardfields = game.getCardFields();
+		String SQLInsertCardField = "Insert into CardField (gameID , cardField , fieldValue) VALUES ( ? , ? , ?) ";
+		Connection connection = connector.getConnection();
+
+		PreparedStatement ps = connection.prepareStatement(SQLInsertCardField);
+
+		for (CardField cardField : cardfields){
+			ps.setInt(1 , game.getGameId());
+			ps.setString(2,);
+		}
+
+	}*/
 	
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
@@ -428,7 +444,8 @@ class Repository implements IRepository {
 			"SELECT gameID, name FROM Game";
 	
 	private PreparedStatement select_games_stmt = null;
-	
+
+
 	private PreparedStatement getSelectGameIdsStatement() {
 		if (select_games_stmt == null) {
 			Connection connection = connector.getConnection();

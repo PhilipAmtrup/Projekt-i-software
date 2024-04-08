@@ -37,11 +37,11 @@ import java.sql.Statement;
  */
 class Connector {
 	
-    private static final String HOST     = "localhost";
+    private static final String HOST     = "127.0.0.1";
     private static final int    PORT     = 3306;
     private static final String DATABASE = "pisd";
-    private static final String USERNAME = "user";
-    private static final String PASSWORD = "";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "Password";
 
     private static final String DELIMITER = ";;";
     
