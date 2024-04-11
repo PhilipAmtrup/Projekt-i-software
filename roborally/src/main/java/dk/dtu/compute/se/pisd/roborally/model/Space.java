@@ -42,7 +42,7 @@ public class Space extends Subject {
     public final int x;
     public final int y;
 
-    private EnumSet<Heading> walls = EnumSet.noneOf(Heading.class);
+    private List<Heading> walls = new ArrayList<>();
     private Player player;
     private CheckPoint checkPoint;
     private List<FieldAction> actions = new ArrayList<>();
