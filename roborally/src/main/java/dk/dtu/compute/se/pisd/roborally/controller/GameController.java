@@ -472,13 +472,6 @@ public void moveForward(Player player) {
 
 
 
-
-
-
-
-
-
-
     void moveToSpace(@NotNull Player player, @NotNull Space targetSpace, @NotNull Heading heading) throws ImpossibleMoveException {
         Space currentSpace = player.getSpace();
         assert board.getNeighbour(player.getSpace(), heading) == targetSpace; // make sure the move to here is possible in principle

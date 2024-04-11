@@ -46,10 +46,11 @@ public class BoardFactory {
     public Board createBoard(String name) {
         Board board;
         if (name == null) {
-            board = new Board(8,8, "<none>");
+            board = new Board(8, 8, "<none>");
         } else {
-            board = new Board(8,8, name);
+            board = new Board(8, 8, name);
         }
+
 
         // add some walls, actions and checkpoints to some spaces
         Space space = board.getSpace(0,0);
@@ -82,6 +83,7 @@ public class BoardFactory {
         space.getActions().add(action);
 
         return board;
+
     }
 
-}
+    }
