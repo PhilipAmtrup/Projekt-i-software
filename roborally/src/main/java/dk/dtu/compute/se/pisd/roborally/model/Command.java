@@ -54,9 +54,11 @@ public enum Command {
 
     final private List<Command> options;
 
+
     Command(String displayName, Command... options) {
         this.displayName = displayName;
         this.options = Collections.unmodifiableList(Arrays.asList(options));
+
 
 
     }
@@ -68,5 +70,6 @@ public enum Command {
     public List<Command> getOptions() {
         return options;
     }
+
 
 }

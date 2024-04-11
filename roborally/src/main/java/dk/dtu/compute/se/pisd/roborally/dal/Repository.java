@@ -105,7 +105,7 @@ public class Repository implements IRepository {
 				createPlayersInDB(game);
 
 				// TODO V4a: this method needs to be implemented first
-				//createCardFieldsInDB(game);
+				createCardFieldsInDB(game);
 
 
 				// since current player is a foreign key, it can only be
@@ -299,10 +299,10 @@ public class Repository implements IRepository {
 	 * @param game
 	 * @throws SQLException
 	 */
-	/*
+
 	private void createCardFieldsInDB(Board game) throws SQLException{
 
-		String SQLInsertCardField = "Insert into CardField (gameID ,  CardName , isVisible) VALUES ( ? , ? , ?) ";
+		String SQLInsertCardField = "Insert into CardFields (gameID , playerID , CardName , type) VALUES ( ? , ? , ? , ?) ";
 		try (Connection connection = connector.getConnection()) {
 
 
@@ -316,10 +316,12 @@ public class Repository implements IRepository {
 				for (int j = 0; j < Player.NO_CARDS; j++) {
 					CommandCardField cardField = player.getCardField(j);
 					CommandCard card = cardField.getCard();
+					rs.moveToInsertRow();
 
 					ps.setInt(1, loadGameFromDB(1).getGameId());
+					ps.setInt(2, i);
 					ps.setString(2, player.getCardField(i) != null ? cardField.getCard().getName() : null);
-					ps.setBoolean(3, cardField.isVisible());
+					ps.setEnum(4, CommandCard.getType());
 
 					ps.executeUpdate();
 					rs.insertRow();
@@ -328,7 +330,7 @@ public class Repository implements IRepository {
 			rs.close();
 		}
 
-	}*/
+	}
 	
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
