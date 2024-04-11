@@ -36,7 +36,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
-
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -68,17 +68,19 @@ public class AppController implements Observer {
 
         if (result.isPresent()) {
             if (gameController != null) {
-                // The UI should not allow this, but in case this happens anyway.
-                // give the user the option to save the game or abort this operation!
                 if (!stopGame()) {
                     return;
                 }
             }
 
-           // Use BoardFactory to create a new board
-           BoardFactory factory = BoardFactory.getInstance();
-           Board board = factory.createBoard("default");  // "default" can be changed based on your configuration needs
+            Board board = LoadBoard.loadBoard("defaultboard");  // loading board from defaultboard.json
 
+            if (board == null) {
+                // display an error message or create a default board
+                board = BoardFactory.getInstance().createBoard(null);
+            }
+
+            gameController = new GameController(board);
            gameController = new GameController(board);
            int no = result.get();
            for (int i = 0; i < no; i++) {

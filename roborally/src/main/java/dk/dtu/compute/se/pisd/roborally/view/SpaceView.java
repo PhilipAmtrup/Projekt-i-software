@@ -20,7 +20,8 @@
  *
  */
 package dk.dtu.compute.se.pisd.roborally.view;
-
+import java.util.List;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
@@ -91,8 +92,8 @@ public class SpaceView extends StackPane implements ViewObserver {
  * @author s230577, s235462
  * Visuals of the walls and their position on a space
  */
-private void drawWalls(Pane pane) {
-    for (Heading wall : space.getWalls()) {
+private void drawWalls(Pane pane, List<Heading > walls) {
+    for (Heading wall : walls) {
         Line line = new Line();
         switch (wall) {
             case NORTH:
@@ -171,11 +172,14 @@ private void drawWalls(Pane pane) {
         if (subject == this.space) {
             this.getChildren().clear(); // Clear the current drawing
             Pane wallsPane = new Pane();
-            drawWalls(wallsPane);       // Redraw the walls
-            updatePlayer();            
+
+            // Pass walls from the space instance to drawWalls
+            List<Heading> walls = space.getWalls();
+            drawWalls(wallsPane, walls);
+
+            updatePlayer();
             drawCheckpoint();
             this.getChildren().add(0, wallsPane); // Ensure walls are under the player
-
         }
     }
 
