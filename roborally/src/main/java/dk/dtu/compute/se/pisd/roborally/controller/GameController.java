@@ -44,7 +44,7 @@ public class GameController {
      *
      * @param space the space to which the current player should move
      */
-    public void moveCurrentPlayerToSpace(@NotNull Space space)  {
+    public void moveCurrentPlayerToSpace(@NotNull Space space) {
         // TODO Assignment V1: method should be implemented by the students:
         //   - the current player should be moved to the given space
         //     (if it is free()
@@ -56,7 +56,7 @@ public class GameController {
 
 
         // tekst skrevet i undervisningen
-        
+
         Player current = board.getCurrentPlayer();
         if (current != null && space.getPlayer() == null) {
             current.setSpace(space);
@@ -65,8 +65,8 @@ public class GameController {
 
             board.setCounter(board.getCounter() + 1);
         }
-       
-        
+
+
         // if (current != null && space.getPlayer() == null) {
         //     current.setSpace(space);
         //     int currentNumber = board.getPlayerNumber(current);
@@ -80,13 +80,9 @@ public class GameController {
     }
 
 
+    // XXX: V2
 
-    
 
-
-    // XXX: V2 
-    
-    
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
@@ -113,6 +109,7 @@ public class GameController {
 
     /**
      * Her generer spillet de forskellige kommando kort som er tilgængelig i programming phase.
+     *
      * @return CommandCards
      */
     private CommandCard generateRandomCommandCard() {
@@ -123,7 +120,7 @@ public class GameController {
 
     // XXX: V2 a
 
- 
+
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
@@ -178,6 +175,7 @@ public class GameController {
 
     /**
      * Makes the different buttons work, where it makes the buttons execute the cards.
+     *
      * @param option the different options of actions, type of cards (option card), defined in section with optionbutton in Playerview
      * @author s235459
      */
@@ -190,15 +188,14 @@ public class GameController {
                 if (card != null) {
                     Command command = card.command;
                     if (command.isInteractive()) {
-                        if(option == null){
+                        if (option == null) {
                             board.setPhase(Phase.PLAYER_INTERACTION);
-                        return;
+                            return;
                         } else {
                             executeCommand(currentPlayer, option);
                         }
-                        
-                    } 
-                    else {
+
+                    } else {
                         executeCommand(currentPlayer, command); // left or right
                     }
                 }
@@ -226,28 +223,31 @@ public class GameController {
     }
 
 
-/**
- * Dette er i forhold til vores option "left or right". 
- * Når man har valgt "left or right" i programming phase så skal fasen sættes til "PLATER_INTERACTION" for at spilleren aktivt kan vælge hvilken option han ønsker.
- * Når han vælger sin option går den tilbage til activation phase og udfører den valgte option.
- * @param option
- * @author s226870
- */
-    public void executeOptionsAndContinue(@NotNull Command option){
+    /**
+     * Dette er i forhold til vores option "left or right".
+     * Når man har valgt "left or right" i programming phase så skal fasen sættes til "PLATER_INTERACTION" for at spilleren aktivt kan vælge hvilken option han ønsker.
+     * Når han vælger sin option går den tilbage til activation phase og udfører den valgte option.
+     *
+     * @param option
+     * @author s226870
+     */
+    public void executeOptionsAndContinue(@NotNull Command option) {
         assert board.getPhase() == Phase.PLAYER_INTERACTION;
         board.setPhase(Phase.ACTIVATION);
         executeNextStep(option);
-        
 
-        while(board.getPhase() == Phase.ACTIVATION && !board.isStepMode()){
+
+        while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode()) {
             executeNextStep(null);
         }
-        
+
     }
 
     // XXX: V2
+
     /**
      * Executer den kommando som bliver kaldt (option - fw, left, right, fastfw)
+     *
      * @param player
      * @param command
      * @author s226870
@@ -284,17 +284,18 @@ public class GameController {
 
     /**
      * Moves the current player one space forward
+     *
      * @param player moves forward
      */
 
     // TODO Assignment V2
     public void moveBack(@NotNull Player player) {
         Space space = player.getSpace();
-        if (space != null){
+        if (space != null) {
             Heading heading = player.getHeading();
             Heading oppositeHeading = heading.next().next();
             Space newSpace = board.getNeighbour(space, oppositeHeading);
-            if (newSpace != null && newSpace.getPlayer() == null){
+            if (newSpace != null && newSpace.getPlayer() == null) {
                 newSpace.setPlayer(player);
             }
 
@@ -308,30 +309,42 @@ public class GameController {
      * @param player moves the player
      */
     // TODO Assignment V2
-    /**
- * @author s230577
- * Now checks if there is any walls blocking the player
- */
-    public void fastForward(Player player) {
-        Space currentSpace = player.getSpace();
 
+    /**
+     * @author s230577
+     * Now checks if there is any walls blocking the player
+     */
+    public void fastForward(Player player) {
+        // Define the starting point
+        Space currentSpace = player.getSpace();
+        // Determine the direction we're moving in
         if (currentSpace != null) {
             Heading heading = player.getHeading();
-            Space nextSpace = board.getNeighbour(currentSpace, heading);
 
-            if (nextSpace != null && !currentSpace.hasWall(heading) && !nextSpace.hasWall(heading.opposite())) {
-                Player otherPlayer = nextSpace.getPlayer();
-
-                if (otherPlayer == null) {
-                    currentSpace.setPlayer(null);
-                    nextSpace.setPlayer(player);
+            // Try to move the player one space ahead
+            try {
+                Space nextSpace = board.getNeighbour(currentSpace, heading);
+                if (nextSpace != null) {
+                    moveToSpace(player, nextSpace, heading);
+                    currentSpace = nextSpace;
                 }
-                // else handle collision with the other player
+            } catch (ImpossibleMoveException exception) {
+                // If can't move further, we stop here
+                return;
+            }
+
+            // Try to move the player a second space ahead
+            try {
+                Space nextSpace = board.getNeighbour(currentSpace, heading);
+                if (nextSpace != null) {
+                    moveToSpace(player, nextSpace, heading);
+                }
+            } catch (ImpossibleMoveException exception) {
+                // If can't move further, we stop here
+                return;
             }
         }
-        // else the player is not on the board
     }
-
 
     /**
      * It makes the current player's heading turns right
