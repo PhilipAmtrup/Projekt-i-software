@@ -36,7 +36,7 @@ import java.util.List;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
-class Repository implements IRepository {
+public class Repository implements IRepository {
 	
 	private static final String GAME_GAMEID = "gameID";
 
@@ -64,7 +64,7 @@ class Repository implements IRepository {
 
 	private Connector connector;
 	
-	Repository(Connector connector){
+	public Repository(Connector connector){
 		this.connector = connector;
 	}
 
@@ -105,7 +105,7 @@ class Repository implements IRepository {
 				createPlayersInDB(game);
 
 				// TODO V4a: this method needs to be implemented first
-				createCardFieldsInDB(game);
+				//createCardFieldsInDB(game);
 
 
 				// since current player is a foreign key, it can only be
@@ -268,7 +268,6 @@ class Repository implements IRepository {
 		}
 		return result;		
 	}
-
 	private void createPlayersInDB(Board game) throws SQLException {
 		// TODO code should be more defensive
 		PreparedStatement ps = getSelectPlayersStatementU();
@@ -291,14 +290,19 @@ class Repository implements IRepository {
 		rs.close();
 	}
 
+
+	//Start med at lave en fælles preparedstatement, ud fra samme fremgangsmåde som han bruger
+	//Og så kør samme metode, start med at gøre sådan så der er en access til databasen igennem appControlleren.
+	//Ændre Attributterne og tabellen til cardFields, De skulle åbenbart ligge et sted i nogle slides
 	/**
 	 * @author s235459
 	 * @param game
 	 * @throws SQLException
 	 */
+	/*
 	private void createCardFieldsInDB(Board game) throws SQLException{
 
-		String SQLInsertCardField = "Insert into CardField (gameID , Card , isVisible) VALUES ( ? , ? , ?) ";
+		String SQLInsertCardField = "Insert into CardField (gameID ,  CardName , isVisible) VALUES ( ? , ? , ?) ";
 		try (Connection connection = connector.getConnection()) {
 
 
@@ -324,7 +328,7 @@ class Repository implements IRepository {
 			rs.close();
 		}
 
-	}
+	}*/
 	
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
@@ -375,10 +379,27 @@ class Repository implements IRepository {
 		
 		// TODO error handling/consistency check: check whether all players were updated
 	}
-
+/*
 	private void updateCardFieldsInDB(Board game) throws SQLException{
-		String Selecter = "SELECT* FROM "
-	}
+		String Selecter = "SELECT* FROM CardFields where gameID = ?";
+
+		try (Connection connection = connector.getConnection();) {
+			PreparedStatement ps = connection.prepareStatement(Selecter);
+			ResultSet rs = ps.executeQuery();
+
+
+			Player player = game.getPlayer(i);
+			ps.setString(2, player.getCardField(i) != null ? cardField.getCard().getName() : null);
+			ps.setBoolean(3, cardField.isVisible());
+			while (rs.next()){
+				rs.updateInt();
+
+			}
+		}
+
+
+
+	}*/
 
 	private static final String SQL_INSERT_GAME =
 			"INSERT INTO Game(name, currentPlayer, phase, step) VALUES (?, ?, ?, ?)";

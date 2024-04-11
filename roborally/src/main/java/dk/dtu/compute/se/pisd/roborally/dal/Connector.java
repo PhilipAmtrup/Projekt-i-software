@@ -35,9 +35,9 @@ import java.sql.Statement;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
-class Connector {
+public class Connector {
 	
-    private static final String HOST     = "127.0.0.1";
+    private static final String HOST     = "localhost";
     private static final int    PORT     = 3306;
     private static final String DATABASE = "pisd";
     private static final String USERNAME = "root";
@@ -46,8 +46,9 @@ class Connector {
     private static final String DELIMITER = ";;";
     
     private Connection connection;
+
         
-    Connector() {
+    public Connector() {
         try {
 			// String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
 			String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?serverTimezone=UTC";
@@ -94,5 +95,6 @@ class Connector {
     Connection getConnection() {
     	return connection; 
     }
+
     
 }

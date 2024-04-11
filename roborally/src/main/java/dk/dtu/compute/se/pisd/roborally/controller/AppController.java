@@ -26,6 +26,10 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
+import dk.dtu.compute.se.pisd.roborally.dal.Connector;
+import dk.dtu.compute.se.pisd.roborally.dal.IRepository;
+import dk.dtu.compute.se.pisd.roborally.dal.Repository;
+import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Health;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
@@ -37,6 +41,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -84,7 +90,7 @@ public class AppController implements Observer {
                 Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1) , 30); //###
                 board.addPlayer(player);
                 player.setSpace(board.getSpace(i % board.width, i));
-                
+
             }
 
             // XXX: V2
@@ -97,6 +103,16 @@ public class AppController implements Observer {
 
     public void saveGame() {
         // XXX needs to be implemented eventually
+        //Connector connector= new Connector();
+        Repository repo = new Repository(new Connector());
+
+        /*if (gameController == null) {
+            repo.createGameInDB(this.gameController.board);
+        } else {
+        repo.updateGameInDB(this.gameController.board);
+        }*/
+
+
     }
 
     public void loadGame() {
