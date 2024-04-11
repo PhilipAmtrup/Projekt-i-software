@@ -30,17 +30,17 @@ CREATE TABLE IF NOT EXISTS Player (
 );;
 
 
-/* TODO still some stuff missing here
+/*TODO still some stuff missing here*/
 
 CREATE TABLE IF NOT EXISTS CardFields (
     gameID int NOT NULL,
-    CardName varchar,
-    isVisible boolean,
+    playerID tinyint NOT NULL,
+    CardName varchar(255),
 
-    PRIMARY KEY (gameID , playerID , Card),
-    FOREIGN KEY (gameID) REFERENCES Player(gameID)
+
+    PRIMARY KEY (gameID , playerID , CardName),
+    FOREIGN KEY (gameID , playerID) REFERENCES Player(gameID , playerID)
 
 );;
 
 SET FOREIGN_KEY_CHECKS = 1;;
-*/

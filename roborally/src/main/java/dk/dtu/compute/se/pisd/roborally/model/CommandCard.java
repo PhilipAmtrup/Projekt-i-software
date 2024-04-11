@@ -44,7 +44,7 @@ public class CommandCard extends Subject {
         return command.displayName;
     }
 
-    public static Type getType() {
+    public Type getType() {
         return type;
     }
 

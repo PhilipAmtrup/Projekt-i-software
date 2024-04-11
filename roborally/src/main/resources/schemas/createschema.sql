@@ -31,16 +31,16 @@ CREATE TABLE IF NOT EXISTS Player (
 
 
 /*TODO still some stuff missing here*/
-/*
+
 CREATE TABLE IF NOT EXISTS CardFields (
     gameID int NOT NULL,
     playerID tinyint NOT NULL,
-    CardName varchar,
-    type enum(CommandCard , OptionCard),
+    CardName varchar(255),
 
-    PRIMARY KEY (gameID , playerID , Card),
-    FOREIGN KEY (gameID , playerID) REFERENCES Player(gameID , playerID),
+
+    PRIMARY KEY (gameID , playerID , CardName),
+    FOREIGN KEY (gameID , playerID) REFERENCES Player(gameID , playerID)
 
 );;
-*/
+
 SET FOREIGN_KEY_CHECKS = 1;;

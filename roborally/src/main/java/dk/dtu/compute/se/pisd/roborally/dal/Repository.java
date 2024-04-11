@@ -302,11 +302,10 @@ public class Repository implements IRepository {
 
 	private void createCardFieldsInDB(Board game) throws SQLException{
 
-		String SQLInsertCardField = "Insert into CardFields (gameID , playerID , CardName , type) VALUES ( ? , ? , ? , ?) ";
+		//String SQLInsertCardField = "Insert into CardFields (gameID , playerID , CardName , type) VALUES ( ? , ? , ? , ?) ";
 		try (Connection connection = connector.getConnection()) {
 
-
-			PreparedStatement ps = connection.prepareStatement(SQLInsertCardField);
+			PreparedStatement ps = getInsertCards();
 			ResultSet rs = ps.executeQuery();
 
 			for (int i = 0 ; i < game.getPlayersNumber() ; i ++) {
@@ -320,8 +319,8 @@ public class Repository implements IRepository {
 
 					ps.setInt(1, loadGameFromDB(1).getGameId());
 					ps.setInt(2, i);
-					ps.setString(2, player.getCardField(i) != null ? cardField.getCard().getName() : null);
-					ps.setEnum(4, CommandCard.getType());
+					ps.setString(3, player.getCardField(i) != null ? cardField.getCard().getName() : null);
+					//ps.setString(4, Type.COMMAND_CARD.toString());
 
 					ps.executeUpdate();
 					rs.insertRow();
@@ -381,32 +380,73 @@ public class Repository implements IRepository {
 		
 		// TODO error handling/consistency check: check whether all players were updated
 	}
-/*
+
+	/*
 	private void updateCardFieldsInDB(Board game) throws SQLException{
-		String Selecter = "SELECT* FROM CardFields where gameID = ?";
-
-		try (Connection connection = connector.getConnection();) {
-			PreparedStatement ps = connection.prepareStatement(Selecter);
-			ResultSet rs = ps.executeQuery();
+		PreparedStatement ps = getSelectCard();
+		ResultSet rs = ps.executeQuery();
 
 
-			Player player = game.getPlayer(i);
-			ps.setString(2, player.getCardField(i) != null ? cardField.getCard().getName() : null);
-			ps.setBoolean(3, cardField.isVisible());
-			while (rs.next()){
-				rs.updateInt();
 
-			}
+		Player player = game.getPlayer();
+		ps.setString(2, player.getCardField(i) != null ? cardField.getCard().getName() : null);
+		ps.setBoolean(3, cardField.isVisible());
+		while (rs.next()){
+			rs.updateInt();
+
+
 		}
 
 
 
-	}*/
+	}
+	*/
+
+	private static final String SQL_INSERT_CARD =
+			"INSERT INTO CardFields (gameID , playerID , CardName) VALUES ( ? , ? , ?)";
+	private PreparedStatement insert_cards= null;
+
+	private PreparedStatement getInsertCards() {
+		if (insert_cards == null) {
+			Connection connection = connector.getConnection();
+			try {
+				insert_cards = connection.prepareStatement(
+						SQL_INSERT_CARD,
+						Statement.RETURN_GENERATED_KEYS);
+			} catch (SQLException e) {
+				// TODO error handling
+				e.printStackTrace();
+			}
+		}
+		return insert_cards;
+	}
+
+	private final String SQL_SELECT_CARD =
+			"SELECT * FROM CardFields WHERE gameID = ?";
+
+	private PreparedStatement select_cards= null;
+
+	private PreparedStatement getSelectCard() {
+		if (select_cards == null) {
+			Connection connection = connector.getConnection();
+			try {
+				select_cards = connection.prepareStatement(
+						SQL_SELECT_CARD,
+						ResultSet.TYPE_FORWARD_ONLY,
+						ResultSet.CONCUR_UPDATABLE);
+			} catch (SQLException e) {
+				// TODO error handling
+				e.printStackTrace();
+			}
+		}
+		return select_cards;
+	}
 
 	private static final String SQL_INSERT_GAME =
 			"INSERT INTO Game(name, currentPlayer, phase, step) VALUES (?, ?, ?, ?)";
 
 	private PreparedStatement insert_game_stmt = null;
+
 
 	private PreparedStatement getInsertGameStatementRGK() {
 		if (insert_game_stmt == null) {
