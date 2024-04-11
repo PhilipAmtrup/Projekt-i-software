@@ -414,41 +414,41 @@ public class GameController {
     public void moveForward(Player player) {
         Space currentSpace = player.getSpace();
         if (currentSpace != null && player.board == board) {
-            Space space = player.getSpace();
             Heading heading = player.getHeading();
             // Get the next space in the direction the player is facing
             Space nextSpace = board.getNeighbour(currentSpace, heading);
 
-            Space target = board.getNeighbour(space, heading);
-                    if (target != null) {
+            // Check if the next space is valid and not occupied
+            if (nextSpace != null && !nextSpace.hasWall(heading)) {
+                // If the next space is empty, move the player
+                if (nextSpace.getPlayer() == null) {
+                    player.setSpace(nextSpace); // Move the player to the next space
+                    currentSpace.setPlayer(null); // Clear the player from the current space
+                    nextSpace.setPlayer(player); // Update the player's position in the new space
+                } else {
+                    // If the next space is occupied, attempt to push the player
+                    Space spaceAfterPush = board.getNeighbour(nextSpace, heading);
+                    if (spaceAfterPush != null && spaceAfterPush.getPlayer() == null && !spaceAfterPush.hasWall(heading)) {
                         try {
-                            moveToSpace(player, target, heading);
-
+                            moveToSpace(nextSpace.getPlayer(), spaceAfterPush, heading);
+                            player.setSpace(nextSpace); // Move the player to the next space
+                            currentSpace.setPlayer(null); // Clear the player from the current space
+                            nextSpace.setPlayer(player); // Update the player's position in the new space
                         } catch (ImpossibleMoveException e) {
-                            // we don't do anything here  for now; we just catch the
-                            // exception so that we do no pass it on to the caller
-                            // (which would be very bad style).
+                            // Handle the exception if needed
+                            // For example: Log the error or display a message
+                            // e.printStackTrace(); // Print stack trace
                         }
                     }
-
-
-                    /**
-            // Check for walls in the current space and the next space.
-            if (currentSpace.hasWall(heading) && nextSpace != null && nextSpace.hasWall(heading) && nextSpace.getPlayer() == null) {
-                // No walls and the next space is not occupied by any player
-                player.setSpace(nextSpace); // Move the player to the next space
-                currentSpace.setPlayer(null); // Clear the player from the current space
-                // This ensures the player's position is updated correctly in the Space object
-                nextSpace.setPlayer(player);
+                }
             }
-*/
-            // Else the player does not move because of walls or the space being occupied
         }
-
     }
-    
-    
-    
+
+
+
+
+
 
 
 
@@ -479,15 +479,16 @@ public class GameController {
          * Det her burde gøre at man ikke kan gå igennem walls, men vi havde lidt problemer med at få både det og skubbe metoden sammen
          */
 
+        /**
         // Make sure that the target space is the correct neighbour.
         if (board.getNeighbour(currentSpace, heading) != targetSpace) {
             throw new ImpossibleMoveException(player, targetSpace, heading);
         }
 
-       // Check for walls in both current and target spaces.
-       if (currentSpace.hasWall(heading) || targetSpace.hasWall(heading.opposite())) {
-        throw new ImpossibleMoveException(player, targetSpace, heading);
-    }
+        // Check for walls in both current and target spaces.
+        if (currentSpace.hasWall(heading) || targetSpace.hasWall(heading.opposite())) {
+            throw new ImpossibleMoveException(player, targetSpace, heading);
+        }
 
         // Check if the target space is occupied by another player.
         if (targetSpace.getPlayer() != null) {
@@ -497,16 +498,16 @@ public class GameController {
         // All checks passed, move the player.
         player.setSpace(targetSpace);
         player.setHeading(heading);
-
+*/
 
     }
 
-    
-    
-  
 
-    
-    
+
+
+
+
+
     class ImpossibleMoveException extends Exception {
 
         private Player player;
