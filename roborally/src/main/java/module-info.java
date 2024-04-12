@@ -31,12 +31,8 @@ module roborally {
 
     exports dk.dtu.compute.se.pisd.designpatterns.observer;
 
-    requires com.google.gson;
-    requires com.google.common;
-    requires java.sql;
-    requires mysql.connector.j;
+
     requires jdk.jdi;
 
-    opens schemas;
-    opens boards;
+
 }
