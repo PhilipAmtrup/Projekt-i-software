@@ -297,6 +297,7 @@ public class Repository implements IRepository {
 	/**
 	 * @author s235459
 	 * @param game
+	 * Får skabt cardfields i databasen som en tabel for sig selv
 	 * @throws SQLException
 	 */
 
