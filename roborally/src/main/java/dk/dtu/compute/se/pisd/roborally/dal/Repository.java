@@ -307,7 +307,7 @@ public class Repository implements IRepository {
 		try (Connection connection = connector.getConnection()) {
 
 			PreparedStatement ps = getInsertCards();
-			ResultSet rs = ps.executeQuery();
+			//ResultSet rs = ps.executeQuery();
 
 			for (int i = 0 ; i < game.getPlayersNumber() ; i ++) {
 
@@ -316,18 +316,19 @@ public class Repository implements IRepository {
 				for (int j = 0; j < Player.NO_CARDS; j++) {
 					CommandCardField cardField = player.getCardField(j);
 					CommandCard card = cardField.getCard();
-					rs.moveToInsertRow();
+					//rs.moveToInsertRow();
 
-					ps.setInt(1, loadGameFromDB(1).getGameId());
+					ps.setInt(1, game.getGameId());
 					ps.setInt(2, i);
 					ps.setString(3, player.getCardField(i) != null ? cardField.getCard().getName() : null);
 					//ps.setString(4, Type.COMMAND_CARD.toString());
 
-					ps.executeUpdate();
-					rs.insertRow();
+
+					//rs.insertRow();
 				}
 			}
-			rs.close();
+			//rs.close();
+			ps.executeUpdate();
 		}
 
 	}

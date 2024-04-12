@@ -84,17 +84,17 @@ public class Board extends Subject {
 
     }
     /**
- * @author s230577, s235462
- * Walls being added during board initialization with their specific coordinates
- * Can also add more if needed
- */
+     * @author s230577, s235462
+     * Walls being added during board initialization with their specific coordinates
+     * Can also add more if needed
+     */
 
-private void addCheckPoints() {
-    // Specifying checkpoints with x and y coordinates
-    getSpace(0, 5).setCheckPoint(new CheckPoint(0, 5));
-    getSpace(6, 2).setCheckPoint(new CheckPoint(6, 2));
-    // Add additional checkpoints as needed
-}
+    private void addCheckPoints() {
+        // Specifying checkpoints with x and y coordinates
+        getSpace(0, 5).setCheckPoint(new CheckPoint(0, 5));
+        getSpace(6, 2).setCheckPoint(new CheckPoint(6, 2));
+        // Add additional checkpoints as needed
+    }
 
     public Board(int width, int height) {
         this(width, height, "defaultboard");
