@@ -20,7 +20,8 @@
  *
  */
 package dk.dtu.compute.se.pisd.roborally.view;
-
+import java.util.List;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
@@ -72,14 +73,59 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.setStyle("-fx-background-color: black;");
         }
 
-        // updatePlayer();
+        Pane wallsPane = new Pane(); // This pane will contain the walls for the space
+        wallsPane.setPrefSize(SPACE_WIDTH, SPACE_HEIGHT);
+
+        Rectangle rectangle = new Rectangle(0.0, 0.0, SPACE_WIDTH, SPACE_HEIGHT);
+        rectangle.setFill(Color.TRANSPARENT);
+        wallsPane.getChildren().add(rectangle);
+
+         // Add the wallsPane on top of everything else, but underneath the player
+         this.getChildren().add(0, wallsPane); // Add at the beginning to ensure it's under the player
 
         // This space view should listen to changes of the space
         space.attach(this);
         update(space);
 
-        addWalls();
     }
+/**
+ * @author s230577, s235462
+ * Visuals of the walls and their position on a space
+ */
+private void drawWalls(Pane pane, List<Heading > walls) {
+    for (Heading wall : walls) {
+        Line line = new Line();
+        switch (wall) {
+            case NORTH:
+                line.setStartX(2);
+                line.setEndX(SPACE_WIDTH - 2);
+                line.setStartY(2);
+                line.setEndY(2);
+                break;
+            case SOUTH:
+                line.setStartX(2);
+                line.setEndX(SPACE_WIDTH - 2);
+                line.setStartY(SPACE_HEIGHT - 2);
+                line.setEndY(SPACE_HEIGHT - 2);
+                break;
+            case EAST:
+                line.setStartX(SPACE_WIDTH - 2);
+                line.setEndX(SPACE_WIDTH - 2);
+                line.setStartY(2);
+                line.setEndY(SPACE_HEIGHT - 2);
+                break;
+            case WEST:
+                line.setStartX(2);
+                line.setEndX(2);
+                line.setStartY(2);
+                line.setEndY(SPACE_HEIGHT - 2);
+                break;
+        }
+        line.setStroke(Color.RED);
+        line.setStrokeWidth(5);
+        pane.getChildren().add(line);
+    }
+}
 
     private void updatePlayer() {
         this.getChildren().clear();
@@ -99,40 +145,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(arrow);
         }
     }
-/**
- * @author s230577, s235462
- * Visuals of the walls and their position on a space
- */
-    private void addWalls() {
-        this.getChildren().removeIf(node -> node instanceof Line);
-    
-        for (Heading heading : Heading.values()) {
-            if (space.hasWall(heading)) {
-                Line wall = null;
-                switch (heading) {
-                    case NORTH:
-                        wall = new Line(0, 0, SPACE_WIDTH, 0);
-                        break;
-                    case SOUTH:
-                        wall = new Line(0, SPACE_HEIGHT, SPACE_WIDTH, SPACE_HEIGHT);
-                        break;
-                    case EAST:
-                        wall = new Line(SPACE_WIDTH, 0, SPACE_WIDTH, SPACE_HEIGHT);
-                        break;
-                    case WEST:
-                        wall = new Line(0, 0, 0, SPACE_HEIGHT);
-                        break;
-                }
-                if (wall != null) {
-    wall.setStroke(Color.RED);
-    wall.setStrokeWidth(5);
-    wall.setStrokeLineCap(StrokeLineCap.ROUND);
-    StackPane.setAlignment(wall, Pos.TOP_LEFT); // Positioning the wall
-    this.getChildren().add(wall);
-}
-            }
-        }
-    }
+
     
 
     private void drawCheckpoint() {
@@ -157,12 +170,16 @@ public class SpaceView extends StackPane implements ViewObserver {
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
-            
+            this.getChildren().clear(); // Clear the current drawing
+            Pane wallsPane = new Pane();
+
+            // Pass walls from the space instance to drawWalls
+            List<Heading> walls = space.getWalls();
+            drawWalls(wallsPane, walls);
+
             updatePlayer();
-            addWalls();
-            
             drawCheckpoint();
-            
+            this.getChildren().add(0, wallsPane); // Ensure walls are under the player
         }
     }
 

@@ -4,7 +4,7 @@
   "spaces": [
     {
       "walls": [
-        "SOUTH"
+        "NORTH"
       ],
       "actions": [
         {
@@ -15,11 +15,11 @@
         }
       ],
       "x": 0,
-      "y": 0
+      "y": 4
     },
     {
       "walls": [
-        "NORTH"
+        "WEST"
       ],
       "actions": [
         {
@@ -30,56 +30,17 @@
         }
       ],
       "x": 1,
-      "y": 0
+      "y": 4
     },
     {
       "walls": [
-        "WEST"
+        "EAST"
       ],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
           "INSTANCE": {
-            "heading": "NORTH"
-          }
-        }
-      ],
-      "x": 1,
-      "y": 1
-    },
-    {
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
-          "INSTANCE": {
-            "heading": "NORTH"
-          }
-        }
-      ],
-      "x": 1,
-      "y": 2
-    },
-    {
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
-          "INSTANCE": {
-            "heading": "NORTH"
-          }
-        }
-      ],
-      "x": 1,
-      "y": 3
-    },
-    {
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
-          "INSTANCE": {
-            "heading": "NORTH"
+            "heading": "WEST"
           }
         }
       ],
@@ -87,7 +48,9 @@
       "y": 4
     },
     {
-      "walls": [],
+      "walls": [
+        "NORTH"
+      ],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
@@ -96,25 +59,96 @@
           }
         }
       ],
-      "x": 1,
-      "y": 5
-    },
-    {
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
-          "INSTANCE": {
-            "heading": "NORTH"
-          }
-        }
-      ],
-      "x": 1,
-      "y": 6
+      "x": 2,
+      "y": 4
     },
     {
       "walls": [
         "NORTH"
+      ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "NORTH"
+          }
+        }
+      ],
+      "x": 3,
+      "y": 4
+    },
+    {
+      "walls": [
+        "NORTH"
+      ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "NORTH"
+          }
+        }
+      ],
+      "x": 4,
+      "y": 4
+    },
+    {
+      "walls": ["NORTH"],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "NORTH"
+          }
+        }
+      ],
+      "x": 5,
+      "y": 4
+    },
+    {
+      "walls": ["WEST"],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "NORTH"
+          }
+        }
+      ],
+      "x": 6,
+      "y": 4
+    },
+    {
+      "walls": [
+        "EAST"
+      ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "WEST"
+          }
+        }
+      ],
+      "x": 6,
+      "y": 4
+    },
+    {
+      "walls": ["NORTH"],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "NORTH"
+          }
+        }
+      ],
+      "x": 7,
+      "y": 4
+    },
+    {
+      "walls": [
+
       ],
       "actions": [
         {
@@ -129,7 +163,7 @@
     },
     {
       "walls": [
-        "EAST"
+
       ],
       "actions": [
         {
@@ -144,7 +178,7 @@
     },
     {
       "walls": [
-        "SOUTH"
+
       ],
       "actions": [
         {
@@ -159,7 +193,7 @@
     },
     {
       "walls": [
-        "WEST"
+
       ],
       "actions": [
         {
@@ -174,7 +208,7 @@
     },
     {
       "walls": [
-        "NORTH"
+
       ],
       "actions": [
         {
@@ -189,7 +223,7 @@
     },
     {
       "walls": [
-        "EAST"
+
       ],
       "actions": [
         {

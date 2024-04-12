@@ -42,7 +42,7 @@ public class Space extends Subject {
     public final int x;
     public final int y;
 
-    private EnumSet<Heading> walls = EnumSet.noneOf(Heading.class);
+    private List<Heading> walls = new ArrayList<>();
     private Player player;
     private CheckPoint checkPoint;
     private List<FieldAction> actions = new ArrayList<>();
@@ -68,9 +68,7 @@ public class Space extends Subject {
         return walls.contains(direction);
     }
 
-    public void addWall(Heading direction) {
-        walls.add(direction);
-    }    
+    
 
     public void setPlayer(Player player) {
         Player oldPlayer = this.player;
@@ -87,7 +85,19 @@ public class Space extends Subject {
             notifyChange();
         }
     }
-
+    /**
+     * Returns the walls (actually their direction) on this space.
+     * Note that clients may change this list; this should, however,
+     * be done only during the setup of the game (not while the game
+     * is running).
+     *
+     * @return the list of walls on this space
+     */
+    // XXX A3
+    public List<Heading> getWalls() {
+        return walls;
+    }
+    
     public CheckPoint getCheckPoint(){
         return checkPoint;
     }
