@@ -70,7 +70,7 @@ class GameControllerTest {
 
         Board board = new Board(8, 8);
         Space space = board.getSpace(1, 5);
-        CheckPoint checkpoint = new CheckPoint(1, 5);
+        CheckPoint checkpoint = new CheckPoint(1, 5, 1);
         
         
         assertNull(space.getCheckPoint());

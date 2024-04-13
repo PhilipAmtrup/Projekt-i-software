@@ -107,6 +107,8 @@ public class Space extends Subject {
         }
         return checkpointNumbers;
     }
+
+
     public void setCheckpointNumber(int checkpointNumber) {
         this.checkpointNumber = checkpointNumber;
         notifyChange();

@@ -7,14 +7,19 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 
  public class CheckPoint {
 
+    private int number;
     private int x;
     private int y;
 
     public CheckPoint(int x, int y, int number){
         this.x = x;
         this.y = y;
+        this.number = number;
     }
 
+    public int getNumber() {
+        return number;
+    }
 
 
     public int getX(){

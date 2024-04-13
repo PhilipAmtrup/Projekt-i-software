@@ -194,11 +194,16 @@ private void drawWalls(Pane pane, List<Heading > walls) {
             updatePlayer();
 
             List<Integer> checkpointNumbers = space.getCheckpointNumbers();
+            System.out.println("Checkpoint numbers: " + checkpointNumbers);
+            // Iterate over each checkpoint number and draw the checkpoint
+            for (Integer number : checkpointNumbers) {
+                drawCheckpoint(number);
+            }
 
-            drawCheckpoint(2);
             this.getChildren().add(0, wallsPane); // Ensure walls are under the player
         }
     }
+
 
 
 
