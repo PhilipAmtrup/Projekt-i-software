@@ -10,10 +10,12 @@ package dk.dtu.compute.se.pisd.roborally.controller;
     private int x;
     private int y;
 
-    public CheckPoint(int x, int y){
+    public CheckPoint(int x, int y, int number){
         this.x = x;
         this.y = y;
     }
+
+
 
     public int getX(){
         return this.x;

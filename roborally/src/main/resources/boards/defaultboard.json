@@ -21,6 +21,7 @@
       "walls": [
         "WEST"
       ],
+
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",

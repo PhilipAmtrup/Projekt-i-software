@@ -91,8 +91,8 @@ public class Board extends Subject {
 
 private void addCheckPoints() {
     // Specifying checkpoints with x and y coordinates
-    getSpace(0, 5).setCheckPoint(new CheckPoint(0, 5));
-    getSpace(6, 2).setCheckPoint(new CheckPoint(6, 2));
+    getSpace(0, 5).setCheckPoint(new CheckPoint(0, 5,1));
+    getSpace(6, 2).setCheckPoint(new CheckPoint(6, 2,2));
     // Add additional checkpoints as needed
 }
 

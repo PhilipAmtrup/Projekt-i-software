@@ -97,7 +97,20 @@ public class Space extends Subject {
     public List<Heading> getWalls() {
         return walls;
     }
-    
+
+    private int checkpointNumber = -1; // Initialize with -1 indicating no checkpoint
+
+    public List<Integer> getCheckpointNumbers() {
+        List<Integer> checkpointNumbers = new ArrayList<>();
+        if (checkpointNumber != -1) {
+            checkpointNumbers.add(checkpointNumber);
+        }
+        return checkpointNumbers;
+    }
+    public void setCheckpointNumber(int checkpointNumber) {
+        this.checkpointNumber = checkpointNumber;
+        notifyChange();
+    }
     public CheckPoint getCheckPoint(){
         return checkPoint;
     }
@@ -106,6 +119,7 @@ public class Space extends Subject {
         this.checkPoint = checkPoint;
         notifyChange();
     }
+
 
     
         /**
@@ -126,5 +140,6 @@ public class Space extends Subject {
         // notify the space of these changes by calling this method.
         notifyChange();
     }
+
 
 }
