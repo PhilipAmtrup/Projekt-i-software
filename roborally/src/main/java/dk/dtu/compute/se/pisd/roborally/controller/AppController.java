@@ -105,6 +105,10 @@ public class AppController implements Observer {
         }
     }
 
+    /**
+     * @author s235459
+     * Makes it possible to save the game to the database.
+     */
     public void saveGame() {
         // XXX needs to be implemented eventually
         //Connector connector= new Connector();
@@ -119,7 +123,11 @@ public class AppController implements Observer {
 
     }
 
-
+    /**
+     * @author s235459
+     * Makes it possible to see the saved games, that are possible to load. The player is able to choose himself what game to load
+     *
+     */
     public void loadGame() {
         // XXX needs to be implememted eventually
         // for now, we just create a new game
@@ -127,19 +135,21 @@ public class AppController implements Observer {
         Repository gameRepo = new Repository(new Connector());
         List< GameInDB> games = gameRepo.getGames();
 
-        ChoiceDialog LoadChoice = new ChoiceDialog();
+        ChoiceDialog<GameInDB> LoadChoice = new ChoiceDialog<>();
         LoadChoice.setTitle("Load Game");
         LoadChoice.setHeaderText("Choose a game to load");
         LoadChoice.getItems().addAll(games);
         LoadChoice.showAndWait();
 
+
         if (LoadChoice.getSelectedItem() != null) {
-            this.board = gameRepo.loadGameFromDB(1);
+            this.board = gameRepo.loadGameFromDB(LoadChoice.getSelectedItem().id);
             this.gameController = new GameController(this.board);
             if (this.board.getPhase() == Phase.INITIALISATION){
                 gameController.startProgrammingPhase();
             }
         }
+        roboRally.createBoardView(this.gameController);
     }
 
     /**

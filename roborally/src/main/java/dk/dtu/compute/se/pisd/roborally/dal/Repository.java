@@ -304,32 +304,32 @@ public class Repository implements IRepository {
 	private void createCardFieldsInDB(Board game) throws SQLException{
 
 		//String SQLInsertCardField = "Insert into CardFields (gameID , playerID , CardName , type) VALUES ( ? , ? , ? , ?) ";
-		try (Connection connection = connector.getConnection()) {
+		Connection connection = connector.getConnection();
 
-			PreparedStatement ps = getInsertCards();
+		PreparedStatement ps = getInsertCards();
 			//ResultSet rs = ps.executeQuery();
 
-			for (int i = 0 ; i < game.getPlayersNumber() ; i ++) {
+		for (int i = 0 ; i < game.getPlayersNumber() ; i ++) {
 
 				// Itererer igennem hvert kort der er tilknyttet spilleren, og får sat Commandcards attributter
-				Player player = game.getPlayer(i);
-				for (int j = 0; j < Player.NO_CARDS; j++) {
-					CommandCardField cardField = player.getCardField(j);
-					CommandCard card = cardField.getCard();
-					//rs.moveToInsertRow();
+			Player player = game.getPlayer(i);
+			for (int j = 0; j < Player.NO_CARDS; j++) {
+				CommandCardField cardField = player.getCardField(j);
+				CommandCard card = cardField.getCard();
+				//rs.moveToInsertRow();
 
-					ps.setInt(1, game.getGameId());
-					ps.setInt(2, i);
-					ps.setString(3, player.getCardField(i) != null ? cardField.getCard().getName() : null);
-					//ps.setString(4, Type.COMMAND_CARD.toString());
+				ps.setInt(1, game.getGameId());
+				ps.setInt(2, i);
+				ps.setString(3, player.getCardField(i) != null ? cardField.getCard().getName() : null);
+				//ps.setString(4, Type.COMMAND_CARD.toString());
 
 
-					//rs.insertRow();
+				//rs.insertRow();
 				}
 			}
-			//rs.close();
-			ps.executeUpdate();
-		}
+		//rs.close();
+		ps.executeUpdate();
+
 
 	}
 	
