@@ -64,7 +64,7 @@
     },
     {
       "walls": [
-        "NORTH"
+        "WEST"
       ],
       "actions": [
         {

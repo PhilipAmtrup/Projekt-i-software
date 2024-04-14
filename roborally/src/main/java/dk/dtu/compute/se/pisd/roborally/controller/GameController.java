@@ -199,6 +199,14 @@ public class GameController {
                         executeCommand(currentPlayer, command); // left or right
                     }
                 }
+                // Here we check if the current player's space has a ConveyorBelt action
+                // and call the doAction method on it if that's the case.
+                for (FieldAction actionOnSpace : board.getCurrentPlayer().getSpace().getActions()) {
+                    if (actionOnSpace instanceof ConveyorBelt) {
+                        actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
+                    }
+                }
+
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
@@ -455,7 +463,7 @@ public class GameController {
 
 
 
-    void moveToSpace(Player player, Space targetSpace, Heading heading) throws ImpossibleMoveException {
+    boolean moveToSpace(Player player, Space targetSpace, Heading heading) throws ImpossibleMoveException {
         Space currentSpace = player.getSpace();
 
         if (board.getNeighbour(player.getSpace(), heading) == targetSpace) {
@@ -479,6 +487,7 @@ public class GameController {
         } else {
             throw new ImpossibleMoveException(player, targetSpace, heading);
         }
+        return false;
     }
 
 

@@ -51,26 +51,23 @@ public class ConveyorBelt extends FieldAction {
      * Implementation of the action of a conveyor belt. Needs to be implemented for A3.
      */
     @Override
-    public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-        // TODO A3: needs to be implemented
-        // ...
-        
-        /**
-         * makes the player to move a space in the direction of the heading of the conveyor belt
-         * @author s235459
-         */
+    public boolean doAction(GameController gameController, Space space) {
         Player player = space.getPlayer();
         Board board = gameController.board;
-
-        if (player != null){ 
+        if (player != null) {
             Heading heading = getHeading();
-            Space spaceNew = board.getNeighbour(space , heading);
-            player.setSpace(spaceNew);
-
-            return true;
+            Space spaceNew = board.getNeighbour(space, heading);
+            if (spaceNew != null) {
+                try {
+                    gameController.moveToSpace(player, spaceNew, heading);
+                    player.setHeading(heading);
+                    return true;
+                } catch (ImpossibleMoveException ex) {
+                    // Handle the exception here, you could perhaps log it or communicate this issue to the user
+                    return false;
+                }
+            }
         }
-        
         return false;
     }
-
 }
