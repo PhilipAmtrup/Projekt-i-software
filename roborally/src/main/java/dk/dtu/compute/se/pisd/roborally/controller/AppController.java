@@ -27,10 +27,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
 import dk.dtu.compute.se.pisd.roborally.dal.*;
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Health;
-import dk.dtu.compute.se.pisd.roborally.model.Phase;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -145,9 +142,19 @@ public class AppController implements Observer {
         if (LoadChoice.getSelectedItem() != null) {
             this.board = gameRepo.loadGameFromDB(LoadChoice.getSelectedItem().id);
             this.gameController = new GameController(this.board);
-            if (this.board.getPhase() == Phase.INITIALISATION){
-                gameController.startProgrammingPhase();
+            Player player = board.getPlayer(this.board.getPlayersNumber());
+
+            for (int i = 0; i < board.getPlayerNumber(player); i++) {
+
+                CommandCardField cardField = player.getCardField(i);
+                if (cardField != null) {
+                    gameController.board.setPhase(Phase.ACTIVATION);
+                } else gameController.board.setPhase(Phase.PROGRAMMING);
             }
+
+            gameController.startProgrammingPhase();
+
+
         }
         roboRally.createBoardView(this.gameController);
     }
