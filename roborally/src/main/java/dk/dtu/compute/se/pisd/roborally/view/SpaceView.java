@@ -152,38 +152,35 @@ private void drawWalls(Pane pane, List<Heading > walls) {
         }
     }
 
+    private void drawCheckpoint() {
+        List<FieldAction> actions = space.getActions();
+        for (FieldAction action : actions) {
+            if (action instanceof CheckPoint) {
+                // Remove only checkpoint visuals if they exist
+                getChildren().removeIf(node -> node instanceof Circle && "checkpoint".equals(node.getUserData()));
 
+                // Define the center points for drawing the checkpoint
+                double centerX = getWidth() / 2.0;
+                double centerY = getHeight() / 2.0;
 
-    private void drawCheckpoint(int number) {
-    List<FieldAction> actions = space.getActions();
-    for (FieldAction action : actions) {
-        if (action instanceof CheckPoint) {
-            // Remove only checkpoint visuals if they exist
-            getChildren().removeIf(node -> node instanceof Circle && "checkpoint".equals(node.getUserData()));
+                // Create a visual representation for the checkpoint
+                Circle checkpointVisual = new Circle(centerX, centerY, 15);
+                checkpointVisual.setFill(Color.TURQUOISE);
+                checkpointVisual.setUserData("checkpoint");  // Tag this node as "checkpoint"
 
-            // Define the center points for drawing the checkpoint
-            double centerX = getWidth() / 2.0;
-            double centerY = getHeight() / 2.0;
+                int number = ((CheckPoint) action).getNumber();
+                Text numberText = new Text(Integer.toString(number));
+                numberText.setFill(Color.BLACK); // Set text color
+                numberText.setFont(Font.font("Arial", FontWeight.BOLD, 15)); // Set font and size
 
-            // Create a visual representation for the checkpoint
-            Circle checkpointVisual = new Circle(centerX, centerY, 15);
-            checkpointVisual.setFill(Color.TURQUOISE);
-            checkpointVisual.setUserData("checkpoint");  // Tag this node as "checkpoint"
+                // Position the text at the center of the circle
+                numberText.setX(centerX - numberText.getLayoutBounds().getWidth() / 2);
+                numberText.setY(centerY + numberText.getLayoutBounds().getHeight() / 4);
 
-            Text numberText = new Text(Integer.toString(number));
-            numberText.setFill(Color.BLACK); // Set text color
-            numberText.setFont(Font.font("Arial", FontWeight.BOLD, 15)); // Set font and size
-
-            // Position the text at the center of the circle
-            numberText.setX(centerX - numberText.getLayoutBounds().getWidth() / 2);
-            numberText.setY(centerY + numberText.getLayoutBounds().getHeight() / 4);
-
-
-            // Add the checkpoint to the pane
-            getChildren().addAll(checkpointVisual, numberText);  // Add at the beginning to ensure it's below other elements
+                // Add the checkpoint to the pane
+                getChildren().addAll(checkpointVisual, numberText);  // Add at the beginning to ensure it's below other elements
+            }
         }
-    }
-
     }
 
     @Override
@@ -197,18 +194,11 @@ private void drawWalls(Pane pane, List<Heading > walls) {
             drawWalls(wallsPane, walls);
 
             updatePlayer();
-            drawCheckpoint(1);
-            List<Integer> checkpointNumbers = space.getCheckpointNumbers();
-
-            // Iterate over each checkpoint number and draw the checkpoint
-            for (Integer number : checkpointNumbers) {
-                drawCheckpoint(number);
-            }
+            drawCheckpoint();
 
             this.getChildren().add(0, wallsPane); // Ensure walls are under the player
         }
     }
-
 
 
 
