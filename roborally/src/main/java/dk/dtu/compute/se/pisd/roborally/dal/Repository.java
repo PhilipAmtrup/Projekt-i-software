@@ -21,8 +21,15 @@
  */
 package dk.dtu.compute.se.pisd.roborally.dal;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dk.dtu.compute.se.pisd.roborally.controller.BoardFactory;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.Adapter;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.model.BoardTemplate;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.view.SpaceView;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
@@ -106,6 +113,7 @@ public class Repository implements IRepository {
 
 				// TODO V4a: this method needs to be implemented first
 				createCardFieldsInDB(game);
+
 
 
 				// since current player is a foreign key, it can only be
@@ -211,7 +219,9 @@ public class Repository implements IRepository {
 				// TODO V4b: and we should also store the name of the used game board
 				//      in the database, and load the corresponding board from the
 				//      JSON file. For now, we use the default game board.
-				game = BoardFactory.getInstance().createBoard(null);
+
+				game = LoadBoard.loadBoard("defaultboard");
+
 				if (game == null) {
 					return null;
 				}
@@ -332,6 +342,7 @@ public class Repository implements IRepository {
 
 
 	}
+
 	
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
@@ -394,28 +405,31 @@ public class Repository implements IRepository {
 	 * @throws SQLException
 	 */
 	private void loadCardFieldsFromDB(Board game) throws SQLException {
-		PreparedStatement ps = getSelectCard();
+		PreparedStatement ps = getSelectCardsOrdStatement();
+		ps.setInt(1, game.getGameId());
+		ResultSet rs = ps.executeQuery();
 
+		while (rs.next()) {
+			for (int i = 0; i < game.getPlayersNumber(); i++) {
+				Player player = game.getPlayer(i);
+				for (int j = 0; j < Player.NO_CARDS; j++) {
+					CommandCardField cardField = player.getCardField(j);
+					CommandCard card = cardField.getCard();
 
-		for (int i = 0; i < game.getPlayersNumber(); i++) {
-			Player player = game.getPlayer(i);
-			for (int j = 0; j < Player.NO_CARDS; j++) {
-				CommandCardField cardField = player.getCardField(j);
-				CommandCard card = cardField.getCard();
+					//s.setInt(1, game.getGameId());
+					//ps.setInt(2, i);
 
-				ps.setInt(1, game.getGameId());
-				//ps.setInt(2, i);
-				ResultSet rs = ps.executeQuery();
-				if (rs.next()) {
-					String cardName = rs.getString("CardName");
+					//String cardName = rs.getString("CardName");
 					cardField.setCard(card);
 				}
-				rs.close();
 			}
+			rs.updateRow();
 		}
+		rs.close();
+
+
 
 	}
-
 
 
 	/**
@@ -427,23 +441,30 @@ public class Repository implements IRepository {
 	private void updateCardFieldsInDB(Board game) throws SQLException{
 		PreparedStatement ps = getUpdateCards();
 		//ps.setInt(1, game.getGameId());
-		//ResultSet rs = ps.executeQuery();
+		ResultSet rs = ps.executeQuery();
 
 		for (int i = 0; i < game.getPlayersNumber(); i++) {
 			Player player = game.getPlayer(i);
 			for (int j = 0; j < Player.NO_CARDS; j++) {
 				CommandCardField cardField = player.getCardField(j);
 				CommandCard card = cardField.getCard();
-				ps.setString(1, card != null ? card.getName() : null);
-				ps.setInt(2, game.getGameId());
-				ps.setInt(3, i);
-				ps.setString(4, card != null ? card.getName() : null);
-				ps.addBatch();
+				if (rs.next()){
+
+					rs.updateString(1, card != null ? card.getName() : null);
+					rs.updateInt(2, game.getGameId());
+					rs.updateInt(3, i);
+					rs.updateString(4, card != null ? card.getName() : null);
+					rs.updateRow();
+				}
+
 			}
 		}
-		ps.executeBatch();
+		rs.close();
+		//ps.executeBatch();
 
 	}
+
+
 
 
 	private static final String SQL_INSERT_CARD =
@@ -549,6 +570,27 @@ public class Repository implements IRepository {
 		return select_players_stmt;
 	}
 
+
+	private static final String SQL_SELECT_CARDS_ORD =
+			"SELECT * FROM CardFields WHERE gameID = ? ORDER BY CardName ASC";
+	private PreparedStatement select_cards_ord_stmt = null;
+
+	private PreparedStatement getSelectCardsOrdStatement() {
+		if (select_cards_ord_stmt == null) {
+			Connection connection = connector.getConnection();
+			try {
+				select_cards_ord_stmt = connection.prepareStatement(
+						SQL_SELECT_CARDS_ORD,
+						ResultSet.TYPE_FORWARD_ONLY,
+						ResultSet.CONCUR_UPDATABLE);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return select_cards_ord_stmt;
+	}
+
+
 	private static final String SQL_SELECT_PLAYERS_ASC =
 			"SELECT * FROM Player WHERE gameID = ? ORDER BY playerID ASC";
 	
@@ -605,5 +647,6 @@ public class Repository implements IRepository {
 		}
 		return update_cards;
 	}
+
 
 }

@@ -111,6 +111,7 @@ public class AppController implements Observer {
         //Connector connector= new Connector();
         Repository repo = new Repository(new Connector());
 
+
         if (this.board.getGameId() != null) {
             repo.updateGameInDB(this.gameController.board);
         } else {
@@ -131,6 +132,7 @@ public class AppController implements Observer {
 
         Repository gameRepo = new Repository(new Connector());
         List< GameInDB> games = gameRepo.getGames();
+        //board = BoardFactory.getInstance().createBoard("defaultboard");
 
         ChoiceDialog<GameInDB> LoadChoice = new ChoiceDialog<>();
         LoadChoice.setTitle("Load Game");
@@ -141,19 +143,21 @@ public class AppController implements Observer {
 
         if (LoadChoice.getSelectedItem() != null) {
             this.board = gameRepo.loadGameFromDB(LoadChoice.getSelectedItem().id);
+            //this.board = BoardFactory.getInstance().createBoard("defaultboard");
             this.gameController = new GameController(this.board);
-            Player player = board.getPlayer(this.board.getPlayersNumber());
+            //Player player = board.getPlayer(this.board.getPlayersNumber());
 
-            for (int i = 0; i < board.getPlayerNumber(player); i++) {
+            for (int i = 0; i < board.getPlayersNumber(); i++) {
+                Player player =this.board.getPlayer(i);
 
                 CommandCardField cardField = player.getCardField(i);
                 if (cardField != null) {
-                    gameController.board.setPhase(Phase.ACTIVATION);
-                } else gameController.board.setPhase(Phase.PROGRAMMING);
+                    //gameController.board.setPhase(Phase.PROGRAMMING);
+                    gameController.startProgrammingPhase();
+                } else gameController.board.setPhase(Phase.INITIALISATION);
             }
 
-            gameController.startProgrammingPhase();
-
+            //gameController.startProgrammingPhase();
 
         }
         roboRally.createBoardView(this.gameController);

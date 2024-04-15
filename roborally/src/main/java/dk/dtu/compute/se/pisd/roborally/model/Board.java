@@ -129,6 +129,8 @@ public class Board extends Subject {
         }
     }
 
+
+
     public int getPlayersNumber() {
         return players.size();
     }

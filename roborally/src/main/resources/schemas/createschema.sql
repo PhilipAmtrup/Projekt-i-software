@@ -43,5 +43,7 @@ CREATE TABLE IF NOT EXISTS CardFields (
 
 );;
 
+
+
 SET FOREIGN_KEY_CHECKS = 1;;
 
