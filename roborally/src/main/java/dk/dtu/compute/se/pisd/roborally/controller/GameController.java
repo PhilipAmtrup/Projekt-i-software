@@ -194,15 +194,19 @@ public class GameController {
                         } else {
                             executeCommand(currentPlayer, option);
                         }
-
                     } else {
                         executeCommand(currentPlayer, command); // left or right
                     }
                 }
-                // Here we check if the current player's space has a ConveyorBelt action
-                // and call the doAction method on it if that's the case.
+
+                // After executing the command, iterate over all field actions on the player's new space.
                 for (FieldAction actionOnSpace : board.getCurrentPlayer().getSpace().getActions()) {
+                    // If the current field action is a ConveyorBelt, call doAction method on it.
                     if (actionOnSpace instanceof ConveyorBelt) {
+                        actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
+                    }
+                    // If the current field action is a CheckPoint, call doAction method on it.
+                    else if (actionOnSpace instanceof CheckPoint) {
                         actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
                     }
                 }
@@ -286,6 +290,7 @@ public class GameController {
                 default:
                     // DO NOTHING (for now)
             }
+            checkForWinCondition(player);
         }
     }
 
@@ -489,7 +494,14 @@ public class GameController {
         }
         return false;
     }
-
+    public void checkForWinCondition(Player player) {
+        int totalCheckpoints = board.totalCheckpoints();
+        if (player.getCurrentCheckpoint() == totalCheckpoints) {
+            System.out.println("Player " + player.getName() + " has won the game!");
+            // Set the game phase to GAME_OVER
+            board.setPhase(Phase.GAME_OVER);
+        }
+    }
 
         /**
          * Det her burde gøre at man ikke kan gå igennem walls, men vi havde lidt problemer med at få både det og skubbe metoden sammen
