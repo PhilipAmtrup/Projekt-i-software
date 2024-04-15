@@ -26,13 +26,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
-import dk.dtu.compute.se.pisd.roborally.dal.Connector;
-import dk.dtu.compute.se.pisd.roborally.dal.IRepository;
-import dk.dtu.compute.se.pisd.roborally.dal.Repository;
-import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Health;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.dal.*;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -61,6 +56,8 @@ public class AppController implements Observer {
 
     final private RoboRally roboRally;
 
+    Board board = LoadBoard.loadBoard("defaultboard");  // loading board from defaultboard.json
+
     private GameController gameController;
 
     public AppController(@NotNull RoboRally roboRally) {
@@ -80,7 +77,7 @@ public class AppController implements Observer {
                 }
             }
 
-            Board board = LoadBoard.loadBoard("defaultboard");  // loading board from defaultboard.json
+
 
             if (board == null) {
                 // display an error message or create a default board
@@ -110,26 +107,65 @@ public class AppController implements Observer {
         }
     }
 
+    /**
+     * @author s235459
+     * Makes it possible to save the game to the database.
+     */
     public void saveGame() {
         // XXX needs to be implemented eventually
         //Connector connector= new Connector();
         Repository repo = new Repository(new Connector());
-        /*
-        if (gameController == null) {
-            repo.createGameInDB(this.gameController.board);
+
+
+        if (this.board.getGameId() != null) {
+            repo.updateGameInDB(this.gameController.board);
         } else {
-        repo.updateGameInDB(this.gameController.board);
-        }*/
+        repo.createGameInDB(this.gameController.board);
+        }
 
 
     }
 
+    /**
+     * @author s235459
+     * Makes it possible to see the saved games, that are possible to load. The player is able to choose himself what game to load
+     *
+     */
     public void loadGame() {
         // XXX needs to be implememted eventually
         // for now, we just create a new game
-        if (gameController == null) {
-            ;
+
+        Repository gameRepo = new Repository(new Connector());
+        List< GameInDB> games = gameRepo.getGames();
+        //board = BoardFactory.getInstance().createBoard("defaultboard");
+
+        ChoiceDialog<GameInDB> LoadChoice = new ChoiceDialog<>();
+        LoadChoice.setTitle("Load Game");
+        LoadChoice.setHeaderText("Choose a game to load");
+        LoadChoice.getItems().addAll(games);
+        LoadChoice.showAndWait();
+
+
+        if (LoadChoice.getSelectedItem() != null) {
+            this.board = gameRepo.loadGameFromDB(LoadChoice.getSelectedItem().id);
+            //this.board = BoardFactory.getInstance().createBoard("defaultboard");
+            this.gameController = new GameController(this.board);
+            //Player player = board.getPlayer(this.board.getPlayersNumber());
+
+            for (int i = 0; i < board.getPlayersNumber(); i++) {
+                Player player =this.board.getPlayer(i);
+
+                CommandCardField cardField = player.getCardField(i);
+                if (cardField != null) {
+                    //gameController.board.setPhase(Phase.PROGRAMMING);
+                    gameController.startProgrammingPhase();
+                } else gameController.board.setPhase(Phase.INITIALISATION);
+            }
+
+            //gameController.startProgrammingPhase();
+
         }
+        roboRally.createBoardView(this.gameController);
     }
 
     /**
