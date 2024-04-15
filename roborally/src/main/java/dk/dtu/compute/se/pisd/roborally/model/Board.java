@@ -24,6 +24,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -233,7 +234,19 @@ private void addCheckPoints() {
             notifyChange();
         }
     }
-
+    public int totalCheckpoints() {
+        int totalCheckpoints = 0;
+        for (Space[] spaceArray : spaces) {
+            for (Space space : spaceArray) {
+                for (FieldAction action : space.getActions()) {
+                    if (action instanceof CheckPoint) {
+                        totalCheckpoints += 1;
+                    }
+                }
+            }
+        }
+        return totalCheckpoints;
+    }
     /**
      * Henter den spiller afhængig af spillernes nummer
      * @param player
@@ -285,7 +298,7 @@ private void addCheckPoints() {
 
         // XXX: V1 add the move count to the status message
         // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
-        return "Player = " + getCurrentPlayer().getName() + "Player's health: " + getCurrentPlayer().getHealth()+ ", number of moves " + getCounter() + ", current phase: " + getPhase();
+        return "Player = " + getCurrentPlayer().getName() + "Player's health: " + getCurrentPlayer().getHealth()+ ", number of moves " + getCounter() + ", current phase: " + getPhase() + ", points: " + getCurrentPlayer().getCurrentCheckpoint();
     }
 
 
