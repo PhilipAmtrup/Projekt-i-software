@@ -6,16 +6,33 @@ module roborally {
 
     requires javafx.controls;
     requires org.jetbrains.annotations;
+    requires java.sql;
+    requires mysql.connector.j;
+    requires com.google.common;
+    requires com.google.gson;
+    requires javafx.graphics;
 
     exports dk.dtu.compute.se.pisd.roborally;
-    exports dk.dtu.compute.se.pisd.roborally.model;
 
+    opens schemas;
+    opens boards;
+
+    // The following are needed for Gson being able to create the
+    // respective Java objects when reading JSON files
+    exports dk.dtu.compute.se.pisd.roborally.model;
+    exports dk.dtu.compute.se.pisd.roborally.fileaccess.model;
+
+    // the following are needed only for generating the JavaDocs via maven
+    // for the respective packages
     exports dk.dtu.compute.se.pisd.roborally.view;
     exports dk.dtu.compute.se.pisd.roborally.controller;
 
+    exports dk.dtu.compute.se.pisd.roborally.fileaccess;
+
     exports dk.dtu.compute.se.pisd.designpatterns.observer;
 
-    requires com.google.gson;
-    requires com.google.common;
-    requires java.sql;
+
+    requires jdk.jdi;
+
+
 }

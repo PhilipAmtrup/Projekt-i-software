@@ -26,9 +26,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Health;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.dal.*;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -37,6 +36,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -54,6 +56,8 @@ public class AppController implements Observer {
 
     final private RoboRally roboRally;
 
+    Board board = LoadBoard.loadBoard("defaultboard");
+
     private GameController gameController;
 
     public AppController(@NotNull RoboRally roboRally) {
@@ -68,24 +72,27 @@ public class AppController implements Observer {
 
         if (result.isPresent()) {
             if (gameController != null) {
-                // The UI should not allow this, but in case this happens anyway.
-                // give the user the option to save the game or abort this operation!
                 if (!stopGame()) {
                     return;
                 }
             }
 
-            // XXX the board should eventually be created programmatically or loaded from a file
-            //     here we just create an empty board with the required number of players.
-            Board board = new Board(8,8);
+            //Board board = LoadBoard.loadBoard("defaultboard");  // loading board from defaultboard.json
+
+            if (board == null) {
+                // display an error message or create a default board
+                board = BoardFactory.getInstance().createBoard(null);
+            }
+
             gameController = new GameController(board);
             int no = result.get();
             for (int i = 0; i < no; i++) {
                 Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1) , 30); //###
                 board.addPlayer(player);
                 player.setSpace(board.getSpace(i % board.width, i));
-                
+
             }
+
 
             // XXX: V2
             // board.setCurrentPlayer(board.getPlayer(0));
@@ -95,16 +102,65 @@ public class AppController implements Observer {
         }
     }
 
+    /**
+     * @author s235459
+     * Makes it possible to save the game to the database.
+     */
     public void saveGame() {
         // XXX needs to be implemented eventually
+        //Connector connector= new Connector();
+        Repository repo = new Repository(new Connector());
+
+
+        if (this.board.getGameId() != null) {
+            repo.updateGameInDB(this.gameController.board);
+        } else {
+        repo.createGameInDB(this.gameController.board);
+        }
+
+
     }
 
+    /**
+     * @author s235459
+     * Makes it possible to see the saved games, that are possible to load. The player is able to choose himself what game to load
+     *
+     */
     public void loadGame() {
         // XXX needs to be implememted eventually
         // for now, we just create a new game
-        if (gameController == null) {
-            newGame();
+
+        Repository gameRepo = new Repository(new Connector());
+        List< GameInDB> games = gameRepo.getGames();
+        //board = BoardFactory.getInstance().createBoard("defaultboard");
+
+        ChoiceDialog<GameInDB> LoadChoice = new ChoiceDialog<>();
+        LoadChoice.setTitle("Load Game");
+        LoadChoice.setHeaderText("Choose a game to load");
+        LoadChoice.getItems().addAll(games);
+        LoadChoice.showAndWait();
+
+
+        if (LoadChoice.getSelectedItem() != null) {
+            this.board = gameRepo.loadGameFromDB(LoadChoice.getSelectedItem().id);
+            //this.board = BoardFactory.getInstance().createBoard("defaultboard");
+            this.gameController = new GameController(this.board);
+            //Player player = board.getPlayer(this.board.getPlayersNumber());
+
+            for (int i = 0; i < board.getPlayersNumber(); i++) {
+                Player player =this.board.getPlayer(i);
+
+                CommandCardField cardField = player.getCardField(i);
+                if (cardField != null) {
+                    //gameController.board.setPhase(Phase.PROGRAMMING);
+                    gameController.startProgrammingPhase();
+                } else gameController.board.setPhase(Phase.INITIALISATION);
+            }
+
+            //gameController.startProgrammingPhase();
+
         }
+        roboRally.createBoardView(this.gameController);
     }
 
     /**
@@ -158,4 +214,6 @@ public class AppController implements Observer {
         // XXX do nothing for now
     }
 
+
+    //Funktion til at starte et nyt spil og ikke kun loade
 }

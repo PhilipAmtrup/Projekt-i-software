@@ -62,20 +62,20 @@ public class LoadBoard {
             return BoardFactory.getInstance().createBoard(boardname);
         }
 
-		// In simple cases, we can create a Gson object with new Gson():
+        // In simple cases, we can create a Gson object with new Gson():
         GsonBuilder simpleBuilder = new GsonBuilder().
                 registerTypeAdapter(ActionTemplate.class, new Adapter<ActionTemplate>());
         Gson gson = simpleBuilder.create();
 
-		Board result;
+        Board result;
         JsonReader reader = null;
-		try {
-			reader = gson.newJsonReader(new InputStreamReader(inputStream));
-			BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
-			result = convert(template, boardname);
-			reader.close();
-			return result;
-		} catch (IOException e1) {
+        try {
+            reader = gson.newJsonReader(new InputStreamReader(inputStream));
+            BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
+            result = convert(template, boardname);
+            reader.close();
+            return result;
+        } catch (IOException e1) {
             if (reader != null) {
                 try {
                     reader.close();
@@ -83,12 +83,12 @@ public class LoadBoard {
                 } catch (IOException e2) {}
             }
             if (inputStream != null) {
-				try {
-					inputStream.close();
-				} catch (IOException e2) {}
-			}
-		}
-		return null;
+                try {
+                    inputStream.close();
+                } catch (IOException e2) {}
+            }
+        }
+        return null;
     }
 
     private static Board convert(BoardTemplate template, String boardname) {
@@ -97,7 +97,7 @@ public class LoadBoard {
             Space space = result.getSpace(spaceTemplate.x, spaceTemplate.y);
             if (space != null) {
                 space.getActions().addAll(convert(spaceTemplate.actions));
-                //space.getWalls().addAll(spaceTemplate.walls);
+                space.getWalls().addAll(spaceTemplate.walls);
             }
         }
         return result;
