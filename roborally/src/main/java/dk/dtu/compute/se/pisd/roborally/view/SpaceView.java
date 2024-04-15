@@ -26,6 +26,8 @@ import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.geometry.Pos;
@@ -47,6 +49,8 @@ import javafx.scene.text.FontWeight;
 
 
 
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 /**
  * ...
  *
@@ -94,6 +98,40 @@ public class SpaceView extends StackPane implements ViewObserver {
         update(space);
 
     }
+    private void drawConveyorBelt() {
+        List<FieldAction> actions = space.getActions();
+        for(FieldAction action : actions) {
+            if(action instanceof ConveyorBelt) {
+                ConveyorBelt belt = (ConveyorBelt) action;
+
+                // Define an arrow
+                Polygon arrow = new Polygon(0.0, 0.0, 15.0, 30.0, 30.0, 0.0);                arrow.setFill(Color.GRAY); // set color of arrow
+
+                // Set rotation of the arrow based on belt's heading
+                switch(belt.getHeading()) {
+                    case SOUTH:
+                        arrow.setRotate(0);
+                        break;
+                    case NORTH:
+                        arrow.setRotate(180);
+                        break;
+                    case WEST:
+                        arrow.setRotate(90);
+                        break;
+                    case EAST:
+                        arrow.setRotate(270);
+                        break;
+                }
+
+                // Position the arrow at the center of the space
+                arrow.relocate((SPACE_WIDTH - 30)/2, (SPACE_HEIGHT - 30)/2);
+
+                // add arrow to children
+                this.getChildren().add(arrow);
+            }
+        }
+    }
+
 /**
  * @author s230577, s235462
  * Visuals of the walls and their position on a space
@@ -134,18 +172,20 @@ private void drawWalls(Pane pane, List<Heading > walls) {
 }
 
     private void updatePlayer() {
-        this.getChildren().clear();
+        // Remove only player visuals if they exist
+        this.getChildren().removeIf(node -> node instanceof Polygon && "player".equals(node.getUserData()));
 
         Player player = space.getPlayer();
         if (player != null) {
-            Polygon arrow = new Polygon(0.0, 0.0,
-                    10.0, 20.0,
-                    20.0, 0.0 );
+            Polygon arrow = new Polygon(0.0, 0.0, 10.0, 20.0, 20.0, 0.0);
             try {
                 arrow.setFill(Color.valueOf(player.getColor()));
             } catch (Exception e) {
                 arrow.setFill(Color.MEDIUMPURPLE);
             }
+
+            // Tag this node as "player"
+            arrow.setUserData("player");
 
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
@@ -187,19 +227,16 @@ private void drawWalls(Pane pane, List<Heading > walls) {
     public void updateView(Subject subject) {
         if (subject == this.space) {
             this.getChildren().clear(); // Clear the current drawing
-            Pane wallsPane = new Pane();
 
-            // Pass walls from the space instance to drawWalls
+            drawCheckpoint();
+            drawConveyorBelt();
+            updatePlayer();
+
+            // Draw walls last
+            Pane wallsPane = new Pane();
             List<Heading> walls = space.getWalls();
             drawWalls(wallsPane, walls);
-
-            updatePlayer();
-            drawCheckpoint();
-
-            this.getChildren().add(0, wallsPane); // Ensure walls are under the player
+            this.getChildren().add(wallsPane);
         }
     }
-
-
-
 }
