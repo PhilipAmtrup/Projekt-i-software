@@ -21,10 +21,11 @@
  */
 package dk.dtu.compute.se.pisd.roborally.view;
 import java.util.List;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
+import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import javafx.geometry.Pos;
@@ -154,7 +155,9 @@ private void drawWalls(Pane pane, List<Heading > walls) {
 
 
     private void drawCheckpoint(int number) {
-        if (space.getCheckPoint() != null) {
+    List<FieldAction> actions = space.getActions();
+    for (FieldAction action : actions) {
+        if (action instanceof CheckPoint) {
             // Remove only checkpoint visuals if they exist
             getChildren().removeIf(node -> node instanceof Circle && "checkpoint".equals(node.getUserData()));
 
@@ -181,6 +184,8 @@ private void drawWalls(Pane pane, List<Heading > walls) {
         }
     }
 
+    }
+
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
@@ -192,7 +197,7 @@ private void drawWalls(Pane pane, List<Heading > walls) {
             drawWalls(wallsPane, walls);
 
             updatePlayer();
-
+            drawCheckpoint(1);
             List<Integer> checkpointNumbers = space.getCheckpointNumbers();
 
             // Iterate over each checkpoint number and draw the checkpoint

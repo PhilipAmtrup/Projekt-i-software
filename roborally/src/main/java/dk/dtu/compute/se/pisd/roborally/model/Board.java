@@ -80,7 +80,7 @@ public class Board extends Subject {
         this.stepMode = false;
 
         // Adding checkpoints and walls during board initialization
-        addCheckPoints();
+       // addCheckPoints();
 
     }
     /**

@@ -1,11 +1,18 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
+
+import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Player;
+
+
+
 /**
  * @author s235459
  * Her bliver typen CheckPoint defineret, som herefter bliver brugt og kaldt til checkpoint funktioner
  */
 
 
- public class CheckPoint {
+ public class CheckPoint extends FieldAction {
 
     private int number;
     private int x;
@@ -15,6 +22,11 @@ package dk.dtu.compute.se.pisd.roborally.controller;
         this.x = x;
         this.y = y;
         this.number = number;
+    }
+
+    public CheckPoint(int number, Boolean last) {
+        this.number = number;
+        this.x = last ? 1 : 0;
     }
 
     public int getNumber() {
@@ -36,6 +48,12 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 
     public void setY(int y){
         this.y = y;
+    }
+
+    @Override
+    // Der skal helt sikkert laves noget her
+    public boolean doAction(GameController gameController, Space space) {
+        return false;
     }
 }
 
