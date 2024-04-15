@@ -271,6 +271,9 @@ public class GameController {
                 case FAST_FORWARD:
                     this.fastForward(player);
                     break;
+                case MOVE_BACK:
+                    this.moveBack(player);
+                    break;
 
                 default:
                     // DO NOTHING (for now)
@@ -285,16 +288,18 @@ public class GameController {
      */
 
     // TODO Assignment V2
-    // public void moveForward(@NotNull Player player) {
-    //     Space space = player.getSpace();
-    //     if (space != null){
-    //         Heading heading = player.getHeading();
-    //         Space newSpace = board.getNeighbour(space, heading);
-    //         if (newSpace != null && newSpace.getPlayer() == null){
-    //             newSpace.setPlayer(player);
-    //         }
-    //     }
-    // }
+    public void moveBack(@NotNull Player player) {
+        Space space = player.getSpace();
+        if (space != null){
+            Heading heading = player.getHeading();
+            Heading oppositeHeading = heading.next().next();
+            Space newSpace = board.getNeighbour(space, oppositeHeading);
+            if (newSpace != null && newSpace.getPlayer() == null){
+                newSpace.setPlayer(player);
+            }
+
+        }
+    }
 
 
     /**

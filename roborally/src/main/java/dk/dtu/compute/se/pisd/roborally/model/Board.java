@@ -89,15 +89,14 @@ public class Board extends Subject {
  * Can also add more if needed
  */
 private void addWalls() {
-    getSpace(1,3).addWall(Heading.SOUTH);
-    getSpace(2,3).addWall(Heading.SOUTH);
-    getSpace(2,4).addWall(Heading.SOUTH);
-    getSpace(1,5).addWall(Heading.EAST);
-    getSpace(1,6).addWall(Heading.WEST);
-    getSpace(6,2).addWall(Heading.SOUTH);
-    getSpace(6,2).addWall(Heading.WEST);
-    getSpace(6,3).addWall(Heading.NORTH);
-
+    getSpace(1, 3).addWall(Heading.SOUTH);
+    getSpace(2, 3).addWall(Heading.SOUTH);
+    getSpace(2, 4).addWall(Heading.SOUTH);
+    getSpace(1, 5).addWall(Heading.EAST);
+    getSpace(1, 6).addWall(Heading.WEST);
+    getSpace(6, 2).addWall(Heading.SOUTH);
+    getSpace(6, 2).addWall(Heading.WEST);
+    getSpace(6, 3).addWall(Heading.NORTH);
 
 }
 private void addCheckPoints() {
