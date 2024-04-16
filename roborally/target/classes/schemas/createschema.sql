@@ -20,10 +20,14 @@ CREATE TABLE IF NOT EXISTS Player (
 
   name varchar(255),
   colour varchar(31),
-  
+
+
   positionX int,
   positionY int,
   heading tinyint,
+
+
+
   
   PRIMARY KEY (gameID, playerID),
   FOREIGN KEY (gameID) REFERENCES Game(gameID)
@@ -43,6 +47,8 @@ CREATE TABLE IF NOT EXISTS CardFields (
 
 );;
 
+ALTER TABLE Player
+    ADD COLUMN checkpoints INT;;
 
 
 SET FOREIGN_KEY_CHECKS = 1;;
