@@ -145,12 +145,11 @@ public class AppController implements Observer {
         LoadChoice.getItems().addAll(games);
         LoadChoice.showAndWait();
 
-
+        //Here the boards gets activated, after the wanted game to load has been chosen.
         if (LoadChoice.getSelectedItem() != null) {
             this.board = gameRepo.loadGameFromDB(LoadChoice.getSelectedItem().id);
-            //this.board = BoardFactory.getInstance().createBoard("defaultboard");
             this.gameController = new GameController(this.board);
-            //Player player = board.getPlayer(this.board.getPlayersNumber());
+
 
             for (int i = 0; i < board.getPlayersNumber(); i++) {
                 Player player =this.board.getPlayer(i);

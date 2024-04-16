@@ -69,6 +69,8 @@ public class Repository implements IRepository {
 
 	private static final String PLAYER_HEADING = "heading";
 
+	private static final String PLAYER_CHECKP = "checkpoints";
+
 	private Connector connector;
 	
 	public Repository(Connector connector){
@@ -281,6 +283,11 @@ public class Repository implements IRepository {
 		return result;		
 	}
 
+	/**
+	 * Added the checkpoints point score, in order to save that as well to the player
+	 * @param game the initialized gameboard
+	 * @throws SQLException
+	 */
 	private void createPlayersInDB(Board game) throws SQLException {
 		// TODO code should be more defensive
 		PreparedStatement ps = getSelectPlayersStatementU();
@@ -297,19 +304,18 @@ public class Repository implements IRepository {
 			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
 			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
 			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+			rs.updateInt(PLAYER_CHECKP , player.getCurrentCheckpoint());
 			rs.insertRow();
 		}
 		rs.close();
 	}
 
 
-	//Start med at lave en fælles preparedstatement, ud fra samme fremgangsmåde som han bruger
-	//Og så kør samme metode, start med at gøre sådan så der er en access til databasen igennem appControlleren.
-	//Ændre Attributterne og tabellen til cardFields, De skulle åbenbart ligge et sted i nogle slides
+
 	/**
 	 * @author s235459
-	 * @param game
-	 * Får skabt cardfields i databasen som en tabel for sig selv
+	 * @param game the initialized gameboard
+	 * Creates cardfields tables in the database, to store cards
 	 * @throws SQLException
 	 */
 
@@ -343,7 +349,8 @@ public class Repository implements IRepository {
 
 	}
 
-	
+
+
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
 		ps.setInt(1, game.getGameId());
@@ -364,6 +371,8 @@ public class Repository implements IRepository {
 				player.setSpace(game.getSpace(x,y));
 				int heading = rs.getInt(PLAYER_HEADING);
 				player.setHeading(Heading.values()[heading]);
+				int checkpoint = rs.getInt(PLAYER_CHECKP);
+				player.setCurrentCheckpoint(checkpoint);
 			} else {
 				// TODO error handling
 
@@ -387,6 +396,7 @@ public class Repository implements IRepository {
 			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
 			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
 			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+			rs.updateInt(PLAYER_CHECKP , player.getCurrentCheckpoint());
 			// TODO error handling
 			// TODO take care of case when number of players changes, etc
 			rs.updateRow();
@@ -438,6 +448,7 @@ public class Repository implements IRepository {
 	 * @param game
 	 * @throws SQLException
 	 */
+
 	private void updateCardFieldsInDB(Board game) throws SQLException{
 		PreparedStatement ps = getUpdateCards();
 		//ps.setInt(1, game.getGameId());
@@ -456,12 +467,10 @@ public class Repository implements IRepository {
 					rs.updateString(4, card != null ? card.getName() : null);
 					rs.updateRow();
 				}
-
 			}
 		}
 		rs.close();
 		//ps.executeBatch();
-
 	}
 
 
