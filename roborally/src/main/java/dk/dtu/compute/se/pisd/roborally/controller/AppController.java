@@ -56,7 +56,7 @@ public class AppController implements Observer {
 
     final private RoboRally roboRally;
 
-    Board board = LoadBoard.loadBoard("defaultboard");
+    Board board = LoadBoard.loadBoard("defaultboard");  // loading board from defaultboard.json
 
     private GameController gameController;
 
@@ -77,7 +77,7 @@ public class AppController implements Observer {
                 }
             }
 
-            //Board board = LoadBoard.loadBoard("defaultboard");  // loading board from defaultboard.json
+
 
             if (board == null) {
                 // display an error message or create a default board
@@ -85,13 +85,18 @@ public class AppController implements Observer {
             }
 
             gameController = new GameController(board);
-            int no = result.get();
-            for (int i = 0; i < no; i++) {
-                Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1) , 30); //###
-                board.addPlayer(player);
-                player.setSpace(board.getSpace(i % board.width, i));
+            int no = result.get();  // Number of players
+            int middleColumn = board.width / 2; // Calculate the middle column
+            int startColumn = middleColumn - (no / 2);  // Calculate the starting column for the leftmost player
 
+            for (int i = 0; i < no; i++) {
+                Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1), 30); // Initialize players
+                board.addPlayer(player);
+                // Set each player's space to be side by side in the top center row of the board
+                player.setSpace(board.getSpace(startColumn + i, 0));
             }
+
+
 
 
             // XXX: V2
@@ -214,6 +219,4 @@ public class AppController implements Observer {
         // XXX do nothing for now
     }
 
-
-    //Funktion til at starte et nyt spil og ikke kun loade
 }

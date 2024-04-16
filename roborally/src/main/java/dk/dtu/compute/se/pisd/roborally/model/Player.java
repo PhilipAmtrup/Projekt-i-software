@@ -47,7 +47,7 @@ public class Player extends Subject {
 
     private CommandCardField[] program;
     private CommandCardField[] cards;
-
+    private int currentCheckPoint = 0;
     private int health;
 
     public Player(@NotNull Board board, String color, @NotNull String name, @NotNull int health ) {
@@ -58,6 +58,8 @@ public class Player extends Subject {
         this.space = null;
 
         this.health = health;
+
+
 
         program = new CommandCardField[NO_REGISTERS];
         for (int i = 0; i < program.length; i++) {
@@ -111,6 +113,27 @@ public class Player extends Subject {
             space.playerChanged();
         }
     }
+
+    /**
+     * @author s230577
+     * This method returns the current checkpoint number the player is at.
+     *
+     * @return The number of the current checkpoint.
+     */
+    public int getCurrentCheckpoint() {
+        return currentCheckPoint;
+    }
+
+    /**
+     * @author s230577
+     * This method sets the current checkpoint number.
+     *
+     * @param checkpoint The number to be set as the current checkpoint.
+     */
+    public void setCurrentCheckpoint(int checkpoint) {
+        this.currentCheckPoint = checkpoint;
+    }
+
     /**
      * Checks the availability of the space 
      * @return current space 

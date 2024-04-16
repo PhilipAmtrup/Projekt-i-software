@@ -28,49 +28,57 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This class represents a conveyor belt on a space.
+ * This class represents a conveyor belt on a space in a RoboRally game.
+ * The conveyor belt moves player's robots in a certain direction (heading) when they end a turn on it.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  */
-// XXX A3
 public class ConveyorBelt extends FieldAction {
 
     private Heading heading;
 
-
+    /**
+     * Returns the heading of the conveyor belt, which is the direction in which it moves player's robots.
+     * @return the heading of the conveyor belt.
+     */
     public Heading getHeading() {
         return heading;
     }
 
+    /**
+     * Sets the heading of the conveyor belt.
+     *
+     * @param heading the new heading of the conveyor belt.
+     */
     public void setHeading(Heading heading) {
         this.heading = heading;
     }
 
     /**
-     * Implementation of the action of a conveyor belt. Needs to be implemented for A3.
+     * Defines the action of the conveyor belt, moving the player's robot to the next space in the heading direction.
+     * @author s230577
+     * @param gameController the game controller, used to manage game flow.
+     * @param space the current space of the player's robot.
+     * @return true if the player's robot was moved; false otherwise.
      */
     @Override
-    public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-        // TODO A3: needs to be implemented
-        // ...
-        
-        /**
-         * makes the player to move a space in the direction of the heading of the conveyor belt
-         * @author s235459
-         */
+    public boolean doAction(GameController gameController, Space space) {
         Player player = space.getPlayer();
         Board board = gameController.board;
-
-        if (player != null){ 
+        if (player != null) {
             Heading heading = getHeading();
-            Space spaceNew = board.getNeighbour(space , heading);
-            player.setSpace(spaceNew);
-
-            return true;
+            Space spaceNew = board.getNeighbour(space, heading);
+            if (spaceNew != null) {
+                try {
+                    gameController.moveToSpace(player, spaceNew, heading);
+                    player.setHeading(heading);
+                    return true;
+                } catch (ImpossibleMoveException ex) {
+                    // Handle the exception here, you could perhaps log it or communicate this issue to the user
+                    return false;
+                }
+            }
         }
-        
         return false;
     }
-
 }

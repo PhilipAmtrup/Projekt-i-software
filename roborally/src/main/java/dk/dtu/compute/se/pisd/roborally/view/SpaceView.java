@@ -21,6 +21,9 @@
  */
 package dk.dtu.compute.se.pisd.roborally.view;
 import java.util.List;
+
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
@@ -40,7 +43,14 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
+
+
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 /**
  * ...
  *
@@ -88,6 +98,40 @@ public class SpaceView extends StackPane implements ViewObserver {
         update(space);
 
     }
+    private void drawConveyorBelt() {
+        List<FieldAction> actions = space.getActions();
+        for(FieldAction action : actions) {
+            if(action instanceof ConveyorBelt) {
+                ConveyorBelt belt = (ConveyorBelt) action;
+
+                // Define an arrow
+                Polygon arrow = new Polygon(0.0, 0.0, 15.0, 30.0, 30.0, 0.0);                arrow.setFill(Color.GRAY); // set color of arrow
+
+                // Set rotation of the arrow based on belt's heading
+                switch(belt.getHeading()) {
+                    case SOUTH:
+                        arrow.setRotate(0);
+                        break;
+                    case NORTH:
+                        arrow.setRotate(180);
+                        break;
+                    case WEST:
+                        arrow.setRotate(90);
+                        break;
+                    case EAST:
+                        arrow.setRotate(270);
+                        break;
+                }
+
+                // Position the arrow at the center of the space
+                arrow.relocate((SPACE_WIDTH - 30)/2, (SPACE_HEIGHT - 30)/2);
+
+                // add arrow to children
+                this.getChildren().add(arrow);
+            }
+        }
+    }
+
 /**
  * @author s230577, s235462
  * Visuals of the walls and their position on a space
@@ -128,42 +172,54 @@ private void drawWalls(Pane pane, List<Heading > walls) {
 }
 
     private void updatePlayer() {
-        this.getChildren().clear();
+        // Remove only player visuals if they exist
+        this.getChildren().removeIf(node -> node instanceof Polygon && "player".equals(node.getUserData()));
 
         Player player = space.getPlayer();
         if (player != null) {
-            Polygon arrow = new Polygon(0.0, 0.0,
-                    10.0, 20.0,
-                    20.0, 0.0 );
+            Polygon arrow = new Polygon(0.0, 0.0, 10.0, 20.0, 20.0, 0.0);
             try {
                 arrow.setFill(Color.valueOf(player.getColor()));
             } catch (Exception e) {
                 arrow.setFill(Color.MEDIUMPURPLE);
             }
 
+            // Tag this node as "player"
+            arrow.setUserData("player");
+
             arrow.setRotate((90*player.getHeading().ordinal())%360);
             this.getChildren().add(arrow);
         }
     }
 
-    
-
     private void drawCheckpoint() {
-        if (space.getCheckPoint() != null) {
-            // Remove only checkpoint visuals if they exist
-            getChildren().removeIf(node -> node instanceof Circle && "checkpoint".equals(node.getUserData()));
-    
-            // Define the center points for drawing the checkpoint
-            double centerX = getWidth() / 2.0;
-            double centerY = getHeight() / 2.0;
-    
-            // Create a visual representation for the checkpoint
-            Circle checkpointVisual = new Circle(centerX, centerY, 10);
-            checkpointVisual.setFill(Color.TURQUOISE);
-            checkpointVisual.setUserData("checkpoint");  // Tag this node as "checkpoint"
-    
-            // Add the checkpoint to the pane
-            getChildren().add(0, checkpointVisual);  // Add at the beginning to ensure it's below other elements
+        List<FieldAction> actions = space.getActions();
+        for (FieldAction action : actions) {
+            if (action instanceof CheckPoint) {
+                // Remove only checkpoint visuals if they exist
+                getChildren().removeIf(node -> node instanceof Circle && "checkpoint".equals(node.getUserData()));
+
+                // Define the center points for drawing the checkpoint
+                double centerX = getWidth() / 2.0;
+                double centerY = getHeight() / 2.0;
+
+                // Create a visual representation for the checkpoint
+                Circle checkpointVisual = new Circle(centerX, centerY, 15);
+                checkpointVisual.setFill(Color.TURQUOISE);
+                checkpointVisual.setUserData("checkpoint");  // Tag this node as "checkpoint"
+
+                int number = ((CheckPoint) action).getNumber();
+                Text numberText = new Text(Integer.toString(number));
+                numberText.setFill(Color.BLACK); // Set text color
+                numberText.setFont(Font.font("Arial", FontWeight.BOLD, 15)); // Set font and size
+
+                // Position the text at the center of the circle
+                numberText.setX(centerX - numberText.getLayoutBounds().getWidth() / 2);
+                numberText.setY(centerY + numberText.getLayoutBounds().getHeight() / 4);
+
+                // Add the checkpoint to the pane
+                getChildren().addAll(checkpointVisual, numberText);  // Add at the beginning to ensure it's below other elements
+            }
         }
     }
 
@@ -171,18 +227,16 @@ private void drawWalls(Pane pane, List<Heading > walls) {
     public void updateView(Subject subject) {
         if (subject == this.space) {
             this.getChildren().clear(); // Clear the current drawing
-            Pane wallsPane = new Pane();
 
-            // Pass walls from the space instance to drawWalls
+            drawCheckpoint();
+            drawConveyorBelt();
+            updatePlayer();
+
+            // Draw walls last
+            Pane wallsPane = new Pane();
             List<Heading> walls = space.getWalls();
             drawWalls(wallsPane, walls);
-
-            updatePlayer();
-            drawCheckpoint();
-            this.getChildren().add(0, wallsPane); // Ensure walls are under the player
+            this.getChildren().add(wallsPane);
         }
     }
-
-
-
 }

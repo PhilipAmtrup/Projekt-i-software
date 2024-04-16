@@ -25,13 +25,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import dk.dtu.compute.se.pisd.roborally.controller.AppController;
-import dk.dtu.compute.se.pisd.roborally.controller.BoardFactory;
-import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
-import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.model.*;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.controller.AppController;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.controller.BoardFactory;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
+
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -115,14 +117,27 @@ public class LoadBoard {
 
         return result;
     }
-
+    /**
+     * @author 230577
+     * Converts an ActionTemplate object into the corresponding FieldAction object.
+     * If the ActionTemplate is an instance of ConveyorBeltTemplate, converts it to a ConveyorBelt.
+     * If the ActionTemplate is an instance of CheckPointTemplate, converts it to a CheckPoint.
+     *
+     * @param actionTemplate The ActionTemplate object to be converted
+     * @return The converted FieldAction object (either ConveyorBelt or CheckPoint)
+     */
     private static FieldAction convert(ActionTemplate actionTemplate) {
         if (actionTemplate instanceof ConveyorBeltTemplate) {
             ConveyorBeltTemplate template = (ConveyorBeltTemplate) actionTemplate;
             ConveyorBelt conveyorBelt = new ConveyorBelt();
             conveyorBelt.setHeading(template.heading);
             return conveyorBelt;
-        } // else if ...
+        } else if(actionTemplate instanceof CheckPointTemplate){
+            CheckPointTemplate template = (CheckPointTemplate) actionTemplate;
+            CheckPoint checkPoint = new CheckPoint(template.number, template.last);
+            return checkPoint;
+        }
+        // else if ...
         // XXX if new field actions are added, the corresponding templates
         //     need to be added to the model subpackage of fileaccess and
         //     the else statement must be extended for converting the

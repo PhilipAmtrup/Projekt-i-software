@@ -194,11 +194,23 @@ public class GameController {
                         } else {
                             executeCommand(currentPlayer, option);
                         }
-
                     } else {
                         executeCommand(currentPlayer, command); // left or right
                     }
                 }
+
+                // After executing the command, iterate over all field actions on the player's new space.
+                for (FieldAction actionOnSpace : board.getCurrentPlayer().getSpace().getActions()) {
+                    // If the current field action is a ConveyorBelt, call doAction method on it.
+                    if (actionOnSpace instanceof ConveyorBelt) {
+                        actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
+                    }
+                    // If the current field action is a CheckPoint, call doAction method on it.
+                    else if (actionOnSpace instanceof CheckPoint) {
+                        actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
+                    }
+                }
+
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
@@ -278,6 +290,7 @@ public class GameController {
                 default:
                     // DO NOTHING (for now)
             }
+            checkForWinCondition(player);
         }
     }
 
@@ -304,15 +317,13 @@ public class GameController {
 
 
     /**
-     * Moves the current player two spaces foward
-     * Now also checks for walls
-     * @param player moves the player
-     */
-    // TODO Assignment V2
-
-    /**
      * @author s230577
-     * Now checks if there is any walls blocking the player
+     * Moves the current player two spaces foward
+     * This method moves the provided Player two spaces forward in the direction they are currently heading.
+     * The fast-forward movement stops at first successful move if the second movement is not possible.
+     * The sequence of operations is: determine heading -> move -> try to move again.
+     * Exceptions are caught and handled within the method, which makes this a safe operation regarding the game rules.
+     * @param player The Player who is to be moved two spaces forward.
      */
     public void fastForward(Player player) {
         // Define the starting point
@@ -421,6 +432,8 @@ public class GameController {
     /**
  * @author s230577
  * Now checks if there is any walls blocking the player
+     *  Wall checks are enforced at spaces, the move is not executed if a wall blocks the way in current or next space.
+     * @param player The Player who is to be moved forward.
  */
   // ... (other parts of the GameController class)
 
@@ -455,7 +468,7 @@ public class GameController {
 
 
 
-    void moveToSpace(Player player, Space targetSpace, Heading heading) throws ImpossibleMoveException {
+    boolean moveToSpace(Player player, Space targetSpace, Heading heading) throws ImpossibleMoveException {
         Space currentSpace = player.getSpace();
 
         if (board.getNeighbour(player.getSpace(), heading) == targetSpace) {
@@ -479,8 +492,16 @@ public class GameController {
         } else {
             throw new ImpossibleMoveException(player, targetSpace, heading);
         }
+        return false;
     }
-
+    public void checkForWinCondition(Player player) {
+        int totalCheckpoints = board.totalCheckpoints();
+        if (player.getCurrentCheckpoint() == totalCheckpoints) {
+            System.out.println("Player " + player.getName() + " has won the game!");
+            // Set the game phase to GAME_OVER
+            board.setPhase(Phase.GAME_OVER);
+        }
+    }
 
         /**
          * Det her burde gøre at man ikke kan gå igennem walls, men vi havde lidt problemer med at få både det og skubbe metoden sammen

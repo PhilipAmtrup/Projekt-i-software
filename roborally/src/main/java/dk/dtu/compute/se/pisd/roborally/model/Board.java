@@ -24,6 +24,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -80,21 +81,34 @@ public class Board extends Subject {
         this.stepMode = false;
 
         // Adding checkpoints and walls during board initialization
-        addCheckPoints();
+       // addCheckPoints();
 
     }
     /**
-     * @author s230577, s235462
-     * Walls being added during board initialization with their specific coordinates
-     * Can also add more if needed
-     */
+ * @author s230577, s235462
+ * Walls being added during board initialization with their specific coordinates
+ * Can also add more if needed
+ */
 
-    private void addCheckPoints() {
-        // Specifying checkpoints with x and y coordinates
-        getSpace(0, 5).setCheckPoint(new CheckPoint(0, 5));
-        getSpace(6, 2).setCheckPoint(new CheckPoint(6, 2));
+private void addCheckPoints() {
+    // Specifying checkpoints with x and y coordinates
+
+        CheckPoint checkpoint1 = new CheckPoint(0, 5, 1);
+        getSpace(0, 7).setCheckPoint(checkpoint1);
+        getSpace(0, 7).setCheckpointNumber(checkpoint1.getNumber());
+
+        CheckPoint checkpoint2 = new CheckPoint(6, 2, 2);
+        getSpace(7, 0).setCheckPoint(checkpoint2);
+        getSpace(7, 0).setCheckpointNumber(checkpoint2.getNumber());
+
+        CheckPoint checkpoint3 = new CheckPoint(6, 2, 3);
+        getSpace(7, 7).setCheckPoint(checkpoint3);
+        getSpace(7, 7).setCheckpointNumber(checkpoint3.getNumber());
         // Add additional checkpoints as needed
-    }
+
+
+    // Add additional checkpoints as needed
+}
 
     public Board(int width, int height) {
         this(width, height, "defaultboard");
@@ -128,8 +142,6 @@ public class Board extends Subject {
             return null;
         }
     }
-
-
 
     public int getPlayersNumber() {
         return players.size();
@@ -222,7 +234,25 @@ public class Board extends Subject {
             notifyChange();
         }
     }
-
+    /**
+     * This method calculates and returns the total number of CheckPoints on the game board.
+     * It loops over every space on the board and checks each one if a CheckPoint is present.
+     * @author s230577
+     * @return The total number of CheckPoints in the game.
+     */
+    public int totalCheckpoints() {
+        int totalCheckpoints = 0;
+        for (Space[] spaceArray : spaces) {
+            for (Space space : spaceArray) {
+                for (FieldAction action : space.getActions()) {
+                    if (action instanceof CheckPoint) {
+                        totalCheckpoints += 1;
+                    }
+                }
+            }
+        }
+        return totalCheckpoints;
+    }
     /**
      * Henter den spiller afhængig af spillernes nummer
      * @param player
@@ -274,7 +304,7 @@ public class Board extends Subject {
 
         // XXX: V1 add the move count to the status message
         // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
-        return "Player = " + getCurrentPlayer().getName() + "Player's health: " + getCurrentPlayer().getHealth()+ ", number of moves " + getCounter() + ", current phase: " + getPhase();
+        return "Player = " + getCurrentPlayer().getName() + "Player's health: " + getCurrentPlayer().getHealth()+ ", number of moves " + getCounter() + ", current phase: " + getPhase() + ", points: " + getCurrentPlayer().getCurrentCheckpoint();
     }
 
 
