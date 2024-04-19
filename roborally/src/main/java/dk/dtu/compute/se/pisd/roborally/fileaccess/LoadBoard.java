@@ -139,7 +139,7 @@ public class LoadBoard {
             return checkPoint;
         } else if(actionTemplate instanceof GearTemplate) {
             GearTemplate template = (GearTemplate) actionTemplate;
-            Gear gear = new Gear();
+            Gear gear = new Gear(template.getX(), template.getY());
             return gear;
         }
         // else if ...
@@ -242,8 +242,9 @@ public class LoadBoard {
             conveyorBeltTemplate.heading = conveyorBelt.getHeading();
             return conveyorBeltTemplate;
         } else if (action instanceof Gear) {
-            // Convert Gear action to GearTemplate
-            GearTemplate gearTemplate = new GearTemplate();
+            Gear gear = (Gear) action;
+            // Convert Gear action to GearTemplate with specific coordinates
+            GearTemplate gearTemplate = new GearTemplate(gear.getX(), gear.getY());
             return gearTemplate;
         }
 

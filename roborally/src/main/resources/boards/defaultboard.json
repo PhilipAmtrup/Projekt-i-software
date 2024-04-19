@@ -49,7 +49,11 @@
       "walls": [],
       "actions": [
         {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate"
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
+          "INSTANCE": {
+            "x": 7,
+            "y": 4
+          }
         }
       ]
     },
@@ -59,17 +63,11 @@
       "walls": [],
       "actions": [
         {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate"
-        }
-      ]
-    },
-    {
-      "x": 7,
-      "y": 8,
-      "walls": ["NORTH","SOUTH"],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate"
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
+          "INSTANCE": {
+            "x": 9,
+            "y": 2
+          }
         }
       ]
     },
