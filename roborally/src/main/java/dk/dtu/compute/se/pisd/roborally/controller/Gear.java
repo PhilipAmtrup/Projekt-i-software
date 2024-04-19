@@ -7,8 +7,8 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
  * author Julius s235462
  */
 public class Gear extends FieldAction {
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
     public Gear(int x, int y) {
         this.x = x;

@@ -139,7 +139,7 @@ public class LoadBoard {
             return checkPoint;
         } else if(actionTemplate instanceof GearTemplate) {
             GearTemplate template = (GearTemplate) actionTemplate;
-            Gear gear = new Gear(template.getX(), template.getY());
+            Gear gear = new Gear(template.x, template.y);
             return gear;
         }
         // else if ...

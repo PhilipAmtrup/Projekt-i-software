@@ -5,8 +5,8 @@ package dk.dtu.compute.se.pisd.roborally.fileaccess.model;
  */
 
 public class GearTemplate extends ActionTemplate {
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
 
         // Constructor

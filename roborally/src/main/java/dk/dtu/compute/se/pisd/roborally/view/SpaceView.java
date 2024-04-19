@@ -142,10 +142,26 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     private void drawGears() {
         List<FieldAction> actions = space.getActions();
-        for (FieldAction action : actions) {
-            if (action instanceof Gear) {
-                Circle gearCircle = new Circle(5, Color.RED); // Create a red circle
-                this.getChildren().add(gearCircle); // Add the circle to the SpaceView
+        for(FieldAction action : actions) {
+            if(action instanceof Gear) {
+                Gear gear = (Gear) action;
+
+                // Load gear image
+                Image gearImage = new Image(getClass().getResource("/roborally/billeder/Gear.png"));
+
+
+                // Create ImageView for the gear image
+                ImageView gearImageView = new ImageView(gearImage);
+
+                // Set size of the ImageView
+                gearImageView.setFitWidth(SPACE_WIDTH);
+                gearImageView.setFitHeight(SPACE_HEIGHT);
+
+                // Position the gear image at the center of the space
+                gearImageView.relocate((SPACE_WIDTH - gearImage.getWidth()) / 2, (SPACE_HEIGHT - gearImage.getHeight()) / 2);
+
+                // Add gear image to children
+                this.getChildren().add(gearImageView);
             }
         }
     }
