@@ -34,6 +34,13 @@ import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.BoardFactory;
 import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -50,47 +57,29 @@ import java.util.List;
 public class LoadBoard {
 
     private static final String BOARDSFOLDER = "boards";
-    private static final String DEFAULTBOARD = "defaultboard";
     private static final String JSON_EXT = "json";
 
     public static Board loadBoard(String boardname) {
-        if (boardname == null) {
-            boardname = DEFAULTBOARD;
+        if (boardname == null || boardname.trim().isEmpty()) {
+            throw new IllegalArgumentException("Board name must not be empty.");
         }
 
         ClassLoader classLoader = LoadBoard.class.getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream(BOARDSFOLDER + "/" + boardname + "." + JSON_EXT);
+        InputStream inputStream = classLoader.getResourceAsStream("boards/" + boardname + ".json");
         if (inputStream == null) {
-            return BoardFactory.getInstance().createBoard(boardname);
+            throw new IllegalArgumentException("Board not found: " + boardname);
         }
 
-        // In simple cases, we can create a Gson object with new Gson():
-        GsonBuilder simpleBuilder = new GsonBuilder().
-                registerTypeAdapter(ActionTemplate.class, new Adapter<ActionTemplate>());
+        GsonBuilder simpleBuilder = new GsonBuilder()
+                .registerTypeAdapter(ActionTemplate.class, new Adapter<ActionTemplate>());
         Gson gson = simpleBuilder.create();
 
-        Board result;
-        JsonReader reader = null;
-        try {
-            reader = gson.newJsonReader(new InputStreamReader(inputStream));
+        try (JsonReader reader = gson.newJsonReader(new InputStreamReader(inputStream))) {
             BoardTemplate template = gson.fromJson(reader, BoardTemplate.class);
-            result = convert(template, boardname);
-            reader.close();
-            return result;
-        } catch (IOException e1) {
-            if (reader != null) {
-                try {
-                    reader.close();
-                    inputStream = null;
-                } catch (IOException e2) {}
-            }
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e2) {}
-            }
+            return convert(template, boardname);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load or parse board: " + boardname, e);
         }
-        return null;
     }
 
     private static Board convert(BoardTemplate template, String boardname) {
@@ -243,6 +232,20 @@ public class LoadBoard {
         //    field action to the corresponding action template.
 
         return null;
+    }
+
+    public static List<String> getAvailableBoards() {
+        try {
+            Path boardsFolderPath = Paths.get(LoadBoard.class.getResource("/" + BOARDSFOLDER).toURI());
+            return Files.walk(boardsFolderPath, 1)
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.toString().endsWith("." + JSON_EXT))
+                    .map(path -> path.getFileName().toString().replace("." + JSON_EXT, ""))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of(); // Return an empty list in case of an error
+        }
     }
 
 }

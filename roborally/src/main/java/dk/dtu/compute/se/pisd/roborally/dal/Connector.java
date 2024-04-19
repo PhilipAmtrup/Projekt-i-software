@@ -92,7 +92,7 @@ public class Connector {
 		}
     }
     
-    Connection getConnection() {
+    public Connection getConnection() {
     	return connection; 
     }
 

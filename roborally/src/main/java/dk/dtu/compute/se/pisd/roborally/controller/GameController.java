@@ -228,9 +228,6 @@ public class GameController {
                 // this should not happen
                 assert false;
             }
-        } else {
-            // this should not happen
-            assert false;
         }
     }
 
@@ -296,8 +293,8 @@ public class GameController {
 
 
     /**
-     * Moves the current player one space forward
-     *
+     * Moves the current player one space bakcwards
+     * @author s226870
      * @param player moves forward
      */
 
@@ -489,8 +486,6 @@ public class GameController {
             } else {
                 throw new ImpossibleMoveException(player, targetSpace, heading);
             }
-        } else {
-            throw new ImpossibleMoveException(player, targetSpace, heading);
         }
         return false;
     }
@@ -502,38 +497,7 @@ public class GameController {
             board.setPhase(Phase.GAME_OVER);
         }
     }
-
-        /**
-         * Det her burde gøre at man ikke kan gå igennem walls, men vi havde lidt problemer med at få både det og skubbe metoden sammen
-         */
-
-        /**
-        // Make sure that the target space is the correct neighbour.
-        if (board.getNeighbour(currentSpace, heading) != targetSpace) {
-            throw new ImpossibleMoveException(player, targetSpace, heading);
-        }
-
-        // Check for walls in both current and target spaces.
-        if (currentSpace.hasWall(heading) || targetSpace.hasWall(heading.opposite())) {
-            throw new ImpossibleMoveException(player, targetSpace, heading);
-        }
-
-        // Check if the target space is occupied by another player.
-        if (targetSpace.getPlayer() != null) {
-            throw new ImpossibleMoveException(player, targetSpace, heading);
-        }
-
-        // All checks passed, move the player.
-        player.setSpace(targetSpace);
-        player.setHeading(heading);
-*/
-
-    }
-
-
-
-
-
+}
 
 
     class ImpossibleMoveException extends Exception {

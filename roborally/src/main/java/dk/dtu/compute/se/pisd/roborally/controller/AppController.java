@@ -65,47 +65,70 @@ public class AppController implements Observer {
     }
 
     public void newGame() {
-        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
-        dialog.setTitle("Player number");
-        dialog.setHeaderText("Select number of players");
-        Optional<Integer> result = dialog.showAndWait();
-
-        if (result.isPresent()) {
-            if (gameController != null) {
-                if (!stopGame()) {
-                    return;
-                }
-            }
-
-
-
-            if (board == null) {
-                // display an error message or create a default board
-                board = BoardFactory.getInstance().createBoard(null);
-            }
-
-            gameController = new GameController(board);
-            int no = result.get();  // Number of players
-            int middleColumn = board.width / 2; // Calculate the middle column
-            int startColumn = middleColumn - (no / 2);  // Calculate the starting column for the leftmost player
-
-            for (int i = 0; i < no; i++) {
-                Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1), 30); // Initialize players
-                board.addPlayer(player);
-                // Set each player's space to be side by side in the top center row of the board
-                player.setSpace(board.getSpace(startColumn + i, 0));
-            }
-
-
-
-
-            // XXX: V2
-            // board.setCurrentPlayer(board.getPlayer(0));
-            gameController.startProgrammingPhase();
-
-            roboRally.createBoardView(gameController);
+        // Get available boards
+        List<String> availableBoards = LoadBoard.getAvailableBoards();
+        if (availableBoards.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No board files found!");
+            alert.showAndWait();
+            return;
         }
+
+        // Create a dialog to choose the board
+        ChoiceDialog<String> boardDialog = new ChoiceDialog<>(availableBoards.get(0), availableBoards);
+        boardDialog.setTitle("Select Board");
+        boardDialog.setHeaderText("Choose a board to play on:");
+        Optional<String> boardChoice = boardDialog.showAndWait();
+
+        if (!boardChoice.isPresent()) {
+            return; // Exit if no selection is made
+        }
+
+        // Load the selected board
+        try {
+            this.board = LoadBoard.loadBoard(boardChoice.get()); // Do not append .json; getAvailableBoards() already strips it
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error loading board: " + e.getMessage());
+            alert.showAndWait();
+            return; // Important to return here if the board could not be loaded
+        }
+
+        // Continue with player number selection
+        ChoiceDialog<Integer> playerNumberDialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
+        playerNumberDialog.setTitle("Player Number");
+        playerNumberDialog.setHeaderText("Select number of players:");
+        Optional<Integer> playerNumber = playerNumberDialog.showAndWait();
+
+        if (!playerNumber.isPresent()) {
+            return; // Exit if no selection is made
+        }
+
+        setupPlayersAndGame(playerNumber.get()); // Setup the game with the number of players
     }
+
+    private void setupPlayersAndGame(int no) {
+        if (gameController != null) {
+            if (!stopGame()) {
+                return; // Ensure current game is stopped before setting up a new one
+            }
+        }
+
+        gameController = new GameController(board);
+        int middleColumn = board.width / 2; // Calculate the middle column
+        int startColumn = middleColumn - (no / 2);  // Calculate the starting column for the leftmost player
+
+        for (int i = 0; i < no; i++) {
+            String color = PLAYER_COLORS.get(i % PLAYER_COLORS.size()); // Ensure cycling through colors
+            Player player = new Player(board, color, "Player " + (i + 1), 30);
+            board.addPlayer(player);
+            player.setSpace(board.getSpace(startColumn + i, 0)); // Assumes 0 is a valid row
+        }
+
+        gameController.startProgrammingPhase();
+        roboRally.createBoardView(gameController); // Assuming this sets up the view
+    }
+
+
+
 
     /**
      * @author s235459
