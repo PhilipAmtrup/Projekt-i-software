@@ -300,6 +300,141 @@ public class GameController {
         }
     }
 
+    /**
+     * Moves the player diagonally front right based on its heading.
+     * checks for any walls around the new space and pushes any players on the space
+     * a space front. // can still jump over walls
+     * @author Julius s235462
+     * @param player
+     */
+    public void moveDiagonalRight(Player player) {
+        // Get the current space of the player
+        Space currentSpace = player.getSpace();
+        // Determine the heading of the player
+        Heading heading = player.getHeading();
+
+        // Calculate the new coordinates based on the current space and heading
+        int newX = currentSpace.x;
+        int newY = currentSpace.y;
+        switch (heading) {
+            case NORTH:
+                newX++; // Move right
+                newY--; // Move up
+                break;
+            case EAST:
+                newX++; // Move right
+                newY++; // Move down
+                break;
+            case SOUTH:
+                newX--; // Move left
+                newY++; // Move down
+                break;
+            case WEST:
+                newX--; // Move left
+                newY--; // Move up
+                break;
+            default:
+                // Handle other cases if needed
+                break;
+        }
+
+        // Get the new space based on the calculated coordinates
+        Space newSpace = board.getSpace(newX, newY);
+        if (newSpace != null) {
+            // Check for wall conditions before attempting to move the player
+            if (newSpace.hasWall(heading.next().next()) && currentSpace.hasWall(heading) || // Wall in front of the player both on current space and in new space
+                    currentSpace.hasWall(heading.next()) && currentSpace.hasWall(heading) || // Wall to the right of the player and in front on current space
+                    newSpace.hasWall(heading.next().next()) && newSpace.hasWall(heading.prev()) || // Wall in front of the player both on new space and in the opposite direction
+                    newSpace.hasWall(heading.prev()) && currentSpace.hasWall(heading.next())) { // Wall to the left of the player and in front on new space
+                // Exit the method without executing the move
+                return;
+            }
+
+            // If the conditions are met, attempt to move the player
+            if (newSpace.getPlayer() == null) {
+                player.setSpace(newSpace); // Move the player to the next space
+                currentSpace.setPlayer(null); // Clear the player from the current space
+                newSpace.setPlayer(player);
+            } else {
+                // If the next space is occupied, attempt to push the player
+                Space spaceAfterPush = board.getNeighbour(newSpace, heading);
+                if (spaceAfterPush != null && spaceAfterPush.getPlayer() == null && !spaceAfterPush.hasWall(heading)) {
+                    try {
+                        moveToSpace(newSpace.getPlayer(), spaceAfterPush, heading);
+                        player.setSpace(newSpace); // Move the player to the next space
+                        currentSpace.setPlayer(null); // Clear the player from the current space
+                        newSpace.setPlayer(player); // Update the player's position in the new space
+                    } catch (ImpossibleMoveException e) {
+                        // Handle the exception if needed
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
+     * exactly the same as moving diagonally right except that it looks for new space
+     * dependend on the heading diffrently. and checks for walls with previus instead of next.
+     * @author Julius s235462
+     * @param player
+     */
+    public void moveDiagonalLeft(Player player) {
+        // Get the current space of the player
+        Space currentSpace = player.getSpace();
+        // Determine the heading of the player
+        Heading heading = player.getHeading();
+
+        // Calculate the new coordinates based on the current space and heading
+        int newX = currentSpace.x;
+        int newY = currentSpace.y;
+        switch (heading) {
+            case NORTH:
+                newX--; // Move left
+                newY--; // Move up
+                break;
+            case EAST:
+                newX--; // Move left
+                newY++; // Move down
+                break;
+            case SOUTH:
+                newX++; // Move right
+                newY++; // Move down
+                break;
+            case WEST:
+                newX++; // Move right
+                newY--; // Move up
+                break;
+            default:
+                // Handle other cases if needed
+                break;
+        }
+        Space newSpace = board.getSpace(newX, newY);
+        if (newSpace != null) {
+            if (!newSpace.hasWall(heading.next().next()) || !newSpace.hasWall(heading.next())) {
+                if (newSpace.getPlayer() == null) {
+                    player.setSpace(newSpace); // Move the player to the next space
+                    currentSpace.setPlayer(null); // Clear the player from the current space
+                    newSpace.setPlayer(player);
+                } else {
+                    // If the next space is occupied, attempt to push the player
+                    Space spaceAfterPush = board.getNeighbour(newSpace, heading);
+                    if (spaceAfterPush != null && spaceAfterPush.getPlayer() == null && !spaceAfterPush.hasWall(heading)) {
+                        try {
+                            moveToSpace(newSpace.getPlayer(), spaceAfterPush, heading);
+                            player.setSpace(newSpace); // Move the player to the next space
+                            currentSpace.setPlayer(null); // Clear the player from the current space
+                            newSpace.setPlayer(player); // Update the player's position in the new space
+                        } catch (ImpossibleMoveException e) {
+                            // Handle the exception if needed
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 
     /**
      * Moves the current player one space forward
