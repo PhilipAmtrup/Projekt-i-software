@@ -303,7 +303,7 @@ public class GameController {
     /**
      * Moves the player diagonally front right based on its heading.
      * checks for any walls around the new space and pushes any players on the space
-     * a space front. // can still jump over walls
+     * a space front.
      * @author Julius s235462
      * @param player
      */
@@ -371,11 +371,11 @@ public class GameController {
             }
         }
     }
-//test to see if this coomits
+
 
     /**
      * exactly the same as moving diagonally right except that it looks for new space
-     * dependend on the heading diffrently. and checks for walls with previus instead of next.
+     * dependend on the heading diffrently. and checks for walls with diffrent conditions
      * @author Julius s235462
      * @param player
      */
