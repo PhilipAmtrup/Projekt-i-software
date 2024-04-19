@@ -45,6 +45,16 @@
     },
     {
       "x": 7,
+      "y": 4,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate"
+        }
+      ]
+    },
+    {
+      "x": 7,
       "y": 5,
       "walls": ["EAST", "SOUTH"],
       "actions": [
