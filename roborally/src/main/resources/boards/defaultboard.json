@@ -54,6 +54,26 @@
       ]
     },
     {
+      "x": 9,
+      "y": 2,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate"
+        }
+      ]
+    },
+    {
+      "x": 7,
+      "y": 8,
+      "walls": ["NORTH","SOUTH"],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate"
+        }
+      ]
+    },
+    {
       "x": 7,
       "y": 5,
       "walls": ["EAST", "SOUTH"],
