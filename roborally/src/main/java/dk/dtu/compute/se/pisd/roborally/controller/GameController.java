@@ -411,6 +411,13 @@ public class GameController {
         }
         Space newSpace = board.getSpace(newX, newY);
         if (newSpace != null) {
+            if (newSpace.hasWall(heading.next().next()) && currentSpace.hasWall(heading) || // Wall in front of the player both on current space and in new space
+                    currentSpace.hasWall(heading.next()) && currentSpace.hasWall(heading) || // Wall to the right of the player and in front on current space
+                    newSpace.hasWall(heading.next().next()) && newSpace.hasWall(heading.prev()) || // Wall in front of the player both on new space and in the opposite direction
+                    newSpace.hasWall(heading.prev()) && currentSpace.hasWall(heading.next())) { // Wall to the left of the player and in front on new space
+                // Exit the method without executing the move
+                return;
+            }
             if (!newSpace.hasWall(heading.next().next()) || !newSpace.hasWall(heading.next())) {
                 if (newSpace.getPlayer() == null) {
                     player.setSpace(newSpace); // Move the player to the next space
