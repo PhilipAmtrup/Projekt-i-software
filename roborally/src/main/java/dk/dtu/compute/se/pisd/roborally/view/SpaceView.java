@@ -22,8 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 import java.util.List;
 
-import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.controller.*;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
@@ -46,11 +45,13 @@ import org.jetbrains.annotations.NotNull;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 
 
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
+
 /**
  * ...
  *
@@ -63,6 +64,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     final public static int SPACE_WIDTH = 45;  // 60; // 75;
 
     public final Space space;
+    private ImageView gearImageView;
 
 
     public SpaceView(@NotNull Space space) {
@@ -93,6 +95,7 @@ public class SpaceView extends StackPane implements ViewObserver {
          // Add the wallsPane on top of everything else, but underneath the player
          this.getChildren().add(0, wallsPane); // Add at the beginning to ensure it's under the player
 
+        this.gearImageView = new ImageView();
         // This space view should listen to changes of the space
         space.attach(this);
         update(space);
@@ -131,6 +134,33 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
     }
+
+    /**
+     * Draws gears on in the space view using a png image 45x45
+     * @author Julius s235462
+     */
+
+    private void drawGears() {
+        List<FieldAction> actions = space.getActions();
+        for(FieldAction action : actions) {
+            if(action instanceof Gear) {
+                Gear gear = (Gear) action;
+
+                // Load the gear image
+                Image gearImage = new Image(getClass().getResourceAsStream("/billeder/Gears.png"));
+
+                // Set the gear image to the ImageView
+                gearImageView.setImage(gearImage);
+
+                // Position the gear image at the center of the space
+                StackPane.setAlignment(gearImageView, Pos.CENTER);
+
+                // Add the gear image to the SpaceView
+                this.getChildren().add(gearImageView);
+            }
+        }
+    }
+
 
 /**
  * @author s230577, s235462
@@ -230,7 +260,9 @@ private void drawWalls(Pane pane, List<Heading > walls) {
 
             drawCheckpoint();
             drawConveyorBelt();
+            drawGears();
             updatePlayer();
+
 
             // Draw walls last
             Pane wallsPane = new Pane();
