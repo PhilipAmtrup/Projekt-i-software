@@ -151,7 +151,7 @@ public class AppController implements Observer {
             //this.board = BoardFactory.getInstance().createBoard("defaultboard");
             this.gameController = new GameController(this.board);
             //Player player = board.getPlayer(this.board.getPlayersNumber());
-
+/*
             for (int i = 0; i < board.getPlayersNumber(); i++) {
                 Player player =this.board.getPlayer(i);
 
@@ -160,9 +160,8 @@ public class AppController implements Observer {
                     //gameController.board.setPhase(Phase.PROGRAMMING);
                     gameController.startProgrammingPhase();
                 } else gameController.board.setPhase(Phase.INITIALISATION);
-            }
-
-            //gameController.startProgrammingPhase();
+            }*/
+            gameController.startProgrammingPhase();
 
         }
         roboRally.createBoardView(this.gameController);

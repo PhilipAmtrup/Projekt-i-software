@@ -121,6 +121,7 @@ public class GameController {
     // XXX: V2 a
 
 
+
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
@@ -286,6 +287,9 @@ public class GameController {
                 case MOVE_BACK:
                     this.moveBack(player);
                     break;
+                case U_TURN:
+                    this.uTurn(player);
+                    break;
 
                 default:
                     // DO NOTHING (for now)
@@ -313,6 +317,13 @@ public class GameController {
             }
 
         }
+    }
+    public void uTurn(@NotNull Player player) {
+
+        Heading heading = player.getHeading();
+        Heading oppositeHeading = heading.next().next();
+        player.setHeading(oppositeHeading);
+
     }
 
 

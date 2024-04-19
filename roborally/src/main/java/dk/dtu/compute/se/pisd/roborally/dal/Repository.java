@@ -323,7 +323,6 @@ public class Repository implements IRepository {
 
 		//String SQLInsertCardField = "Insert into CardFields (gameID , playerID , CardName , type) VALUES ( ? , ? , ? , ?) ";
 		Connection connection = connector.getConnection();
-
 		PreparedStatement ps = getInsertCards();
 			//ResultSet rs = ps.executeQuery();
 
@@ -424,21 +423,19 @@ public class Repository implements IRepository {
 				Player player = game.getPlayer(i);
 				for (int j = 0; j < Player.NO_CARDS; j++) {
 					CommandCardField cardField = player.getCardField(j);
-					CommandCard card = cardField.getCard();
+					String cardName = rs.getString("CardName");
 
-					//s.setInt(1, game.getGameId());
+
+					ps.setInt(1, game.getGameId());
 					//ps.setInt(2, i);
 
 					//String cardName = rs.getString("CardName");
-					cardField.setCard(card);
+					//cardField.setCard();
 				}
 			}
-			rs.updateRow();
 		}
+		rs.updateRow();
 		rs.close();
-
-
-
 	}
 
 
@@ -581,7 +578,7 @@ public class Repository implements IRepository {
 
 
 	private static final String SQL_SELECT_CARDS_ORD =
-			"SELECT * FROM CardFields WHERE gameID = ? ORDER BY CardName ASC";
+			"SELECT * FROM CardFields WHERE gameID = ? ORDER BY playerID ASC";
 	private PreparedStatement select_cards_ord_stmt = null;
 
 	private PreparedStatement getSelectCardsOrdStatement() {
@@ -652,6 +649,7 @@ public class Repository implements IRepository {
 						SQL_UPDATE_CARD);
 			} catch (SQLException e) {
 				e.printStackTrace();
+				System.out.println("En fejl ved opdatering af kortenes egenskaber");
 			}
 		}
 		return update_cards;

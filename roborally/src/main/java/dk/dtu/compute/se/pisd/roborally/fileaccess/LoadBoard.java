@@ -25,14 +25,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import dk.dtu.compute.se.pisd.roborally.controller.*;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.model.*;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
-import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
-import dk.dtu.compute.se.pisd.roborally.controller.AppController;
-import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.controller.BoardFactory;
-import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 
 
 import java.io.FileWriter;
@@ -136,6 +132,10 @@ public class LoadBoard {
             CheckPointTemplate template = (CheckPointTemplate) actionTemplate;
             CheckPoint checkPoint = new CheckPoint(template.number, template.last);
             return checkPoint;
+        } else if (actionTemplate instanceof LaserTemplate){
+            LaserTemplate template = (LaserTemplate) actionTemplate;
+            Laser laser = new Laser(template.x , template.y, template.reduceHealth);
+            return laser;
         }
         // else if ...
         // XXX if new field actions are added, the corresponding templates
@@ -236,7 +236,13 @@ public class LoadBoard {
             ConveyorBeltTemplate conveyorBeltTemplate = new ConveyorBeltTemplate();
             conveyorBeltTemplate.heading = conveyorBelt.getHeading();
             return conveyorBeltTemplate;
-        } // else if ...
+        } else if (action instanceof Laser) {
+            Laser laser = (Laser) action;
+            LaserTemplate laserTemplate = new LaserTemplate(laser.getX() , laser.getY(), 10);
+
+            return laserTemplate;
+        }
+        // else if ...
         // XXX if new field actions are added, the corresponding templates
         //     need to be added to the model subpackage of fileaccess and
         //     the else statement must be extended for converting the

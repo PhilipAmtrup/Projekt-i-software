@@ -22,8 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 import java.util.List;
 
-import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.controller.*;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
@@ -50,7 +49,7 @@ import javafx.scene.text.FontWeight;
 
 
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
+
 /**
  * ...
  *
@@ -192,6 +191,28 @@ private void drawWalls(Pane pane, List<Heading > walls) {
         }
     }
 
+    private void drawLaser(){
+    List<FieldAction> actions = space.getActions();
+    for(FieldAction action : actions) {
+        if(action instanceof Laser) {
+            getChildren().removeIf(node -> node instanceof Line && "laser".equals(node.getUserData()));
+
+            Laser laser = (Laser) action;
+
+            int x = laser.getX();
+            int y = laser.getY();
+            Line line = new Line(SPACE_WIDTH / 2 , SPACE_HEIGHT / 2 , SPACE_WIDTH, SPACE_HEIGHT);
+
+            line.setStroke(Color.RED);
+            Player player = space.getPlayer();
+            if(player != null) {
+                player.reduceHealth(laser.getReduceHealth());
+            }
+            getChildren().add(line);
+        }
+    }
+    }
+
     private void drawCheckpoint() {
         List<FieldAction> actions = space.getActions();
         for (FieldAction action : actions) {
@@ -230,6 +251,7 @@ private void drawWalls(Pane pane, List<Heading > walls) {
 
             drawCheckpoint();
             drawConveyorBelt();
+            drawLaser();
             updatePlayer();
 
             // Draw walls last

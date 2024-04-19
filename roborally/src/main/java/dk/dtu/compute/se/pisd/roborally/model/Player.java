@@ -113,6 +113,9 @@ public class Player extends Subject {
             space.playerChanged();
         }
     }
+    public void reduceHealth(int amount) {
+        this.health -= amount;
+    }
 
     /**
      * @author s230577
