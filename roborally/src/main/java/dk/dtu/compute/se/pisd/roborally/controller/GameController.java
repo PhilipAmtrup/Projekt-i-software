@@ -286,6 +286,12 @@ public class GameController {
                 case MOVE_BACK:
                     this.moveBack(player);
                     break;
+                case FRONT_RIGHT:
+                    this.moveDiagonalRight(player);
+                    break;
+                case FRONT_LEFT:
+                    this.moveDiagonalLeft(player);
+                    break;
 
                 default:
                     // DO NOTHING (for now)
