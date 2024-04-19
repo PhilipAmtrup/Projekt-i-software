@@ -371,7 +371,7 @@ public class GameController {
             }
         }
     }
-
+//test to see if this coomits
 
     /**
      * exactly the same as moving diagonally right except that it looks for new space
