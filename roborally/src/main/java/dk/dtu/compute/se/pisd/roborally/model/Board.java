@@ -44,7 +44,7 @@ public class Board extends Subject {
 
     public final int height;
 
-    public final String boardName;
+    public String boardName;
 
     private Integer gameId;
 
@@ -60,6 +60,7 @@ public class Board extends Subject {
 
     private boolean stepMode;
     private int health;
+
 
     /* 
      * counter for the number of moves (but only for assigment v1)
@@ -322,6 +323,14 @@ private void addCheckPoints() {
         
     }
 
+    public void setBoardName(String boardName) {
+        this.boardName = boardName;
+    }
+
+    // Method to get the board name
+    public String getBoardName() {
+        return this.boardName;
+    }
     
     
 

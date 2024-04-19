@@ -85,7 +85,8 @@ public class AppController implements Observer {
 
         // Load the selected board
         try {
-            this.board = LoadBoard.loadBoard(boardChoice.get()); // Do not append .json; getAvailableBoards() already strips it
+            this.board = LoadBoard.loadBoard(boardChoice.get());// Do not append .json; getAvailableBoards() already strips it
+            this.board.setBoardName(boardChoice.get());
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error loading board: " + e.getMessage());
             alert.showAndWait();
@@ -174,6 +175,7 @@ public class AppController implements Observer {
             //this.board = BoardFactory.getInstance().createBoard("defaultboard");
             this.gameController = new GameController(this.board);
             //Player player = board.getPlayer(this.board.getPlayersNumber());
+            roboRally.createBoardView(this.gameController);
 
             for (int i = 0; i < board.getPlayersNumber(); i++) {
                 Player player =this.board.getPlayer(i);

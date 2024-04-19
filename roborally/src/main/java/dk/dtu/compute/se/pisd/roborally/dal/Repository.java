@@ -92,7 +92,7 @@ public class Repository implements IRepository {
 				ps.setNull(2, Types.TINYINT); // game.getPlayerNumber(game.getCurrentPlayer())); is inserted after players!
 				ps.setInt(3, game.getPhase().ordinal());
 				ps.setInt(4, game.getStep());
-
+				ps.setString(5, game.getBoardName());
 				// If you have a foreign key constraint for current players,
 				// the check would need to be temporarily disabled, since
 				// MySQL does not have a per transaction validation, but
@@ -222,7 +222,9 @@ public class Repository implements IRepository {
 				//      in the database, and load the corresponding board from the
 				//      JSON file. For now, we use the default game board.
 
-				game = LoadBoard.loadBoard("defaultboard");
+				String boardName = rs.getString("board_name");
+				game = LoadBoard.loadBoard(boardName); // Load the specific board
+				game.setBoardName(boardName);
 
 				if (game == null) {
 					return null;
@@ -517,7 +519,7 @@ public class Repository implements IRepository {
 	}
 
 	private static final String SQL_INSERT_GAME =
-			"INSERT INTO Game(name, currentPlayer, phase, step) VALUES (?, ?, ?, ?)";
+			"INSERT INTO Game(name, currentPlayer, phase, step, board_name) VALUES (?, ?, ?, ?, ?)";
 
 	private PreparedStatement insert_game_stmt = null;
 
