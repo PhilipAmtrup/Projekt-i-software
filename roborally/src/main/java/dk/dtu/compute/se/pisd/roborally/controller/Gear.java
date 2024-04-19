@@ -17,5 +17,4 @@ public class Gear extends FieldAction {
         }
         return false;
     }
-
 }

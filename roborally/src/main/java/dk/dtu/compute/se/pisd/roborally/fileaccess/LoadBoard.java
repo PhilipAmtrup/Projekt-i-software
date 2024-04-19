@@ -33,6 +33,7 @@ import dk.dtu.compute.se.pisd.roborally.controller.AppController;
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.BoardFactory;
 import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
+import dk.dtu.compute.se.pisd.roborally.controller.Gear;
 
 
 import java.io.FileWriter;
@@ -136,6 +137,10 @@ public class LoadBoard {
             CheckPointTemplate template = (CheckPointTemplate) actionTemplate;
             CheckPoint checkPoint = new CheckPoint(template.number, template.last);
             return checkPoint;
+        } else if(actionTemplate instanceof GearTemplate) {
+            GearTemplate template = (GearTemplate) actionTemplate;
+            Gear gear = new Gear();
+            return gear;
         }
         // else if ...
         // XXX if new field actions are added, the corresponding templates
@@ -236,7 +241,13 @@ public class LoadBoard {
             ConveyorBeltTemplate conveyorBeltTemplate = new ConveyorBeltTemplate();
             conveyorBeltTemplate.heading = conveyorBelt.getHeading();
             return conveyorBeltTemplate;
-        } // else if ...
+        } else if (action instanceof Gear) {
+            // Convert Gear action to GearTemplate
+            GearTemplate gearTemplate = new GearTemplate();
+            return gearTemplate;
+        }
+
+        // else if ...
         // XXX if new field actions are added, the corresponding templates
         //     need to be added to the model subpackage of fileaccess and
         //     the else statement must be extended for converting the
