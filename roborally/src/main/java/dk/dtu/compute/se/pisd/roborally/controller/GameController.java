@@ -511,7 +511,7 @@ public class GameController {
      */
 
     // TODO Assignment V2
-    public void turnRight(@NotNull Player player) {
+    public static void turnRight(@NotNull Player player) {
         Heading heading = player.getHeading();
         Heading nextHeading = heading.next();
         player.setHeading(nextHeading);

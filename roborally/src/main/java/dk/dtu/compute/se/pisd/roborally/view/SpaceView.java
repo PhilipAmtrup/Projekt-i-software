@@ -26,13 +26,8 @@ import dk.dtu.compute.se.pisd.roborally.controller.*;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
-import javafx.geometry.Pos;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -40,7 +35,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
@@ -146,11 +140,8 @@ public class SpaceView extends StackPane implements ViewObserver {
             if(action instanceof Gear) {
                 Gear gear = (Gear) action;
 
-                // Load gear image
-                Image gearImage = new Image(getClass().getResource("/roborally/billeder/Gear.png"));
+                Image gearImage = new Image("Gear.png");
 
-
-                // Create ImageView for the gear image
                 ImageView gearImageView = new ImageView(gearImage);
 
                 // Set size of the ImageView
@@ -160,7 +151,7 @@ public class SpaceView extends StackPane implements ViewObserver {
                 // Position the gear image at the center of the space
                 gearImageView.relocate((SPACE_WIDTH - gearImage.getWidth()) / 2, (SPACE_HEIGHT - gearImage.getHeight()) / 2);
 
-                // Add gear image to children
+                // Add gear image
                 this.getChildren().add(gearImageView);
             }
         }
