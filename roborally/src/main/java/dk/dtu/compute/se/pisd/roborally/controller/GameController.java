@@ -75,7 +75,7 @@ public class GameController {
         //     board.setCurrentPlayer(next);
 
         //     // fortæller hvor mange gange man har rykket
-        //     
+        //
         // }
     }
 
@@ -295,22 +295,43 @@ public class GameController {
     /**
      * Moves the current player one space bakcwards
      * @author s226870
-     * @param player moves forward
+     * @param player moves backwards
      */
 
-    // TODO Assignment V2
+
     public void moveBack(@NotNull Player player) {
         Space space = player.getSpace();
         if (space != null) {
             Heading heading = player.getHeading();
-            Heading oppositeHeading = heading.next().next();
+            Heading oppositeHeading = heading.next().next(); // Get the opposite direction
             Space newSpace = board.getNeighbour(space, oppositeHeading);
-            if (newSpace != null && newSpace.getPlayer() == null) {
-                newSpace.setPlayer(player);
-            }
 
+            if (newSpace != null) {
+                // Check if there is a wall blocking the movement back
+                if (!space.hasWall(oppositeHeading) && !newSpace.hasWall(oppositeHeading.next().next())) {
+                    Player otherPlayer = newSpace.getPlayer();
+                    if (otherPlayer == null) {
+                        // If the new space is empty, move the player there
+                        newSpace.setPlayer(player);
+                        space.setPlayer(null);
+                        player.setSpace(newSpace);
+                    } else {
+                        // Attempt to push the other player back
+                        Space spaceBehindNew = board.getNeighbour(newSpace, oppositeHeading);
+                        if (spaceBehindNew != null && !newSpace.hasWall(oppositeHeading) && !spaceBehindNew.hasWall(oppositeHeading.next().next()) && spaceBehindNew.getPlayer() == null) {
+                            // Move the other player back if there is no wall and the space is empty
+                            spaceBehindNew.setPlayer(otherPlayer);
+                            newSpace.setPlayer(player);
+                            space.setPlayer(null);
+                            player.setSpace(newSpace);
+                            otherPlayer.setSpace(spaceBehindNew);
+                        }
+                    }
+                }
+            }
         }
     }
+
 
 
     /**
