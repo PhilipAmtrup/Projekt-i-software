@@ -223,7 +223,7 @@ public class LoadBoard {
         return result;
     }
 
-    private static List<ActionTemplate> convertToTemplate(List<FieldAction> actions) {
+    private List<ActionTemplate> convertToTemplate(List<FieldAction> actions) {
         List<ActionTemplate> result = new ArrayList<>();
 
         for (FieldAction action: actions) {
