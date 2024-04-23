@@ -127,6 +127,21 @@
       ]
     },
     {
+      "x": 13,
+      "y": 5,
+      "walls": ["EAST", "WEST"],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.LaserTemplate",
+          "INSTANCE": {
+            "x": 13,
+            "y": 5,
+            "reduceHealth": 10
+          }
+        }
+      ]
+    },
+    {
       "x": 4,
       "y": 3,
       "walls": ["SOUTH", "EAST", "WEST"],
@@ -137,6 +152,36 @@
             "x" : 4,
             "y" : 3,
             "reduceHealth" : 10
+          }
+        }
+      ]
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "walls": ["SOUTH"],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.LaserTemplate",
+          "INSTANCE" : {
+            "x": 5,
+            "y": 4,
+            "reduceHealth" : 10
+          }
+        }
+      ]
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.LaserTemplate",
+          "INSTANCE": {
+            "x": 6,
+            "y": 4,
+            "reduceHealth": 10
           }
         }
       ]

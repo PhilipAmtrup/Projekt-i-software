@@ -192,25 +192,26 @@ private void drawWalls(Pane pane, List<Heading > walls) {
     }
 
     private void drawLaser(){
-    List<FieldAction> actions = space.getActions();
-    for(FieldAction action : actions) {
-        if(action instanceof Laser) {
-            getChildren().removeIf(node -> node instanceof Line && "laser".equals(node.getUserData()));
+        List<FieldAction> actions = space.getActions();
+        for(FieldAction action : actions) {
+            if(action instanceof Laser) {
+                getChildren().removeIf(node -> node instanceof Line && "laser".equals(node.getUserData()));
 
-            Laser laser = (Laser) action;
+                Laser laser = (Laser) action;
 
-            int x = laser.getX();
-            int y = laser.getY();
-            Line line = new Line(SPACE_WIDTH / 2 , SPACE_HEIGHT / 2 , SPACE_WIDTH, SPACE_HEIGHT);
+                int x = laser.getX();
+                int y = laser.getY();
 
-            line.setStroke(Color.RED);
-            Player player = space.getPlayer();
-            if(player != null) {
-                player.reduceHealth(laser.getReduceHealth());
+                Line line = new Line(x-SPACE_WIDTH / 2 , y  , x+SPACE_WIDTH / 2, y);
+
+                line.setStroke(Color.RED);
+                Player player = space.getPlayer();
+                if(player != null) {
+                    player.reduceHealth(laser.getReduceHealth());
+                }
+                getChildren().add(line);
             }
-            getChildren().add(line);
         }
-    }
     }
 
     private void drawCheckpoint() {
