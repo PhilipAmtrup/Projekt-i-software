@@ -5,19 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b33b757-db36-4148-911e-6cc21a43cf0e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/roborally/src/main/resources/Gear.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/billeder/Gear.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/Gear.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/Gear.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/fileaccess/LoadBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/fileaccess/LoadBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/fileaccess/model/GearTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/fileaccess/model/GearTemplate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Heading.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Heading.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/view/SpaceView.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/view/SpaceView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/controller/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/controller/GameController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/controller/Gear.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/fileaccess/LoadBoard.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/model/Heading.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/view/SpaceView$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/view/SpaceView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/model/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/model/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/model/CommandCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/model/CommandCard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/model/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/model/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/view/CardFieldView.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/view/CardFieldView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/view/PlayerView.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/view/PlayerView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/module-info.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,7 +183,7 @@
       <workItem from="1713175913336" duration="15822000" />
       <workItem from="1713198571026" duration="1522000" />
       <workItem from="1713259364167" duration="724000" />
-      <workItem from="1713876115551" duration="3801000" />
+      <workItem from="1713876115551" duration="7024000" />
     </task>
     <servers />
   </component>

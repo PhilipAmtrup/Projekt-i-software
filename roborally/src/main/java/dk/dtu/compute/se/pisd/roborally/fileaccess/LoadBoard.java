@@ -139,7 +139,8 @@ public class LoadBoard {
             return checkPoint;
         } else if(actionTemplate instanceof GearTemplate) {
             GearTemplate template = (GearTemplate) actionTemplate;
-            Gear gear = new Gear(template.x, template.y);
+            Gear gear = new Gear();
+            gear.setDirection(template.direction);
             return gear;
         }
         // else if ...
@@ -235,7 +236,7 @@ public class LoadBoard {
         return result;
     }
 
-    private static ActionTemplate convertToTemplate(FieldAction action) {
+    private ActionTemplate convertToTemplate(FieldAction action) {
         if (action instanceof ConveyorBelt) {
             ConveyorBelt conveyorBelt = (ConveyorBelt) action;
             ConveyorBeltTemplate conveyorBeltTemplate = new ConveyorBeltTemplate();
@@ -243,8 +244,8 @@ public class LoadBoard {
             return conveyorBeltTemplate;
         } else if (action instanceof Gear) {
             Gear gear = (Gear) action;
-            // Convert Gear action to GearTemplate with specific coordinates
-            GearTemplate gearTemplate = new GearTemplate(gear.getX(), gear.getY());
+            GearTemplate gearTemplate = new GearTemplate();
+            GearTemplate.direction = gear.getDirection();
             return gearTemplate;
         }
 
