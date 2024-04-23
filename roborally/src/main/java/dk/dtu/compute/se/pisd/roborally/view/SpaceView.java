@@ -26,8 +26,15 @@ import dk.dtu.compute.se.pisd.roborally.controller.*;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import javafx.geometry.Pos;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -35,12 +42,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 
 
@@ -58,7 +64,6 @@ public class SpaceView extends StackPane implements ViewObserver {
     final public static int SPACE_WIDTH = 45;  // 60; // 75;
 
     public final Space space;
-    private ImageView gearImageView;
 
 
     public SpaceView(@NotNull Space space) {
@@ -89,7 +94,6 @@ public class SpaceView extends StackPane implements ViewObserver {
          // Add the wallsPane on top of everything else, but underneath the player
          this.getChildren().add(0, wallsPane); // Add at the beginning to ensure it's under the player
 
-        this.gearImageView = new ImageView();
         // This space view should listen to changes of the space
         space.attach(this);
         update(space);
@@ -129,42 +133,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-    /**
-     * Draws gears on in the space view using a png image 45x45
-     * @author Julius s235462
-     */
-
-    private void drawGears() {
-        List<FieldAction> actions = space.getActions();
-        for(FieldAction action : actions) {
-            if(action instanceof Gear) {
-                Gear gear = (Gear) action;
-
-                String direction = gear.getDirection();
-                Image gearImage = new Image("GearRight.png");
-                switch (direction) {
-                    case "Right":
-                        gearImage = new Image("GearRight.png");
-                        break;
-                    case "Left":
-                        gearImage = new Image("GearLeft.png");
-                        break;
-                }
-
-                ImageView gearImageView = new ImageView();
-
-                gearImageView.setFitWidth(SPACE_WIDTH);
-                gearImageView.setFitHeight(SPACE_HEIGHT);
-
-                gearImageView.relocate((SPACE_WIDTH - gearImage.getWidth()) / 2, (SPACE_HEIGHT - gearImage.getHeight()) / 2);
-
-
-                this.getChildren().add(gearImageView);
-            }
-        }
-    }
-
-
 /**
  * @author s230577, s235462
  * Visuals of the walls and their position on a space
@@ -203,6 +171,44 @@ private void drawWalls(Pane pane, List<Heading > walls) {
         pane.getChildren().add(line);
     }
 }
+
+    /**
+     * Metode som tegner gears left og right med billeder.
+     * @author Julius s235462
+     */
+    private void drawGears() {
+        List<FieldAction> actions = space.getActions();
+        for(FieldAction action : actions) {
+            if(action instanceof Gear) {
+                Gear gear = (Gear) action;
+
+                String direction = gear.getDirection();
+                Image gearImage;
+
+                switch (direction) {
+                    case "Right":
+                        gearImage = new Image("GearRight.png");
+                        break;
+                    case "Left":
+                        gearImage = new Image("GearLeft.png");
+                        break;
+                }
+
+                ImageView gearImageView = new ImageView(gearImage);
+
+                // Set size of the ImageView
+                gearImageView.setFitWidth(SPACE_WIDTH);
+                gearImageView.setFitHeight(SPACE_HEIGHT);
+
+                // Position the gear image at the center of the space
+                gearImageView.relocate((SPACE_WIDTH - gearImage.getWidth()) / 2, (SPACE_HEIGHT - gearImage.getHeight()) / 2);
+
+                // Add gear image
+                this.getChildren().add(gearImageView);
+            }
+        }
+    }
+
 
     private void updatePlayer() {
         // Remove only player visuals if they exist
@@ -265,7 +271,6 @@ private void drawWalls(Pane pane, List<Heading > walls) {
             drawConveyorBelt();
             drawGears();
             updatePlayer();
-
 
             // Draw walls last
             Pane wallsPane = new Pane();

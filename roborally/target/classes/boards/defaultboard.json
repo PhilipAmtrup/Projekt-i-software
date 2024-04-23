@@ -70,6 +70,19 @@
       ]
     },
     {
+      "x": 3,
+      "y": 8,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
+          "INSTANCE": {
+            "direction": "Left"
+          }
+        }
+      ]
+    },
+    {
       "x": 7,
       "y": 5,
       "walls": ["EAST", "SOUTH"],

@@ -5,19 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b33b757-db36-4148-911e-6cc21a43cf0e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/roborally/src/main/resources/GearLeft.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/roborally/src/main/resources/GearRight.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/fileaccess/LoadBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/fileaccess/LoadBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/fileaccess/model/GearTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/fileaccess/model/GearTemplate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/view/SpaceView.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/view/SpaceView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/resources/Gear.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/resources/boards/defaultboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/resources/boards/defaultboard.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/target/classes/Gear.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/roborally/target/classes/boards/defaultboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/boards/defaultboard.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/controller/Gear.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/controller/Gear.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/fileaccess/LoadBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/fileaccess/LoadBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/fileaccess/model/GearTemplate.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/fileaccess/model/GearTemplate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/view/SpaceView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/view/SpaceView$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/view/SpaceView.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/view/SpaceView.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -184,7 +175,7 @@
       <workItem from="1713175913336" duration="15822000" />
       <workItem from="1713198571026" duration="1522000" />
       <workItem from="1713259364167" duration="724000" />
-      <workItem from="1713876115551" duration="10329000" />
+      <workItem from="1713876115551" duration="12252000" />
     </task>
     <servers />
   </component>
