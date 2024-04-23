@@ -41,6 +41,7 @@ public enum Command {
     FAST_FORWARD("Fast Fwd"),
     MOVE_BACK("Move Back"),
     U_TURN("U Turn"),
+    SHOOT_LASER("SHOOT LASER"),
 
     // XXX Assignment V3 (step 1)
     OPTION_LEFT_RIGHT("Left OR Right", LEFT, RIGHT);

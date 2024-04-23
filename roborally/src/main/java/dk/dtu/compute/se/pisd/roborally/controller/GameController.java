@@ -290,6 +290,9 @@ public class GameController {
                 case U_TURN:
                     this.uTurn(player);
                     break;
+                case SHOOT_LASER:
+                    this.shootLaser(player);
+                    break;
 
                 default:
                     // DO NOTHING (for now)
@@ -475,6 +478,28 @@ public class GameController {
                 }
             }
         }
+    }
+
+    public void shootLaser(@NotNull Player player ){
+        Space space = player.getSpace();
+        Heading heading = player.getHeading();
+
+        Space nextSpace = board.getNeighbour(space, heading);
+        Space nextnextSpace = board.getNeighbour(nextSpace, heading);
+
+        Player shootingPlayer = space.getPlayer();
+        Player nextSpacePlayer = (nextSpace != null) ? nextSpace.getPlayer() : null;
+        Player nextnextSpacePlayer = (nextnextSpace != null) ? nextnextSpace.getPlayer() : null;
+
+
+        if (nextSpacePlayer != null) {
+            nextSpacePlayer.reduceHealth(10);
+
+        }
+        if (nextnextSpacePlayer != null) {
+            nextnextSpacePlayer.reduceHealth(5);
+        }
+
     }
 
 
