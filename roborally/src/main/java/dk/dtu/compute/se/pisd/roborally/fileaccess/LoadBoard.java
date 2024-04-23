@@ -223,7 +223,7 @@ public class LoadBoard {
         return result;
     }
 
-    private List<ActionTemplate> convertToTemplate(List<FieldAction> actions) {
+    private static List<ActionTemplate> convertToTemplate(List<FieldAction> actions) {
         List<ActionTemplate> result = new ArrayList<>();
 
         for (FieldAction action: actions) {
@@ -236,7 +236,7 @@ public class LoadBoard {
         return result;
     }
 
-    private ActionTemplate convertToTemplate(FieldAction action) {
+    private static ActionTemplate convertToTemplate(FieldAction action) {
         if (action instanceof ConveyorBelt) {
             ConveyorBelt conveyorBelt = (ConveyorBelt) action;
             ConveyorBeltTemplate conveyorBeltTemplate = new ConveyorBeltTemplate();

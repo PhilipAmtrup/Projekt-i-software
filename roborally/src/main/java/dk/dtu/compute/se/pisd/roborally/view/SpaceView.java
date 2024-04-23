@@ -140,18 +140,25 @@ public class SpaceView extends StackPane implements ViewObserver {
             if(action instanceof Gear) {
                 Gear gear = (Gear) action;
 
-                Image gearImage = new Image("Gear.png");
+                String direction = gear.getDirection();
+                Image gearImage = new Image("GearRight.png");
+                switch (direction) {
+                    case "Right":
+                        gearImage = new Image("GearRight.png");
+                        break;
+                    case "Left":
+                        gearImage = new Image("GearLeft.png");
+                        break;
+                }
 
-                ImageView gearImageView = new ImageView(gearImage);
+                ImageView gearImageView = new ImageView();
 
-                // Set size of the ImageView
                 gearImageView.setFitWidth(SPACE_WIDTH);
                 gearImageView.setFitHeight(SPACE_HEIGHT);
 
-                // Position the gear image at the center of the space
                 gearImageView.relocate((SPACE_WIDTH - gearImage.getWidth()) / 2, (SPACE_HEIGHT - gearImage.getHeight()) / 2);
 
-                // Add gear image
+
                 this.getChildren().add(gearImageView);
             }
         }

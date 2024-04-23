@@ -64,7 +64,20 @@
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
           "INSTANCE": {
-           "direction": "Right"
+           "direction": "Left"
+          }
+        }
+      ]
+    },
+    {
+      "x": 3,
+      "y": 8,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
+          "INSTANCE": {
+            "direction": "Left"
           }
         }
       ]

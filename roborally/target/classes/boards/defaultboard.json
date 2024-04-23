@@ -51,8 +51,7 @@
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
           "INSTANCE": {
-            "x": 7,
-            "y": 4
+            "direction": "Right"
           }
         }
       ]
@@ -65,8 +64,7 @@
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
           "INSTANCE": {
-            "x": 9,
-            "y": 2
+           "direction": "Left"
           }
         }
       ]
