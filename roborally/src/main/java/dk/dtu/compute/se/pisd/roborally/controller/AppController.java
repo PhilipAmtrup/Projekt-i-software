@@ -64,6 +64,14 @@ public class AppController implements Observer {
         this.roboRally = roboRally;
     }
 
+    /**
+     * Denne method starter et nyt spil i starten når man trykker "new game".
+     * Man har derefter mulighed for at vælge hvilket board man vil spille på gennem choicedialog og metoden "getAvailableBoards();"
+     * Efter boarded er valgt, vælger man antal spillere, gennem choicedialog også.
+     * Når man har gået disse trin igennem, starter spillet med metoden setupPlayersAndGame();
+     * @author s226870
+     * @return Start af nyt spil
+     */
     public void newGame() {
         // Get available boards
         List<String> availableBoards = LoadBoard.getAvailableBoards();
@@ -112,6 +120,8 @@ public class AppController implements Observer {
                 return; // Ensure current game is stopped before setting up a new one
             }
         }
+
+
 
         gameController = new GameController(board);
         int middleColumn = board.width / 2; // Calculate the middle column
