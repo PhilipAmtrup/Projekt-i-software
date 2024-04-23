@@ -480,6 +480,12 @@ public class GameController {
         }
     }
 
+    /**
+     * Makes it possible to shoot laser and damage a player up to two spaces away from the shooter.
+     * @author s235459
+     * @param player
+     */
+
     public void shootLaser(@NotNull Player player ){
         Space space = player.getSpace();
         Heading heading = player.getHeading();
