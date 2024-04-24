@@ -183,16 +183,8 @@ private void drawWalls(Pane pane, List<Heading > walls) {
                 Gear gear = (Gear) action;
 
                 String direction = gear.getDirection();
-                Image gearImage;
+                Image gearImage = new Image("GearRight.png");
 
-                switch (direction) {
-                    case "Right":
-                        gearImage = new Image("GearRight.png");
-                        break;
-                    case "Left":
-                        gearImage = new Image("GearLeft.png");
-                        break;
-                }
 
                 ImageView gearImageView = new ImageView(gearImage);
 
