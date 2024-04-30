@@ -101,6 +101,8 @@ public class CheckPoint extends FieldAction {
         Player player = space.getPlayer();
         if (player != null && this.getNumber() == player.getCurrentCheckpoint() + 1) {
             player.setCurrentCheckpoint(this.getNumber());
+            // Check for win condition after each move
+            gameController.checkForWinCondition(player);
             return true;
         }
         return false;

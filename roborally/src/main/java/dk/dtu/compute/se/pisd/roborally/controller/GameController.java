@@ -23,6 +23,12 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.jetbrains.annotations.NotNull;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * ...
@@ -55,7 +61,8 @@ public class GameController {
         //     message needs to be implemented at another place)
 
 
-        // tekst skrevet i undervisningen
+        // Dette her skal slettes inden vi aflevere!!
+        // Undtagen board.setCounter(board.getCounter() + 1); (dette er counteren)
 
         Player current = board.getCurrentPlayer();
         if (current != null && space.getPlayer() == null) {
@@ -287,7 +294,6 @@ public class GameController {
                 default:
                     // DO NOTHING (for now)
             }
-            checkForWinCondition(player);
         }
     }
 
@@ -510,11 +516,21 @@ public class GameController {
         }
         return false;
     }
+
+    // To be able to show an alert when a player has reached all the checkpoints
+    private void showAlert(AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     public void checkForWinCondition(Player player) {
         int totalCheckpoints = board.totalCheckpoints();
         if (player.getCurrentCheckpoint() == totalCheckpoints) {
-            System.out.println("Player " + player.getName() + " has won the game!");
-            // Set the game phase to GAME_OVER
+            String message = "Congratulations " + player.getName() + "! \nYou have successfully collected all the checkpoints." + "\nYou have won the game!";
+            showAlert(AlertType.INFORMATION, "Game Over", message);
             board.setPhase(Phase.GAME_OVER);
         }
     }
