@@ -29,6 +29,7 @@ import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import javafx.animation.*;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -47,8 +48,8 @@ import org.jetbrains.annotations.NotNull;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.animation.RotateTransition;
 import javafx.util.Duration;
+import javafx.animation.Timeline;
 
 
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
@@ -266,6 +267,17 @@ private void drawWalls(Pane pane, List<Heading > walls) {
                 Circle checkpointVisual = new Circle(centerX, centerY, 15);
                 checkpointVisual.setFill(Color.TURQUOISE);
                 checkpointVisual.setUserData("checkpoint");  // Tag this node as "checkpoint"
+
+
+                // make checkpoint move in and out
+                ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(1), checkpointVisual);
+                scaleTransition.setAutoReverse(true);
+                scaleTransition.setCycleCount(ScaleTransition.INDEFINITE);
+                scaleTransition.setFromX(1.0);
+                scaleTransition.setToX(1.1);
+                scaleTransition.setFromY(1.0);
+                scaleTransition.setToY(1.1);
+                scaleTransition.play();
 
                 int number = ((CheckPoint) action).getNumber();
                 Text numberText = new Text(Integer.toString(number));
