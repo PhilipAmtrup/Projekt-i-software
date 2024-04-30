@@ -39,10 +39,14 @@ CREATE TABLE IF NOT EXISTS Player (
 CREATE TABLE IF NOT EXISTS CardFields (
     gameID int NOT NULL,
     playerID tinyint NOT NULL,
+
+    cardType tinyint NOT NULL,
+    position tinyint NOT NULL,
+
     CardName varchar(255),
 
 
-    PRIMARY KEY (gameID , playerID , CardName),
+    PRIMARY KEY (gameID , playerID , cardType, position),
     FOREIGN KEY (gameID , playerID) REFERENCES Player(gameID , playerID)
 
 );;
