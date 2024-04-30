@@ -182,9 +182,9 @@ private void drawWalls(Pane pane, List<Heading > walls) {
             if(action instanceof Gear) {
                 Gear gear = (Gear) action;
 
-                    gear.getIsClockWise();
+                   boolean isClockWise = gear.getIsClockWise();
 
-                if (gear.isClockWise) {
+                if (isClockWise) {
                     Image gearImage = new Image("GearRight.png");
 
                     ImageView gearImageView = new ImageView(gearImage);

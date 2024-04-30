@@ -245,7 +245,7 @@ public class LoadBoard {
         } else if (action instanceof Gear) {
             Gear gear = (Gear) action;
             GearTemplate gearTemplate = new GearTemplate();
-            GearTemplate.isClockWise = gear.getIsClockWise();
+            gearTemplate.setIsClockWise(gear.getIsClockWise());
             return gearTemplate;
         }
 

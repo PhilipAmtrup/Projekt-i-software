@@ -5,5 +5,14 @@ package dk.dtu.compute.se.pisd.roborally.fileaccess.model;
  */
 
 public class GearTemplate extends ActionTemplate {
-    public static boolean isClockWise;
+    public boolean isClockWise;
+
+    public void setIsClockWise(boolean isClockWise) {
+        this.isClockWise = isClockWise;
     }
+
+    public boolean getIsClockWise() {
+        return isClockWise;
+    }
+
+}
