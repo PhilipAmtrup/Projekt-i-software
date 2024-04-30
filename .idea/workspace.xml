@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0b33b757-db36-4148-911e-6cc21a43cf0e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/resources/boards/defaultboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/resources/boards/defaultboard.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/target/classes/boards/defaultboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/boards/defaultboard.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/view/SpaceView.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/view/SpaceView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/view/SpaceView.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/view/SpaceView.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +175,7 @@
       <workItem from="1713259364167" duration="724000" />
       <workItem from="1713876115551" duration="12756000" />
       <workItem from="1713958096147" duration="2800000" />
-      <workItem from="1714466254449" duration="6222000" />
+      <workItem from="1714466254449" duration="7579000" />
     </task>
     <servers />
   </component>

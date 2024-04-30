@@ -47,7 +47,8 @@ import org.jetbrains.annotations.NotNull;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
+import javafx.animation.RotateTransition;
+import javafx.util.Duration;
 
 
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
@@ -198,6 +199,12 @@ private void drawWalls(Pane pane, List<Heading > walls) {
 
                     // Add gear image
                     this.getChildren().add(gearImageView);
+
+                    // Rotate the gear image
+                    RotateTransition rotateTransition = new RotateTransition(Duration.seconds(8), gearImageView);
+                    rotateTransition.setByAngle(360); // Rotate by 360 degrees
+                    rotateTransition.setCycleCount(RotateTransition.INDEFINITE); // Repeat indefinitely
+                    rotateTransition.play();
                 } else {
                     Image gearImage = new Image("GearLeft.png");
 
@@ -212,6 +219,11 @@ private void drawWalls(Pane pane, List<Heading > walls) {
 
                     // Add gear image
                     this.getChildren().add(gearImageView);
+                    // Rotate the gear image
+                    RotateTransition rotateTransition = new RotateTransition(Duration.seconds(8), gearImageView);
+                    rotateTransition.setByAngle(-360); // Rotate by 360 degrees
+                    rotateTransition.setCycleCount(RotateTransition.INDEFINITE); // Repeat indefinitely
+                    rotateTransition.play();
                 }
             }
         }
