@@ -397,16 +397,16 @@ public class GameController {
                 newY--; // Move up
                 break;
             case EAST:
-                newX--; // Move left
-                newY++; // Move down
+                newX++; // Move left
+                newY--; // Move down
                 break;
             case SOUTH:
                 newX++; // Move right
                 newY++; // Move down
                 break;
             case WEST:
-                newX++; // Move right
-                newY--; // Move up
+                newX--; // Move right
+                newY++; // Move up
                 break;
             default:
                 // Handle other cases if needed

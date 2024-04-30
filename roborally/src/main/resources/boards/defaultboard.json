@@ -1,51 +1,37 @@
 {
-  "width": 15,
-  "height": 10,
+  "width": 10,
+  "height": 9,
   "spaces": [
     {
       "x": 1,
-      "y": 1,
-      "walls": ["EAST", "SOUTH"],
+      "y": 2,
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.CheckPointTemplate",
           "INSTANCE": {
-            "number": 3,
+            "number": 1,
             "last": false
           }
         }
       ]
     },
     {
-      "x": 13,
-      "y": 8,
-      "walls": ["WEST", "NORTH"],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.CheckPointTemplate",
-          "INSTANCE": {
-            "number": 4,
-            "last": false
-          }
-        }
-      ]
-    },
-    {
-      "x": 3,
-      "y": 5,
-      "walls": ["NORTH", "SOUTH"],
+      "x": 1,
+      "y": 0,
+      "walls": [],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
           "INSTANCE": {
-            "heading": "EAST"
+            "heading": "SOUTH"
           }
         }
       ]
     },
     {
-      "x": 7,
-      "y": 4,
+      "x": 2,
+      "y": 1,
       "walls": [],
       "actions": [
         {
@@ -57,8 +43,206 @@
       ]
     },
     {
+      "x": 2,
+      "y": 2,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "EAST"
+          }
+        }
+      ]
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "walls": [
+        "EAST"
+      ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
+          "INSTANCE": {
+            "isClockWise": false
+          }
+        }
+      ]
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "NORTH"
+          }
+        }
+      ]
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.CheckPointTemplate",
+          "INSTANCE": {
+            "number": 2,
+            "last": false
+          }
+        }
+      ]
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "walls": ["SOUTH","WEST"],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.CheckPointTemplate",
+          "INSTANCE": {
+            "number": 3,
+            "last": true
+          }
+        }
+      ]
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "WEST"
+          }
+        }
+      ]
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "walls": ["WEST","NORTH"],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "EAST"
+          }
+        }
+      ]
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "EAST"
+          }
+        }
+      ]
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "walls": ["SOUTH"],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "EAST"
+          }
+        }
+      ]
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "NORTH"
+          }
+        }
+      ]
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "walls": ["SOUTH"],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "NORTH"
+          }
+        }
+      ]
+    },
+    {
       "x": 7,
+      "y": 1,
+      "walls": ["NORTH"],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
+          "INSTANCE": {
+            "heading": "WEST"
+          }
+        }
+      ]
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
+          "INSTANCE": {
+            "isClockWise": false
+          }
+        }
+      ]
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
+          "INSTANCE": {
+            "isClockWise": true
+          }
+        }
+      ]
+    },
+    {
+      "x": 4,
       "y": 3,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
+          "INSTANCE": {
+            "isClockWise": true
+          }
+        }
+      ]
+    },{
+      "x": 6,
+      "y": 6,
       "walls": [],
       "actions": [
         {
@@ -71,7 +255,7 @@
     },
     {
       "x": 6,
-      "y": 3,
+      "y": 5,
       "walls": [],
       "actions": [
         {
@@ -83,8 +267,8 @@
       ]
     },
     {
-      "x": 9,
-      "y": 2,
+      "x": 8,
+      "y": 0,
       "walls": [],
       "actions": [
         {
@@ -96,8 +280,8 @@
       ]
     },
     {
-      "x": 3,
-      "y": 8,
+      "x": 9,
+      "y": 1,
       "walls": [],
       "actions": [
         {
@@ -109,91 +293,29 @@
       ]
     },
     {
-      "x": 7,
-      "y": 5,
-      "walls": ["EAST", "SOUTH"],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.CheckPointTemplate",
-          "INSTANCE": {
-            "number": 5,
-            "last": true
-          }
-        }
-      ]
+      "x": 3,
+      "y": 6,
+      "walls": ["WEST","SOUTH"]
     },
     {
-      "x": 0,
-      "y": 9,
-      "walls": ["SOUTH"],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.CheckPointTemplate",
-          "INSTANCE": {
-            "number": 1,
-            "last": false
-          }
-        }
-      ]
-    },
-    {
-      "x": 14,
-      "y": 0,
-      "walls": ["EAST"],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.CheckPointTemplate",
-          "INSTANCE": {
-            "number": 2,
-            "last": false
-          }
-        }
-      ]
-    },
-    {
-      "x": 1,
-      "y": 4,
-      "walls": ["WEST", "EAST"],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
-          "INSTANCE": {
-            "heading": "NORTH"
-          }
-        }
-      ]
-    },
-    {
-      "x": 13,
-      "y": 4,
-      "walls": ["EAST", "WEST"],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
-          "INSTANCE": {
-            "heading": "SOUTH"
-          }
-        }
-      ]
+      "x": 5,
+      "y": 6,
+      "walls": ["SOUTH"]
     },
     {
       "x": 4,
-      "y": 3,
-      "walls": ["SOUTH", "EAST", "WEST"],
-      "actions": []
-    },
-    {
-      "x": 10,
-      "y": 6,
-      "walls": ["NORTH", "EAST", "WEST"],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",
-          "INSTANCE": {
-            "heading": "EAST"
-          }
-        }
-      ]
+      "y": 2,
+      "walls": ["NORTH"]
+    },{
+      "x": 9,
+      "y": 2,
+      "walls": ["SOUTH"]
+    },{
+      "x": 7,
+      "y": 2,
+      "walls": ["SOUTH"]
     }
+
+
   ]
 }

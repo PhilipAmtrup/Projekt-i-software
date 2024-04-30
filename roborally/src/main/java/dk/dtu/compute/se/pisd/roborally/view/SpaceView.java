@@ -49,7 +49,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
-import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 
 
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
@@ -131,6 +131,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
                 // add arrow to children
                 this.getChildren().add(arrow);
+
             }
         }
     }
@@ -176,6 +177,7 @@ private void drawWalls(Pane pane, List<Heading > walls) {
 
     /**
      * Metode som tegner gears left og right med billeder.
+     * Og roterer dem i den retning som de drejer spilleren.
      * @author Julius s235462
      */
     private void drawGears() {
