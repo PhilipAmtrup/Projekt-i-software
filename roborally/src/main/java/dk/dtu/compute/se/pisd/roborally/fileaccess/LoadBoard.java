@@ -140,7 +140,7 @@ public class LoadBoard {
         } else if(actionTemplate instanceof GearTemplate) {
             GearTemplate template = (GearTemplate) actionTemplate;
             Gear gear = new Gear();
-            gear.setDirection(template.direction);
+            gear.setIsClockWise(template.isClockWise);
             return gear;
         }
         // else if ...
@@ -245,7 +245,7 @@ public class LoadBoard {
         } else if (action instanceof Gear) {
             Gear gear = (Gear) action;
             GearTemplate gearTemplate = new GearTemplate();
-            GearTemplate.direction = gear.getDirection();
+            GearTemplate.isClockWise = gear.getIsClockWise();
             return gearTemplate;
         }
 

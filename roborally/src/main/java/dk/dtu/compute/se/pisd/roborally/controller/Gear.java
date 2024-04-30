@@ -8,7 +8,10 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
  * author Julius s235462
  */
 public class Gear extends FieldAction {
-    public String direction;
+    //true clockwise == right
+    //false clockwise == left
+    // image names.
+    public boolean isClockWise;
 
     public Gear() {
     }
@@ -19,22 +22,20 @@ public class Gear extends FieldAction {
         Player player = space.getPlayer();
         if (player != null) {
             Heading heading = player.getHeading();
-            switch (direction) {
-                case "Right":
-                    player.setHeading(heading.next());
-                    break;
-                case "Left":
-                    player.setHeading(heading.prev());
+            if (isClockWise) {
+                player.setHeading(heading.next());
+            } else {
+                player.setHeading(heading.prev());
             }
             return true;
         }
         return false;
     }
 
-    public void setDirection(String direction) {
-        this.direction = direction;
+    public void setIsClockWise(Boolean isClockWise) {
+        this.isClockWise = isClockWise;
     }
-    public String getDirection() {
-        return this.direction;
+    public boolean getIsClockWise() {
+        return isClockWise;
     }
 }

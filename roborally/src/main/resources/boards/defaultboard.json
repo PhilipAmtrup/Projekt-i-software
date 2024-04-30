@@ -51,7 +51,7 @@
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
           "INSTANCE": {
-            "direction": "Right"
+            "isClockWise": true
           }
         }
       ]
@@ -64,7 +64,7 @@
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
           "INSTANCE": {
-           "direction": "Left"
+            "isClockWise": false
           }
         }
       ]
@@ -77,7 +77,7 @@
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
           "INSTANCE": {
-            "direction": "Left"
+            "isClockWise": true
           }
         }
       ]
