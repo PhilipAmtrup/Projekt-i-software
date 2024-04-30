@@ -209,6 +209,9 @@ public class GameController {
                     else if (actionOnSpace instanceof CheckPoint) {
                         actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
                     }
+                    else if (actionOnSpace instanceof Gear){
+                        actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
+                    }
                 }
 
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;

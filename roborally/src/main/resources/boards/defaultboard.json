@@ -57,6 +57,32 @@
       ]
     },
     {
+      "x": 7,
+      "y": 3,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
+          "INSTANCE": {
+            "isClockWise": false
+          }
+        }
+      ]
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
+          "INSTANCE": {
+            "isClockWise": true
+          }
+        }
+      ]
+    },
+    {
       "x": 9,
       "y": 2,
       "walls": [],
