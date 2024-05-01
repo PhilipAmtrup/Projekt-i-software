@@ -33,6 +33,7 @@ module roborally {
 
 
     requires jdk.jdi;
+    requires org.checkerframework.checker.qual;
 
 
 }
