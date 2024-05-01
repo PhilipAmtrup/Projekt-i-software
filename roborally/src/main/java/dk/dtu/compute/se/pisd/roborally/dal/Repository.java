@@ -312,56 +312,56 @@ public class Repository implements IRepository {
 	 * @throws SQLException
 	 */
 
-
 	private void createCardFieldsInDB(Board game) throws SQLException{
-
-		//String SQLInsertCardField = "Insert into CardFields (gameID , playerID , CardName , type) VALUES ( ? , ? , ? , ?) ";
-		//Connection connection = connector.getConnection();
-
 		PreparedStatement ps = getSelectCards();
 		ps.setInt(1, game.getGameId());
 		ResultSet rs = ps.executeQuery();
 
-
-		//int playerNo = rs.getInt(PLAYER_GAMEID);
-		//String cardName = rs.getString(CARDNAME);
-
-
 		CommandCardField cardfield;
-		//for (int i = 0; i < game.getPlayersNumber(); i++) {
 		for (int i = 0; i < game.getPlayersNumber(); i++) {
-
 			Player player = game.getPlayer(i);
-			for (int pos = 0 ; pos < player.NO_CARDS ; pos ++){
+
+			for (int pos = 0 ; pos < player.NO_CARDS ; pos++){
 				rs.moveToInsertRow();
 
-				//int pos = rs.getInt("position");
-				int type = rs.getInt("cardType");
-
+				// int type = rs.getInt("cardType");
 				cardfield = player.getCardField(pos);
 
-				/*if (type == 0) {
-				} else {
-					cardfield = player.getProgramField(pos);
-				}*/
 				CommandCard card = cardfield.getCard();
-
 
 				rs.updateInt(PLAYER_GAMEID, game.getGameId());
 				rs.updateInt(PLAYER_PLAYERID, i);
-				rs.updateInt("cardType" , (card.getType() == Type.COMMAND_CARD) ? 1 : 0);
-				rs.updateInt("position", pos + 1);
-				rs.updateString(CARDNAME, card.getName());
+				rs.updateInt("cardType" , 0);
+				rs.updateInt("position", pos );
+				if (card != null) {
+					rs.updateString(CARDNAME, card.getName());
+				} else {
+					rs.updateNull(CARDNAME);
+				}
 				rs.insertRow();
 			}
 
+			for (int pos = 0 ; pos < player.NO_REGISTERS ; pos++){
+				rs.moveToInsertRow();
 
+				// int type = rs.getInt("cardType");
+				cardfield = player.getProgramField(pos);
+
+				CommandCard card = cardfield.getCard();
+
+				rs.updateInt(PLAYER_GAMEID, game.getGameId());
+				rs.updateInt(PLAYER_PLAYERID, i);
+				rs.updateInt("cardType" , 1);
+				rs.updateInt("position", pos );
+				if (card != null) {
+					rs.updateString(CARDNAME, card.getName());
+				} else {
+					rs.updateNull(CARDNAME);
+				}
+				rs.insertRow();
+			}
 		}
-
 		rs.close();
-		//rs.updateString(CARDNAME , rs.getString(CARDNAME));
-
-
 	}
 
 
@@ -468,93 +468,80 @@ public class Repository implements IRepository {
 		ps.setInt(1, game.getGameId());
 
 
-
 		ResultSet rs = ps.executeQuery();
 
-		//Indtil videre fundet ud af dette:
-		//	Skal bruge settere til at sætte kort på frem
-		//	Skal finde en måde at både at kunne bruge settere og info der er inde i databasen. Det vil højst sandsynligt få det hele til at virke
 
 		int currentPlayerActive = 0;
 		int loadedCards = 0;
 
+
 		while (rs.next()) {
-
-
 		//for (int i = 0; i < game.getPlayersNumber(); i++) {
 			//Player player = game.getPlayer(i);
 			//for (int pos = 0; pos < player.NO_CARDS && rs.next(); pos++) {
-
 			int playerId = rs.getInt(PLAYER_PLAYERID);
+			Player player = game.getPlayer(playerId);
+
 			int type = rs.getInt("cardType");
 			int pos = rs.getInt("position");
+			CommandCardField cardfield;
+
+			if (type == 1) {
+				cardfield = player.getProgramField(pos);
+			} else {
+				cardfield = player.getCardField(pos);
+			}
+
 			String cardName = rs.getString(CARDNAME);
 
-				if (playerId != currentPlayerActive) {
-					currentPlayerActive = playerId;
-					loadedCards = 0;
 
+			Command command = null;
+
+			if (cardName != null) {
+				switch (cardName) {
+					case "Fwd":
+						command = Command.FORWARD;
+						break;
+					case "Turn Right":
+						command = Command.RIGHT;
+						break;
+					case "Turn Left":
+						command = Command.LEFT;
+						break;
+					case "Fast Fwd":
+						command = Command.FORWARD;
+						break;
+					case "Diagonal Right":
+						command = Command.FRONT_RIGHT;
+						break;
+					case "Diagonal Left":
+						command = Command.FRONT_LEFT;
+						break;
+					case "Left OR Right":
+						command = Command.OPTION_LEFT_RIGHT;
+						break;
 				}
-					Player player = game.getPlayer(currentPlayerActive);
+			}
 
-					CommandCardField cardfield;
+			if (command != null) {
+				CommandCard card = new CommandCard(command);
+				cardfield.setCard(card);
+				// loadedCards++;
 
-					System.out.println("Player ID: " + playerId);
-					System.out.println("Card Type: " + type);
-					System.out.println("Position: " + pos);
-					System.out.println("Card Name: " + cardName);
+				/*
+				if(loadedCards == Player.NO_CARDS){
+					currentPlayerActive++;
+					loadedCards = 0;
+				}
+				*/
 
+			} else {
+				cardfield.setCard(null);
+				//System.err.println("Spilleren bliver ikke skiftet, siden der kun bliver printet de første 8");
 
-					if (type == 0) {
-						cardfield = player.getProgramField(pos);
-					} else {
-						cardfield = player.getCardField(pos);
-					}
-
-					Command command = null;
-
-
-					switch (cardName) {
-						case "Fwd":
-							command = Command.FORWARD;
-							break;
-						case "Turn Right":
-							command = Command.RIGHT;
-							break;
-						case "Turn Left":
-							command = Command.LEFT;
-							break;
-						case "Fast Fwd":
-							command = Command.FORWARD;
-							break;
-						case "Diagonal Right":
-							command = Command.FRONT_RIGHT;
-							break;
-						case "Diagonal Left":
-							command = Command.FRONT_LEFT;
-							break;
-						case "Left OR Right":
-							command = Command.OPTION_LEFT_RIGHT;
-							break;
-					}
-
-					if (command != null) {
-						CommandCard card = new CommandCard(command);
-						cardfield.setCard(card);
-						loadedCards++;
-
-						if(loadedCards == Player.NO_CARDS){
-							currentPlayerActive++;
-							loadedCards = 0;
-						}
-					} else {
-						System.err.println("Spilleren bliver ikke skiftet, siden der kun bliver printet de første 8");
-
-					}
+			}
 		}
 		rs.close();
-
-
 	}
 
 
@@ -577,7 +564,7 @@ public class Repository implements IRepository {
 			 int pos = rs.getInt("position");
 
 			 CommandCardField cardField;
-			 if (type == 0) {
+			 if (type == 1) {
 				 cardField = player.getProgramField(pos);
 			 } else  {
 				 cardField = player.getCardField(pos);
@@ -781,5 +768,9 @@ public class Repository implements IRepository {
 		}
 		return selecting_cards;
 	}
+
+
+
+
 
 }

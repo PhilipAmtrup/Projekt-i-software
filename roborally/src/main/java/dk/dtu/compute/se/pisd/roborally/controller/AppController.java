@@ -120,7 +120,7 @@ public class AppController implements Observer {
         if (this.board.getGameId() != null) {
             repo.updateGameInDB(this.gameController.board);
         } else {
-        repo.createGameInDB(this.gameController.board);
+            repo.createGameInDB(this.gameController.board);
         }
 
 
@@ -152,6 +152,7 @@ public class AppController implements Observer {
             this.gameController = new GameController(this.board);
             //Player player = board.getPlayer(this.board.getPlayersNumber());
 
+            /*
             for (int i = 0; i < board.getPlayersNumber(); i++) {
                 Player player =this.board.getPlayer(i);
 
@@ -160,7 +161,7 @@ public class AppController implements Observer {
                     //gameController.board.setPhase(Phase.PROGRAMMING);
                     gameController.startProgrammingPhase();
                 } else gameController.board.setPhase(Phase.INITIALISATION);
-            }
+            }*/
 
             //gameController.startProgrammingPhase();
 
