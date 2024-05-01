@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b33b757-db36-4148-911e-6cc21a43cf0e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/ImpossibleMoveException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/AppController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/dal/Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/dal/Repository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/Laser.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/Laser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Health.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Health.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/view/SpaceView.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/view/SpaceView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/roborally/src/main/resources/boards/SilverstoneTrack.json" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/resources/boards/SilverstoneTrack.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/resources/boards/board2.json" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/resources/boards/board2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/resources/boards/board3.json" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/resources/boards/board3.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/resources/boards/board4.json" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/resources/boards/board4.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/roborally/src/main/resources/boards/defaultboard.json" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/resources/boards/defaultboard.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -187,7 +187,7 @@
       <workItem from="1714134974585" duration="8556000" />
       <workItem from="1714469012367" duration="4040000" />
       <workItem from="1714481602903" duration="7546000" />
-      <workItem from="1714551126462" duration="8803000" />
+      <workItem from="1714551126462" duration="674000" />
     </task>
     <servers />
   </component>

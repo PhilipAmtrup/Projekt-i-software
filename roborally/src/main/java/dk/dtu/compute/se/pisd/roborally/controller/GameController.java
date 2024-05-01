@@ -73,17 +73,6 @@ public class GameController {
             board.setCounter(board.getCounter() + 1);
         }
 
-
-        // if (current != null && space.getPlayer() == null) {
-        //     current.setSpace(space);
-        //     int currentNumber = board.getPlayerNumber(current);
-        //     int nextPlayerNumber = (currentNumber + 1) % board.getPlayerNumber(current);
-        //     Player next = board.getPlayer(nextPlayerNumber);
-        //     board.setCurrentPlayer(next);
-
-        //     // fortæller hvor mange gange man har rykket
-        //
-        // }
     }
 
 
@@ -218,6 +207,9 @@ public class GameController {
                         actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
                     }
                     else if (actionOnSpace instanceof Gear){
+                        actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
+
+                    } else if (actionOnSpace instanceof Laser){
                         actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
                     }
                 }
@@ -678,14 +670,15 @@ public class GameController {
 
 
         if (nextSpacePlayer != null) {
-            nextSpacePlayer.reduceHealth(10);
+            nextSpacePlayer.reduceHealth(10, this);
 
         }
         if (nextnextSpacePlayer != null) {
-            nextnextSpacePlayer.reduceHealth(5);
+            nextnextSpacePlayer.reduceHealth(5, this);
         }
 
     }
+
 
     public void healthPotion(@NotNull Player player) {
         Space space = player.getSpace();
@@ -699,10 +692,10 @@ public class GameController {
 
 
 
-    boolean moveToSpace(Player player, Space targetSpace, Heading heading) throws ImpossibleMoveException {
+    public boolean moveToSpace(Player player, Space targetSpace, Heading heading) throws ImpossibleMoveException {
         Space currentSpace = player.getSpace();
 
-        if (board.getNeighbour(player.getSpace(), heading) == targetSpace) {
+
             Player other = targetSpace.getPlayer();
             if (other != null) {
                 Space target = board.getNeighbour(targetSpace, heading);
@@ -720,7 +713,7 @@ public class GameController {
             } else {
                 throw new ImpossibleMoveException(player, targetSpace, heading);
             }
-        }
+
         return false;
     }
 
@@ -742,21 +735,6 @@ public class GameController {
         }
     }
 }
-
-
-    class ImpossibleMoveException extends Exception {
-
-        private Player player;
-        private Space space;
-        private Heading heading;
-
-        public ImpossibleMoveException(Player player, Space space, Heading heading) {
-            super("Move impossible");
-            this.player = player;
-            this.space = space;
-            this.heading = heading;
-        }
-    }
 
 
 

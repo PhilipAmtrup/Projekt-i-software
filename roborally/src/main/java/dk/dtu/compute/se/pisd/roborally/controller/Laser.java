@@ -30,7 +30,7 @@ public class Laser extends FieldAction{
     public boolean doAction(GameController gameController, Space space) {
         Player player =  space.getPlayer();
         if (player != null){
-            player.reduceHealth(reduceHealth);
+            player.reduceHealth(reduceHealth, gameController);
             return true;
         }
         return false;

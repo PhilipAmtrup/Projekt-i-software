@@ -1,6 +1,6 @@
 {
-  "width": 7,
-  "height": 8,
+  "width": 10,
+  "height": 10,
   "spaces": [
     {
       "x": 1,
@@ -17,8 +17,8 @@
       ]
     },
     {
-      "x": 4,
-      "y": 8,
+      "x": 2,
+      "y": 2,
       "walls": ["WEST", "NORTH"],
       "actions": [
         {
@@ -44,73 +44,8 @@
       ]
     },
     {
-      "x": 7,
-      "y": 4,
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
-          "INSTANCE": {
-            "isClockWise": true
-          }
-        }
-      ]
-    },
-    {
-      "x": 7,
-      "y": 3,
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
-          "INSTANCE": {
-            "isClockWise": false
-          }
-        }
-      ]
-    },
-    {
-      "x": 6,
-      "y": 3,
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
-          "INSTANCE": {
-            "isClockWise": true
-          }
-        }
-      ]
-    },
-    {
-      "x": 9,
-      "y": 2,
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
-          "INSTANCE": {
-            "isClockWise": false
-          }
-        }
-      ]
-    },
-    {
       "x": 3,
-      "y": 8,
-      "walls": [],
-      "actions": [
-        {
-          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.GearTemplate",
-          "INSTANCE": {
-            "isClockWise": true
-          }
-        }
-      ]
-    },
-    {
-      "x": 7,
-      "y": 5,
+      "y": 2,
       "walls": ["EAST", "SOUTH"],
       "actions": [
         {
@@ -124,7 +59,7 @@
     },
     {
       "x": 0,
-      "y": 7,
+      "y": 9,
       "walls": ["SOUTH"],
       "actions": [
         {
@@ -137,8 +72,8 @@
       ]
     },
     {
-      "x": 7,
-      "y": 1,
+      "x": 14,
+      "y": 0,
       "walls": ["EAST"],
       "actions": [
         {
@@ -164,9 +99,9 @@
       ]
     },
     {
-      "x": 1,
-      "y": 3,
-      "walls": ["WEST", "EAST"],
+      "x": 13,
+      "y": 4,
+      "walls": ["EAST", "WEST"],
       "actions": [
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.ConveyorBeltTemplate",

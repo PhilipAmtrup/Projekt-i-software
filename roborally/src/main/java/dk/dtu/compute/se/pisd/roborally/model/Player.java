@@ -22,7 +22,10 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.ImpossibleMoveException;
+import javafx.scene.control.Alert;
 import org.jetbrains.annotations.NotNull;
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
@@ -114,8 +117,40 @@ public class Player extends Subject {
             space.playerChanged();
         }
     }
-    public void reduceHealth(int amount) {
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    /**
+     * This method reduce the health of a player.
+     * When you reach zero (0) health you are being moved to the start position
+     * The player also lose 1 checkpoint and have to reach the last one again
+     * @author s226870
+     * @param amount
+     */
+    public void reduceHealth(int amount, GameController gameController)  {
         this.health -= amount;
+
+        if(this.health <= 0){
+            String message = "You lost all your health " + getName() + "\nYou have been moved back to the start position" +
+                    "\nYou have also lost your last checkpoint.\nMake sure to get that again!";
+            showAlert(Alert.AlertType.INFORMATION, "Death", message);
+            this.setHeading(SOUTH);
+
+            try {
+
+                gameController.moveToSpace(this, board.getSpace(4, 0), SOUTH);
+            } catch (ImpossibleMoveException e) {
+                throw new RuntimeException(e);
+            }
+            this.setHealth(30);
+            this.setCurrentCheckpoint(this.getCurrentCheckpoint()-1);
+        }
     }
     public void addHealth(int amount) {
         this.health += amount;
@@ -199,7 +234,6 @@ public class Player extends Subject {
     /**
      * @author s235459
      * Funktion der giver spillerens liv/Damage token
-     * @param health Parameter som værende spillerens liv i mængde
      * @return Returnere spillerens health/liv
      */
     
@@ -220,7 +254,7 @@ public class Player extends Subject {
             notifyChange();
         }
     }
-    
-    
+
+
 
 }

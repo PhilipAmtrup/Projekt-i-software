@@ -1,5 +1,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+
 /**
  * Definere Health, altså Damage-token for spillerne, lige nu kan health ikke reduceres, da spillet ikke er programmeret færdigt. 
  * @author s235459
@@ -14,6 +16,8 @@ public class Health {
     public Health (int health , Player player){
         this.health = health;
         this.player = player;
+
+
     }
 
     /*
