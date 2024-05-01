@@ -293,6 +293,9 @@ public class GameController {
                 case SHOOT_LASER:
                     this.shootLaser(player);
                     break;
+                case HEALTH_POTION:
+                    this.healthPotion(player);
+                    break;
 
                 default:
                     // DO NOTHING (for now)

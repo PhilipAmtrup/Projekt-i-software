@@ -42,6 +42,7 @@ public enum Command {
     MOVE_BACK("Move Back"),
     U_TURN("U Turn"),
     SHOOT_LASER("SHOOT LASER"),
+    HEALTH_POTION("Health Potion"),
 
     // XXX Assignment V3 (step 1)
     OPTION_LEFT_RIGHT("Left OR Right", LEFT, RIGHT);

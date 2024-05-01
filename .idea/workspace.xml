@@ -7,9 +7,7 @@
     <list default="true" id="0b33b757-db36-4148-911e-6cc21a43cf0e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/controller/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/controller/GameController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/controller/ImpossibleMoveException.class" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/target/classes/dk/dtu/compute/se/pisd/roborally/controller/ImpossibleMoveException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Command.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +67,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.RoboRally.executor": "Run",
-    "Application.StartRoboRally.executor": "Run",
+    "Application.StartRoboRally.executor": "Debug",
     "Maven.roborally [compile].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -175,7 +173,15 @@
       <workItem from="1713259364167" duration="724000" />
       <workItem from="1713524593275" duration="807000" />
       <workItem from="1713525403600" duration="15881000" />
-      <workItem from="1713859078311" duration="7319000" />
+      <workItem from="1713859078311" duration="14125000" />
+      <workItem from="1713895393860" duration="4603000" />
+      <workItem from="1713967228248" duration="5457000" />
+      <workItem from="1714048762063" duration="6745000" />
+      <workItem from="1714055654598" duration="1822000" />
+      <workItem from="1714134974585" duration="8556000" />
+      <workItem from="1714469012367" duration="4040000" />
+      <workItem from="1714481602903" duration="7546000" />
+      <workItem from="1714551126462" duration="3476000" />
     </task>
     <servers />
   </component>
@@ -215,10 +221,6 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.sql.SQLSyntaxErrorException" package="java.sql" />
           <option name="timeStamp" value="2" />
-        </breakpoint>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.ClassNotFoundException" package="java.lang" />
-          <option name="timeStamp" value="3" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
