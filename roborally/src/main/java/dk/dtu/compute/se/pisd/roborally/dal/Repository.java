@@ -21,17 +21,8 @@
  */
 package dk.dtu.compute.se.pisd.roborally.dal;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import dk.dtu.compute.se.pisd.roborally.controller.BoardFactory;
-import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.fileaccess.Adapter;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
-import dk.dtu.compute.se.pisd.roborally.fileaccess.model.BoardTemplate;
 import dk.dtu.compute.se.pisd.roborally.model.*;
-import dk.dtu.compute.se.pisd.roborally.view.SpaceView;
-import org.jetbrains.annotations.NotNull;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,6 +63,8 @@ public class Repository implements IRepository {
 	private static final String PLAYER_CHECKP = "checkpoints";
 
     private static final String CARDNAME = "CardName";
+
+	private static final String PLAYER_HEALTH = "health";
 
 
 	private Connector connector;
@@ -310,6 +303,7 @@ public class Repository implements IRepository {
 			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
 			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
 			rs.updateInt(PLAYER_CHECKP , player.getCurrentCheckpoint());
+			rs.updateInt(PLAYER_HEALTH, player.getHealth());
 			rs.insertRow();
 		}
 		rs.close();
@@ -335,9 +329,7 @@ public class Repository implements IRepository {
 			for (int pos = 0 ; pos < player.NO_CARDS ; pos++){
 				rs.moveToInsertRow();
 
-				// int type = rs.getInt("cardType");
 				cardfield = player.getCardField(pos);
-
 				CommandCard card = cardfield.getCard();
 
 				rs.updateInt(PLAYER_GAMEID, game.getGameId());
@@ -376,41 +368,6 @@ public class Repository implements IRepository {
 	}
 
 
-
-
-		/*for (int i = 0 ; i < game.getPlayersNumber() ; i ++) {
-			Player player = game.getPlayer(i);
-
-			//int playerNo = rs.getInt(PLAYER_GAMEID);
-
-			rs.moveToInsertRow();
-
-			int type = rs.getInt("cardType");
-			int pos = rs.getInt("position");
-			CommandCardField cardField;
-
-
-			rs.updateInt(PLAYER_GAMEID, game.getGameId());
-			rs.updateInt(PLAYER_PLAYERID, i);
-			rs.updateInt("cardType" , type);
-			rs.updateInt("position" , pos);
-			if (type == 0) {
-				cardField = player.getCardField(pos);
-			} else {
-				cardField = player.getProgramField(pos);
-			}
-			CommandCard card = cardField.getCard();
-
-			rs.updateString(CARDNAME, card.getName());
-
-			rs.insertRow();
-			}*/
-		//rs.close();
-
-
-
-
-
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
 		ps.setInt(1, game.getGameId());
@@ -433,6 +390,8 @@ public class Repository implements IRepository {
 				player.setHeading(Heading.values()[heading]);
 				int checkpoint = rs.getInt(PLAYER_CHECKP);
 				player.setCurrentCheckpoint(checkpoint);
+				int health = rs.getInt(PLAYER_HEALTH);
+				player.setHealth(health);
 			} else {
 				// TODO error handling
 
@@ -457,6 +416,7 @@ public class Repository implements IRepository {
 			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
 			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
 			rs.updateInt(PLAYER_CHECKP , player.getCurrentCheckpoint());
+			rs.updateInt(PLAYER_HEALTH, player.getHealth());
 			// TODO error handling
 			// TODO take care of case when number of players changes, etc
 			rs.updateRow();
@@ -480,7 +440,6 @@ public class Repository implements IRepository {
 		ResultSet rs = ps.executeQuery();
 
 		while (rs.next()) {
-
 			int playerId = rs.getInt(PLAYER_PLAYERID);
 			Player player = game.getPlayer(playerId);
 
@@ -495,13 +454,11 @@ public class Repository implements IRepository {
 			}
 
 			String cardName = rs.getString(CARDNAME);
-
 			Command command = giveCommandValue(cardName);
 
 			if (command != null) {
 				CommandCard card = new CommandCard(command);
 				cardfield.setCard(card);
-
 			} else {
 				cardfield.setCard(null);
 			}
@@ -516,7 +473,6 @@ public class Repository implements IRepository {
 	 * @param game
 	 * @throws SQLException
 	 */
-
 	private void updateCardFieldsInDB(Board game) throws SQLException{
 		PreparedStatement ps = getSelectCards();
 		ps.setInt(1, game.getGameId());
@@ -541,33 +497,48 @@ public class Repository implements IRepository {
 			 } else {
 				 rs.updateString("CardName", null);
 			 }
-
 		}
 		rs.close();
-		//ps.executeBatch();
 	}
 
+	/**
+	 * @author s235459
+	 * @param cardName The cardname retrieved from the database, in a String form
+	 * @return returns the corresponding Command value
+	 */
+	private Command giveCommandValue(String cardName){
 
-
-
-	private static final String SQL_INSERT_CARD =
-			"INSERT INTO CardFields (gameID , playerID , cardType , position , CardName) VALUES ( ? , ? , ? , ? , ?)";
-	private PreparedStatement insert_cards= null;
-
-	private PreparedStatement getInsertCards() {
-		if (insert_cards == null) {
-			Connection connection = connector.getConnection();
-			try {
-				insert_cards = connection.prepareStatement(
-						SQL_INSERT_CARD,
-						Statement.RETURN_GENERATED_KEYS);
-			} catch (SQLException e) {
-				// TODO error handling
-				e.printStackTrace();
+		if (cardName != null) {
+			switch (cardName) {
+				case "Fwd":
+					return Command.FORWARD;
+				case "Turn Right":
+					return Command.RIGHT;
+				case "Turn Left":
+					return Command.LEFT;
+				case "Fast Fwd":
+					return Command.FORWARD;
+				case "Diagonal Right":
+					return Command.FRONT_RIGHT;
+				case "Diagonal Left":
+					return Command.FRONT_LEFT;
+				case "Left OR Right":
+					return Command.OPTION_LEFT_RIGHT;
+				case "U Turn":
+					return Command.U_TURN;
+				case "SHOOT LASER":
+					return Command.SHOOT_LASER;
+				case "Health Potion":
+					return Command.HEALTH_POTION;
+				case "Move Back":
+					return Command.MOVE_BACK;
+				default:
+					return null;
 			}
 		}
-		return insert_cards;
+		return null;
 	}
+
 
 	private final String SQL_SELECT_CARD =
 			"SELECT * FROM CardFields WHERE gameID = ?";
@@ -594,7 +565,6 @@ public class Repository implements IRepository {
 			"INSERT INTO Game(name, currentPlayer, phase, step, board_name) VALUES (?, ?, ?, ?, ?)";
 
 	private PreparedStatement insert_game_stmt = null;
-
 
 	private PreparedStatement getInsertGameStatementRGK() {
 		if (insert_game_stmt == null) {
@@ -653,25 +623,6 @@ public class Repository implements IRepository {
 		return select_players_stmt;
 	}
 
-
-	private static final String SQL_SELECT_CARDS_ORD =
-			"SELECT * FROM CardFields WHERE gameID = ? ORDER BY CardName ASC";
-	private PreparedStatement select_cards_ord_stmt = null;
-
-	private PreparedStatement getSelectCardsOrdStatement() {
-		if (select_cards_ord_stmt == null) {
-			Connection connection = connector.getConnection();
-			try {
-				select_cards_ord_stmt = connection.prepareStatement(
-						SQL_SELECT_CARDS_ORD,
-						ResultSet.TYPE_FORWARD_ONLY,
-						ResultSet.CONCUR_UPDATABLE);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return select_cards_ord_stmt;
-	}
 
 
 	private static final String SQL_SELECT_PLAYERS_ASC =
@@ -733,43 +684,6 @@ public class Repository implements IRepository {
 		return selecting_cards;
 	}
 
-	/**
-	 * @author s235459
-	 * @param cardName The cardname retrieved from the database, in a String form
-	 * @return returns the corresponding Command value
-	 */
 
-	private Command giveCommandValue(String cardName){
-		if (cardName != null) {
-			switch (cardName) {
-				case "Fwd":
-					return Command.FORWARD;
-				case "Turn Right":
-					return Command.RIGHT;
-				case "Turn Left":
-					return Command.LEFT;
-				case "Fast Fwd":
-					return Command.FORWARD;
-				case "Diagonal Right":
-					return Command.FRONT_RIGHT;
-				case "Diagonal Left":
-					return Command.FRONT_LEFT;
-				case "Left OR Right":
-					return Command.OPTION_LEFT_RIGHT;
-				case "U Turn":
-					return Command.U_TURN;
-				case "SHOOT LASER":
-					return Command.SHOOT_LASER;
-				case "Health Potion":
-					return Command.HEALTH_POTION;
-				case "Move Back":
-					return Command.MOVE_BACK;
-				default:
-					return null;
-			}
-		}
-		return null;
-
-	}
 
 }

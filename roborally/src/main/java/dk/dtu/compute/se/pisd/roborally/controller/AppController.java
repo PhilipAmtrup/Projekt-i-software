@@ -173,7 +173,6 @@ public class AppController implements Observer {
 
         Repository gameRepo = new Repository(new Connector());
         List< GameInDB> games = gameRepo.getGames();
-        //board = BoardFactory.getInstance().createBoard("defaultboard");
 
         ChoiceDialog<GameInDB> LoadChoice = new ChoiceDialog<>();
         LoadChoice.setTitle("Load Game");
@@ -184,9 +183,7 @@ public class AppController implements Observer {
 
         if (LoadChoice.getSelectedItem() != null) {
             this.board = gameRepo.loadGameFromDB(LoadChoice.getSelectedItem().id);
-            //this.board = BoardFactory.getInstance().createBoard("defaultboard");
             this.gameController = new GameController(this.board);
-            //Player player = board.getPlayer(this.board.getPlayersNumber());
             roboRally.createBoardView(this.gameController);
 
         }
