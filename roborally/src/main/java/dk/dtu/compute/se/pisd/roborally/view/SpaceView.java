@@ -68,7 +68,6 @@ public class SpaceView extends StackPane implements ViewObserver {
     public final Space space;
 
 
-
     public SpaceView(@NotNull Space space) {
         this.space = space;
 
@@ -132,7 +131,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 
                 // add arrow to children
                 this.getChildren().add(arrow);
-
             }
         }
     }
@@ -255,6 +253,29 @@ private void drawWalls(Pane pane, List<Heading > walls) {
         }
     }
 
+    private void drawLaser(){
+        List<FieldAction> actions = space.getActions();
+        for(FieldAction action : actions) {
+            if(action instanceof Laser) {
+                getChildren().removeIf(node -> node instanceof Line && "laser".equals(node.getUserData()));
+
+                Laser laser = (Laser) action;
+
+                int x = laser.getX();
+                int y = laser.getY();
+
+                Line line = new Line(x-SPACE_WIDTH / 2 , y  , x+SPACE_WIDTH / 2, y);
+
+                line.setStroke(Color.RED);
+                Player player = space.getPlayer();
+                if(player != null) {
+                    player.reduceHealth(laser.getReduceHealth());
+                }
+                getChildren().add(line);
+            }
+        }
+    }
+
     private void drawCheckpoint() {
         List<FieldAction> actions = space.getActions();
         for (FieldAction action : actions) {
@@ -297,8 +318,6 @@ private void drawWalls(Pane pane, List<Heading > walls) {
         }
     }
 
-
-
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
@@ -306,6 +325,7 @@ private void drawWalls(Pane pane, List<Heading > walls) {
 
             drawCheckpoint();
             drawConveyorBelt();
+            drawLaser();
             drawGears();
             updatePlayer();
 

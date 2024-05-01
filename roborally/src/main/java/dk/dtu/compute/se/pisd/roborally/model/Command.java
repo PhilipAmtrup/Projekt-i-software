@@ -40,6 +40,9 @@ public enum Command {
     LEFT("Turn Left"),
     FAST_FORWARD("Fast Fwd"),
     MOVE_BACK("Move Back"),
+    U_TURN("U Turn"),
+    SHOOT_LASER("SHOOT LASER"),
+    HEALTH_POTION("Health Potion"),
 
     //diagonal moves added in cards
     FRONT_RIGHT("Diagonal Right"),

@@ -128,6 +128,7 @@ public class GameController {
     // XXX: V2 a
 
 
+
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
@@ -298,6 +299,15 @@ public class GameController {
                     break;
                 case FRONT_LEFT:
                     this.moveDiagonalLeft(player);
+                    break;
+                case U_TURN:
+                    this.uTurn(player);
+                    break;
+                case SHOOT_LASER:
+                    this.shootLaser(player);
+                    break;
+                case HEALTH_POTION:
+                    this.healthPotion(player);
                     break;
 
                 default:
@@ -488,7 +498,13 @@ public class GameController {
             }
         }
     }
+    public void uTurn(@NotNull Player player) {
 
+        Heading heading = player.getHeading();
+        Heading oppositeHeading = heading.next().next();
+        player.setHeading(oppositeHeading);
+
+    }
 
 
     /**
@@ -589,7 +605,7 @@ public class GameController {
         assert false;
     }
 
-    
+   /**
     public void reduceHealth(@NotNull Health health , @NotNull Player player){
         //Hvordan sætter jeg funktionen til at reducere health
         int playerHealth = player.getHealth();
@@ -604,6 +620,8 @@ public class GameController {
         }
 
     }
+
+    */
     /**
  * @author s230577
  * Now checks if there is any walls blocking the player
@@ -640,6 +658,44 @@ public class GameController {
             }
         }
     }
+
+    /**
+     * Makes it possible to shoot laser and damage a player up to two spaces away from the shooter.
+     * @author s235459
+     * @param player
+     */
+
+    public void shootLaser(@NotNull Player player ){
+        Space space = player.getSpace();
+        Heading heading = player.getHeading();
+
+        Space nextSpace = board.getNeighbour(space, heading);
+        Space nextnextSpace = board.getNeighbour(nextSpace, heading);
+
+        Player shootingPlayer = space.getPlayer();
+        Player nextSpacePlayer = (nextSpace != null) ? nextSpace.getPlayer() : null;
+        Player nextnextSpacePlayer = (nextnextSpace != null) ? nextnextSpace.getPlayer() : null;
+
+
+        if (nextSpacePlayer != null) {
+            nextSpacePlayer.reduceHealth(10);
+
+        }
+        if (nextnextSpacePlayer != null) {
+            nextnextSpacePlayer.reduceHealth(5);
+        }
+
+    }
+
+    public void healthPotion(@NotNull Player player) {
+        Space space = player.getSpace();
+        Heading heading = player.getHeading();
+
+        if (space != null) {
+            player.addHealth(10);
+        }
+    }
+
 
 
 

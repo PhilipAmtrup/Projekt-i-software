@@ -123,6 +123,8 @@ public class AppController implements Observer {
 
 
 
+
+
         gameController = new GameController(board);
         int middleColumn = board.width / 2; // Calculate the middle column
         int startColumn = middleColumn - (no / 2);  // Calculate the starting column for the leftmost player
@@ -154,7 +156,7 @@ public class AppController implements Observer {
         if (this.board.getGameId() != null) {
             repo.updateGameInDB(this.gameController.board);
         } else {
-            repo.createGameInDB(this.gameController.board);
+        repo.createGameInDB(this.gameController.board);
         }
 
 
@@ -254,8 +256,5 @@ public class AppController implements Observer {
     public void update(Subject subject) {
         // XXX do nothing for now
     }
-
-
-
 
 }

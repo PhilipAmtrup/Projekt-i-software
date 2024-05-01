@@ -21,8 +21,16 @@
  */
 package dk.dtu.compute.se.pisd.roborally.dal;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import dk.dtu.compute.se.pisd.roborally.controller.BoardFactory;
+import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.Adapter;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.model.BoardTemplate;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import dk.dtu.compute.se.pisd.roborally.view.SpaceView;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -62,7 +70,8 @@ public class Repository implements IRepository {
 	private static final String PLAYER_HEADING = "heading";
 
 	private static final String PLAYER_CHECKP = "checkpoints";
-	private static final String CARDNAME = "CardName";
+
+    private static final String CARDNAME = "CardName";
 
 
 	private Connector connector;
@@ -398,7 +407,7 @@ public class Repository implements IRepository {
 			}*/
 		//rs.close();
 
-	
+
 
 
 
@@ -764,7 +773,6 @@ public class Repository implements IRepository {
 						ResultSet.TYPE_FORWARD_ONLY,
 						ResultSet.CONCUR_UPDATABLE);
 			} catch (SQLException e) {
-				System.out.println("Fejl med updateCards");
 				e.printStackTrace();
 			}
 		}

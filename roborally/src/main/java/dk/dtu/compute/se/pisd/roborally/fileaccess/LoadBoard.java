@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import dk.dtu.compute.se.pisd.roborally.controller.*;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.model.*;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -131,6 +132,10 @@ public class LoadBoard {
             Gear gear = new Gear();
             gear.setIsClockWise(template.isClockWise);
             return gear;
+        } else if (actionTemplate instanceof LaserTemplate){
+            LaserTemplate template = (LaserTemplate) actionTemplate;
+            Laser laser = new Laser(template.x , template.y, template.reduceHealth);
+            return laser;
         }
         // else if ...
         // XXX if new field actions are added, the corresponding templates
@@ -236,8 +241,12 @@ public class LoadBoard {
             GearTemplate gearTemplate = new GearTemplate();
             gearTemplate.setIsClockWise(gear.getIsClockWise());
             return gearTemplate;
-        }
+        } else if (action instanceof Laser) {
+            Laser laser = (Laser) action;
+            LaserTemplate laserTemplate = new LaserTemplate(laser.getX() , laser.getY(), 10);
 
+            return laserTemplate;
+        }
         // else if ...
         // XXX if new field actions are added, the corresponding templates
         //     need to be added to the model subpackage of fileaccess and
