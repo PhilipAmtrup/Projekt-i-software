@@ -266,12 +266,13 @@ private void drawWalls(Pane pane, List<Heading > walls) {
 
                 Line line = new Line(x-SPACE_WIDTH / 2 , y  , x+SPACE_WIDTH / 2, y);
 
-                line.setStroke(Color.RED);
+                line.setStroke(Color.VIOLET);
                 Player player = space.getPlayer();
                 if(player != null) {
                     player.reduceHealth(laser.getReduceHealth());
                 }
                 getChildren().add(line);
+                line.setStrokeWidth(3);
             }
         }
     }

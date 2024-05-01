@@ -278,6 +278,20 @@
           }
         }
       ]
+    },{
+      "x": 3,
+      "y": 3,
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.fileaccess.model.LaserTemplate",
+          "INSTANCE": {
+            "x": 3,
+            "y": 3,
+            "reduceHealth": 10
+          }
+        }
+      ]
     },
     {
       "x": 9,

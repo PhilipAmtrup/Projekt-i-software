@@ -189,19 +189,6 @@ public class AppController implements Observer {
             //Player player = board.getPlayer(this.board.getPlayersNumber());
             roboRally.createBoardView(this.gameController);
 
-            /*
-            for (int i = 0; i < board.getPlayersNumber(); i++) {
-                Player player =this.board.getPlayer(i);
-
-                CommandCardField cardField = player.getCardField(i);
-                if (cardField != null) {
-                    //gameController.board.setPhase(Phase.PROGRAMMING);
-                    gameController.startProgrammingPhase();
-                } else gameController.board.setPhase(Phase.INITIALISATION);
-            }*/
-
-            //gameController.startProgrammingPhase();
-
         }
         roboRally.createBoardView(this.gameController);
     }

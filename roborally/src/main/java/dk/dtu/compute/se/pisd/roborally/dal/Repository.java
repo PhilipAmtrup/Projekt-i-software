@@ -477,19 +477,10 @@ public class Repository implements IRepository {
 	private void loadCardFieldsFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectCard();
 		ps.setInt(1, game.getGameId());
-
-
 		ResultSet rs = ps.executeQuery();
 
-
-		int currentPlayerActive = 0;
-		int loadedCards = 0;
-
-
 		while (rs.next()) {
-		//for (int i = 0; i < game.getPlayersNumber(); i++) {
-			//Player player = game.getPlayer(i);
-			//for (int pos = 0; pos < player.NO_CARDS && rs.next(); pos++) {
+
 			int playerId = rs.getInt(PLAYER_PLAYERID);
 			Player player = game.getPlayer(playerId);
 
@@ -505,51 +496,14 @@ public class Repository implements IRepository {
 
 			String cardName = rs.getString(CARDNAME);
 
-
-			Command command = null;
-
-			if (cardName != null) {
-				switch (cardName) {
-					case "Fwd":
-						command = Command.FORWARD;
-						break;
-					case "Turn Right":
-						command = Command.RIGHT;
-						break;
-					case "Turn Left":
-						command = Command.LEFT;
-						break;
-					case "Fast Fwd":
-						command = Command.FORWARD;
-						break;
-					case "Diagonal Right":
-						command = Command.FRONT_RIGHT;
-						break;
-					case "Diagonal Left":
-						command = Command.FRONT_LEFT;
-						break;
-					case "Left OR Right":
-						command = Command.OPTION_LEFT_RIGHT;
-						break;
-				}
-			}
+			Command command = giveCommandValue(cardName);
 
 			if (command != null) {
 				CommandCard card = new CommandCard(command);
 				cardfield.setCard(card);
-				// loadedCards++;
-
-				/*
-				if(loadedCards == Player.NO_CARDS){
-					currentPlayerActive++;
-					loadedCards = 0;
-				}
-				*/
 
 			} else {
 				cardfield.setCard(null);
-				//System.err.println("Spilleren bliver ikke skiftet, siden der kun bliver printet de første 8");
-
 			}
 		}
 		rs.close();
@@ -779,8 +733,43 @@ public class Repository implements IRepository {
 		return selecting_cards;
 	}
 
+	/**
+	 * @author s235459
+	 * @param cardName The cardname retrieved from the database, in a String form
+	 * @return returns the corresponding Command value
+	 */
 
+	private Command giveCommandValue(String cardName){
+		if (cardName != null) {
+			switch (cardName) {
+				case "Fwd":
+					return Command.FORWARD;
+				case "Turn Right":
+					return Command.RIGHT;
+				case "Turn Left":
+					return Command.LEFT;
+				case "Fast Fwd":
+					return Command.FORWARD;
+				case "Diagonal Right":
+					return Command.FRONT_RIGHT;
+				case "Diagonal Left":
+					return Command.FRONT_LEFT;
+				case "Left OR Right":
+					return Command.OPTION_LEFT_RIGHT;
+				case "U Turn":
+					return Command.U_TURN;
+				case "SHOOT LASER":
+					return Command.SHOOT_LASER;
+				case "Health Potion":
+					return Command.HEALTH_POTION;
+				case "Move Back":
+					return Command.MOVE_BACK;
+				default:
+					return null;
+			}
+		}
+		return null;
 
-
+	}
 
 }
