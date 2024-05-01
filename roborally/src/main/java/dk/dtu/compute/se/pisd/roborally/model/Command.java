@@ -41,6 +41,10 @@ public enum Command {
     FAST_FORWARD("Fast Fwd"),
     MOVE_BACK("Move Back"),
 
+    //diagonal moves added in cards
+    FRONT_RIGHT("Diagonal Right"),
+    FRONT_LEFT("Diagonal Left"),
+
     // XXX Assignment V3 (step 1)
     OPTION_LEFT_RIGHT("Left OR Right", LEFT, RIGHT);
 

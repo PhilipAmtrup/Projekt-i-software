@@ -22,17 +22,19 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 import java.util.List;
 
-import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
+import dk.dtu.compute.se.pisd.roborally.controller.*;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.controller.CheckPoint;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
+import javafx.animation.*;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -46,11 +48,12 @@ import org.jetbrains.annotations.NotNull;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
+import javafx.util.Duration;
+import javafx.animation.TranslateTransition;
 
 
 import dk.dtu.compute.se.pisd.roborally.controller.FieldAction;
-import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
+
 /**
  * ...
  *
@@ -129,6 +132,7 @@ public class SpaceView extends StackPane implements ViewObserver {
 
                 // add arrow to children
                 this.getChildren().add(arrow);
+
             }
         }
     }
@@ -172,6 +176,64 @@ private void drawWalls(Pane pane, List<Heading > walls) {
     }
 }
 
+    /**
+     * Metode som tegner gears left og right med billeder.
+     * Og roterer dem i den retning som de drejer spilleren.
+     * @author Julius s235462
+     */
+    private void drawGears() {
+        List<FieldAction> actions = space.getActions();
+        for(FieldAction action : actions) {
+            if(action instanceof Gear) {
+                Gear gear = (Gear) action;
+
+                   boolean isClockWise = gear.getIsClockWise();
+
+                if (isClockWise) {
+                    Image gearImage = new Image("GearRight.png");
+
+                    ImageView gearImageView = new ImageView(gearImage);
+
+                    // Set size of the ImageView
+                    gearImageView.setFitWidth(SPACE_WIDTH);
+                    gearImageView.setFitHeight(SPACE_HEIGHT);
+
+                    // Position the gear image at the center of the space
+                    gearImageView.relocate((SPACE_WIDTH - gearImage.getWidth()) / 2, (SPACE_HEIGHT - gearImage.getHeight()) / 2);
+
+                    // Add gear image
+                    this.getChildren().add(gearImageView);
+
+                    // Rotate the gear image
+                    RotateTransition rotateTransition = new RotateTransition(Duration.seconds(8), gearImageView);
+                    rotateTransition.setByAngle(360); // Rotate by 360 degrees
+                    rotateTransition.setCycleCount(RotateTransition.INDEFINITE); // Repeat indefinitely
+                    rotateTransition.play();
+                } else {
+                    Image gearImage = new Image("GearLeft.png");
+
+                    ImageView gearImageView = new ImageView(gearImage);
+
+                    // Set size of the ImageView
+                    gearImageView.setFitWidth(SPACE_WIDTH);
+                    gearImageView.setFitHeight(SPACE_HEIGHT);
+
+                    // Position the gear image at the center of the space
+                    gearImageView.relocate((SPACE_WIDTH - gearImage.getWidth()) / 2, (SPACE_HEIGHT - gearImage.getHeight()) / 2);
+
+                    // Add gear image
+                    this.getChildren().add(gearImageView);
+                    // Rotate the gear image
+                    RotateTransition rotateTransition = new RotateTransition(Duration.seconds(8), gearImageView);
+                    rotateTransition.setByAngle(-360); // Rotate by 360 degrees
+                    rotateTransition.setCycleCount(RotateTransition.INDEFINITE); // Repeat indefinitely
+                    rotateTransition.play();
+                }
+            }
+        }
+    }
+
+
     private void updatePlayer() {
         // Remove only player visuals if they exist
         this.getChildren().removeIf(node -> node instanceof Polygon && "player".equals(node.getUserData()));
@@ -209,6 +271,17 @@ private void drawWalls(Pane pane, List<Heading > walls) {
                 checkpointVisual.setFill(Color.TURQUOISE);
                 checkpointVisual.setUserData("checkpoint");  // Tag this node as "checkpoint"
 
+
+                // make checkpoint move in and out
+                ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(1), checkpointVisual);
+                scaleTransition.setAutoReverse(true);
+                scaleTransition.setCycleCount(ScaleTransition.INDEFINITE);
+                scaleTransition.setFromX(1.0);
+                scaleTransition.setToX(1.1);
+                scaleTransition.setFromY(1.0);
+                scaleTransition.setToY(1.1);
+                scaleTransition.play();
+
                 int number = ((CheckPoint) action).getNumber();
                 Text numberText = new Text(Integer.toString(number));
                 numberText.setFill(Color.BLACK); // Set text color
@@ -233,6 +306,7 @@ private void drawWalls(Pane pane, List<Heading > walls) {
 
             drawCheckpoint();
             drawConveyorBelt();
+            drawGears();
             updatePlayer();
 
             // Draw walls last

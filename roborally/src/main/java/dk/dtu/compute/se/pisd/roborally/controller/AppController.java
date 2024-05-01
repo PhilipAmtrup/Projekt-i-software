@@ -254,17 +254,7 @@ public class AppController implements Observer {
         // XXX do nothing for now
     }
 
-    public void endGame(Player player) {
-        int totalCheckpoints = board.totalCheckpoints();
-        if (player.getCurrentCheckpoint() == totalCheckpoints) {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("End Game");
-            alert.setHeaderText("End Game");
-            alert.setContentText("Game has ended!");
-            alert.showAndWait();
 
-        }
-        endGame(player);
-    }
+
 
 }
