@@ -137,8 +137,8 @@ public class Player extends Subject {
         this.health -= amount;
 
         if(this.health <= 0){
-            String message = "You lost all your health " + getName() + "\nYou have been moved back to the start position" +
-                    "\nYou have also lost your last checkpoint.\nMake sure to get that again!";
+            String message = "You have lost all your health " + getName() + "\nYou have been moved back to the start position." +
+                    "\nAll your checkpoints have been lost.\nSo make sure to get them again!";
             showAlert(Alert.AlertType.INFORMATION, "Death", message);
             this.setHeading(SOUTH);
 
@@ -149,7 +149,7 @@ public class Player extends Subject {
                 throw new RuntimeException(e);
             }
             this.setHealth(30);
-            this.setCurrentCheckpoint(this.getCurrentCheckpoint()-1);
+            this.setCurrentCheckpoint(0);
         }
     }
     public void addHealth(int amount) {
