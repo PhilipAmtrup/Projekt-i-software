@@ -148,7 +148,7 @@ public class Player extends Subject {
             } catch (ImpossibleMoveException e) {
                 throw new RuntimeException(e);
             }
-            this.setHealth(30);
+            this.setHealth(50);
             this.setCurrentCheckpoint(0);
         }
     }

@@ -131,7 +131,7 @@ public class AppController implements Observer {
 
         for (int i = 0; i < no; i++) {
             String color = PLAYER_COLORS.get(i % PLAYER_COLORS.size()); // Ensure cycling through colors
-            Player player = new Player(board, color, "Player " + (i + 1), 30);
+            Player player = new Player(board, color, "Player " + (i + 1), 50);
             board.addPlayer(player);
             player.setSpace(board.getSpace(startColumn + i, 0)); // Assumes 0 is a valid row
         }

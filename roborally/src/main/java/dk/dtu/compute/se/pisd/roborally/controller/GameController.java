@@ -597,23 +597,7 @@ public class GameController {
         assert false;
     }
 
-   /**
-    public void reduceHealth(@NotNull Health health , @NotNull Player player){
-        //Hvordan sætter jeg funktionen til at reducere health
-        int playerHealth = player.getHealth();
-        Space space = player.getSpace();
-        Heading heading = player.getHeading();
 
-        if (board.getNeighbour(space, heading) != null){
-        
-            playerHealth -= 10;
-            player.setHealth(playerHealth);
-
-        }
-
-    }
-
-    */
     /**
  * @author s230577
  * Now checks if there is any walls blocking the player

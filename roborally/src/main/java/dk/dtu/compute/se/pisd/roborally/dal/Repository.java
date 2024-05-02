@@ -380,7 +380,7 @@ public class Repository implements IRepository {
 				// TODO this should be more defensive
 				String name = rs.getString(PLAYER_NAME);
 				String colour = rs.getString(PLAYER_COLOUR);
-				Player player = new Player(game, colour ,name , 30);
+				Player player = new Player(game, colour ,name , 50);
 				game.addPlayer(player);
 
 				int x = rs.getInt(PLAYER_POSITION_X);
