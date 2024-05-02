@@ -23,6 +23,12 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.jetbrains.annotations.NotNull;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * ...
@@ -44,7 +50,7 @@ public class GameController {
      *
      * @param space the space to which the current player should move
      */
-    public void moveCurrentPlayerToSpace(@NotNull Space space)  {
+    public void moveCurrentPlayerToSpace(@NotNull Space space) {
         // TODO Assignment V1: method should be implemented by the students:
         //   - the current player should be moved to the given space
         //     (if it is free()
@@ -55,8 +61,9 @@ public class GameController {
         //     message needs to be implemented at another place)
 
 
-        // tekst skrevet i undervisningen
-        
+        // Dette her skal slettes inden vi aflevere!!
+        // Undtagen board.setCounter(board.getCounter() + 1); (dette er counteren)
+
         Player current = board.getCurrentPlayer();
         if (current != null && space.getPlayer() == null) {
             current.setSpace(space);
@@ -65,28 +72,13 @@ public class GameController {
 
             board.setCounter(board.getCounter() + 1);
         }
-       
-        
-        // if (current != null && space.getPlayer() == null) {
-        //     current.setSpace(space);
-        //     int currentNumber = board.getPlayerNumber(current);
-        //     int nextPlayerNumber = (currentNumber + 1) % board.getPlayerNumber(current);
-        //     Player next = board.getPlayer(nextPlayerNumber);
-        //     board.setCurrentPlayer(next);
 
-        //     // fortæller hvor mange gange man har rykket
-        //     
-        // }
     }
 
 
+    // XXX: V2
 
-    
 
-
-    // XXX: V2 
-    
-    
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
@@ -113,6 +105,7 @@ public class GameController {
 
     /**
      * Her generer spillet de forskellige kommando kort som er tilgængelig i programming phase.
+     *
      * @return CommandCards
      */
     private CommandCard generateRandomCommandCard() {
@@ -123,7 +116,8 @@ public class GameController {
 
     // XXX: V2 a
 
- 
+
+
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
@@ -178,6 +172,7 @@ public class GameController {
 
     /**
      * Makes the different buttons work, where it makes the buttons execute the cards.
+     *
      * @param option the different options of actions, type of cards (option card), defined in section with optionbutton in Playerview
      * @author s235459
      */
@@ -190,18 +185,35 @@ public class GameController {
                 if (card != null) {
                     Command command = card.command;
                     if (command.isInteractive()) {
-                        if(option == null){
+                        if (option == null) {
                             board.setPhase(Phase.PLAYER_INTERACTION);
-                        return;
+                            return;
                         } else {
                             executeCommand(currentPlayer, option);
                         }
-                        
-                    } 
-                    else {
+                    } else {
                         executeCommand(currentPlayer, command); // left or right
                     }
                 }
+
+                // After executing the command, iterate over all field actions on the player's new space.
+                for (FieldAction actionOnSpace : board.getCurrentPlayer().getSpace().getActions()) {
+                    // If the current field action is a ConveyorBelt, call doAction method on it.
+                    if (actionOnSpace instanceof ConveyorBelt) {
+                        actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
+                    }
+                    // If the current field action is a CheckPoint, call doAction method on it.
+                    else if (actionOnSpace instanceof CheckPoint) {
+                        actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
+                    }
+                    else if (actionOnSpace instanceof Gear){
+                        actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
+
+                    } else if (actionOnSpace instanceof Laser){
+                        actionOnSpace.doAction(this, board.getCurrentPlayer().getSpace());
+                    }
+                }
+
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
                 if (nextPlayerNumber < board.getPlayersNumber()) {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
@@ -219,35 +231,35 @@ public class GameController {
                 // this should not happen
                 assert false;
             }
-        } else {
-            // this should not happen
-            assert false;
         }
     }
 
 
-/**
- * Dette er i forhold til vores option "left or right". 
- * Når man har valgt "left or right" i programming phase så skal fasen sættes til "PLATER_INTERACTION" for at spilleren aktivt kan vælge hvilken option han ønsker.
- * Når han vælger sin option går den tilbage til activation phase og udfører den valgte option.
- * @param option
- * @author s226870
- */
-    public void executeOptionsAndContinue(@NotNull Command option){
+    /**
+     * Dette er i forhold til vores option "left or right".
+     * Når man har valgt "left or right" i programming phase så skal fasen sættes til "PLATER_INTERACTION" for at spilleren aktivt kan vælge hvilken option han ønsker.
+     * Når han vælger sin option går den tilbage til activation phase og udfører den valgte option.
+     *
+     * @param option
+     * @author s226870
+     */
+    public void executeOptionsAndContinue(@NotNull Command option) {
         assert board.getPhase() == Phase.PLAYER_INTERACTION;
         board.setPhase(Phase.ACTIVATION);
         executeNextStep(option);
-        
 
-        while(board.getPhase() == Phase.ACTIVATION && !board.isStepMode()){
+
+        while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode()) {
             executeNextStep(null);
         }
-        
+
     }
 
     // XXX: V2
+
     /**
      * Executer den kommando som bliver kaldt (option - fw, left, right, fastfw)
+     *
      * @param player
      * @param command
      * @author s226870
@@ -271,6 +283,24 @@ public class GameController {
                 case FAST_FORWARD:
                     this.fastForward(player);
                     break;
+                case MOVE_BACK:
+                    this.moveBack(player);
+                    break;
+                case FRONT_RIGHT:
+                    this.moveDiagonalRight(player);
+                    break;
+                case FRONT_LEFT:
+                    this.moveDiagonalLeft(player);
+                    break;
+                case U_TURN:
+                    this.uTurn(player);
+                    break;
+                case SHOOT_LASER:
+                    this.shootLaser(player);
+                    break;
+                case HEALTH_POTION:
+                    this.healthPotion(player);
+                    break;
 
                 default:
                     // DO NOTHING (for now)
@@ -278,44 +308,237 @@ public class GameController {
         }
     }
 
-
     /**
-     * Moves the current player one space forward
-     * @param player moves forward
+     * Moves the player diagonally front right based on its heading.
+     * checks for any walls around the new space and pushes any players on the space
+     * a space front.
+     * @author Julius s235462
+     * @param player
      */
-
-    // TODO Assignment V2
-    public void moveForward(@NotNull Player player) {
-        Space space = player.getSpace();
-        if (space != null){
-            Heading heading = player.getHeading();
-            Space newSpace = board.getNeighbour(space, heading);
-            if (newSpace != null && newSpace.getPlayer() == null){
-                newSpace.setPlayer(player);
-            }
-        }
-    }
-
-
-    /**
-     * Moves the current player two spaces foward
-     * @param player moves the player
-     */
-    // TODO Assignment V2
-    public void fastForward(@NotNull Player player) {
-        Space space = player.getSpace();
-        
-        if (space != null){
+    public void moveDiagonalRight(Player player) {
+        // Get the current space of the player
+        Space currentSpace = player.getSpace();
+        // Determine the heading of the player
         Heading heading = player.getHeading();
-        Space newSpace = board.getNeighbour(space, heading);
-        newSpace = board.getNeighbour(newSpace, heading);
-            if (newSpace != null && newSpace.getPlayer() == null){
+
+        // Calculate the new coordinates based on the current space and heading
+        int newX = currentSpace.x;
+        int newY = currentSpace.y;
+        switch (heading) {
+            case NORTH:
+                newX++; // Move right
+                newY--; // Move up
+                break;
+            case EAST:
+                newX++; // Move right
+                newY++; // Move down
+                break;
+            case SOUTH:
+                newX--; // Move left
+                newY++; // Move down
+                break;
+            case WEST:
+                newX--; // Move left
+                newY--; // Move up
+                break;
+            default:
+                // Handle other cases if needed
+                break;
+        }
+
+        // Get the new space based on the calculated coordinates
+        Space newSpace = board.getSpace(newX, newY);
+        if (newSpace != null) {
+            // Check for wall conditions before attempting to move the player
+            if (newSpace.hasWall(heading.opposite()) && currentSpace.hasWall(heading) || // Wall in front of the player both on current space and in new space
+                    currentSpace.hasWall(heading.next()) && currentSpace.hasWall(heading) || // Wall to the right of the player and in front on current space
+                    newSpace.hasWall(heading.opposite()) && newSpace.hasWall(heading.prev()) || // Wall in front of the player both on new space and in the opposite direction
+                    newSpace.hasWall(heading.prev()) && currentSpace.hasWall(heading.next())) { // Wall to the left of the player and in front on new space
+                // Exit the method without executing the move
+                return;
+            }
+
+            // If the conditions are met, attempt to move the player
+            if (newSpace.getPlayer() == null) {
+                player.setSpace(newSpace); // Move the player to the next space
+                currentSpace.setPlayer(null); // Clear the player from the current space
                 newSpace.setPlayer(player);
+            } else {
+                // If the next space is occupied, attempt to push the player
+                Space spaceAfterPush = board.getNeighbour(newSpace, heading);
+                if (spaceAfterPush != null && spaceAfterPush.getPlayer() == null && !spaceAfterPush.hasWall(heading)) {
+                    try {
+                        moveToSpace(newSpace.getPlayer(), spaceAfterPush, heading);
+                        player.setSpace(newSpace); // Move the player to the next space
+                        currentSpace.setPlayer(null); // Clear the player from the current space
+                        newSpace.setPlayer(player); // Update the player's position in the new space
+                    } catch (ImpossibleMoveException e) {
+                        // Handle the exception if needed
+                    }
+                }
             }
         }
+    }
+
+
+    /**
+     * exactly the same as moving diagonally right except that it looks for new space
+     * dependend on the heading diffrently. and checks for walls with diffrent conditions
+     * @author Julius s235462
+     * @param player
+     */
+    public void moveDiagonalLeft(Player player) {
+        // Get the current space of the player
+        Space currentSpace = player.getSpace();
+        // Determine the heading of the player
+        Heading heading = player.getHeading();
+
+        // Calculate the new coordinates based on the current space and heading
+        int newX = currentSpace.x;
+        int newY = currentSpace.y;
+        switch (heading) {
+            case NORTH:
+                newX--; // Move left
+                newY--; // Move up
+                break;
+            case EAST:
+                newX++; // Move left
+                newY--; // Move down
+                break;
+            case SOUTH:
+                newX++; // Move right
+                newY++; // Move down
+                break;
+            case WEST:
+                newX--; // Move right
+                newY++; // Move up
+                break;
+            default:
+                // Handle other cases if needed
+                break;
+        }
+        Space newSpace = board.getSpace(newX, newY);
+        if (newSpace != null) {
+            if (newSpace.hasWall(heading.opposite()) && currentSpace.hasWall(heading) ||
+                    currentSpace.hasWall(heading.prev()) && currentSpace.hasWall(heading) ||
+                    newSpace.hasWall(heading.opposite()) && newSpace.hasWall(heading.next()) ||
+                    newSpace.hasWall(heading.next()) && currentSpace.hasWall(heading.prev())) {
+                // Exit the method without executing the move
+                return;
+            }
+            if (!newSpace.hasWall(heading.next().next()) || !newSpace.hasWall(heading.next())) {
+                if (newSpace.getPlayer() == null) {
+                    player.setSpace(newSpace); // Move the player to the next space
+                    currentSpace.setPlayer(null); // Clear the player from the current space
+                    newSpace.setPlayer(player);
+                } else {
+                    // If the next space is occupied, attempt to push the player
+                    Space spaceAfterPush = board.getNeighbour(newSpace, heading);
+                    if (spaceAfterPush != null && spaceAfterPush.getPlayer() == null && !spaceAfterPush.hasWall(heading)) {
+                        try {
+                            moveToSpace(newSpace.getPlayer(), spaceAfterPush, heading);
+                            player.setSpace(newSpace); // Move the player to the next space
+                            currentSpace.setPlayer(null); // Clear the player from the current space
+                            newSpace.setPlayer(player); // Update the player's position in the new space
+                        } catch (ImpossibleMoveException e) {
+                            // Handle the exception if needed
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    /**
+     * Moves the current player one space bakcwards
+     * @author s226870
+     * @param player moves backwards
+     */
+
+
+    public void moveBack(@NotNull Player player) {
+        Space space = player.getSpace();
+        if (space != null) {
+            Heading heading = player.getHeading();
+            Heading oppositeHeading = heading.next().next(); // Get the opposite direction
+            Space newSpace = board.getNeighbour(space, oppositeHeading);
+
+            if (newSpace != null) {
+                // Check if there is a wall blocking the movement back
+                if (!space.hasWall(oppositeHeading) && !newSpace.hasWall(oppositeHeading.next().next())) {
+                    Player otherPlayer = newSpace.getPlayer();
+                    if (otherPlayer == null) {
+                        // If the new space is empty, move the player there
+                        newSpace.setPlayer(player);
+                        space.setPlayer(null);
+                        player.setSpace(newSpace);
+                    } else {
+                        // Attempt to push the other player back
+                        Space spaceBehindNew = board.getNeighbour(newSpace, oppositeHeading);
+                        if (spaceBehindNew != null && !newSpace.hasWall(oppositeHeading) && !spaceBehindNew.hasWall(oppositeHeading.next().next()) && spaceBehindNew.getPlayer() == null) {
+                            // Move the other player back if there is no wall and the space is empty
+                            spaceBehindNew.setPlayer(otherPlayer);
+                            newSpace.setPlayer(player);
+                            space.setPlayer(null);
+                            player.setSpace(newSpace);
+                            otherPlayer.setSpace(spaceBehindNew);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public void uTurn(@NotNull Player player) {
+
+        Heading heading = player.getHeading();
+        Heading oppositeHeading = heading.next().next();
+        player.setHeading(oppositeHeading);
 
     }
 
+
+    /**
+     * @author s230577
+     * Moves the current player two spaces foward
+     * This method moves the provided Player two spaces forward in the direction they are currently heading.
+     * The fast-forward movement stops at first successful move if the second movement is not possible.
+     * The sequence of operations is: determine heading -> move -> try to move again.
+     * Exceptions are caught and handled within the method, which makes this a safe operation regarding the game rules.
+     * @param player The Player who is to be moved two spaces forward.
+     */
+    public void fastForward(Player player) {
+        // Define the starting point
+        Space currentSpace = player.getSpace();
+        // Determine the direction we're moving in
+        if (currentSpace != null) {
+            Heading heading = player.getHeading();
+
+            // Try to move the player one space ahead
+            try {
+                Space nextSpace = board.getNeighbour(currentSpace, heading);
+                if (nextSpace != null) {
+                    moveToSpace(player, nextSpace, heading);
+                    currentSpace = nextSpace;
+                }
+            } catch (ImpossibleMoveException exception) {
+                // If can't move further, we stop here
+                return;
+            }
+
+            // Try to move the player a second space ahead
+            try {
+                Space nextSpace = board.getNeighbour(currentSpace, heading);
+                if (nextSpace != null) {
+                    moveToSpace(player, nextSpace, heading);
+                }
+            } catch (ImpossibleMoveException exception) {
+                // If can't move further, we stop here
+                return;
+            }
+        }
+    }
 
     /**
      * It makes the current player's heading turns right
@@ -374,6 +597,128 @@ public class GameController {
         assert false;
     }
 
-   
 
+    /**
+ * @author s230577
+ * Now checks if there is any walls blocking the player
+     *  Wall checks are enforced at spaces, the move is not executed if a wall blocks the way in current or next space.
+     * @param player The Player who is to be moved forward.
+ */
+  // ... (other parts of the GameController class)
+
+    public void moveForward(Player player) {
+        Space currentSpace = player.getSpace();
+        if (currentSpace != null) {
+            Heading heading = player.getHeading();
+            Space nextSpace = board.getNeighbour(currentSpace, heading);
+
+            // Check for walls on the current space and the next space
+            if (nextSpace != null && !currentSpace.hasWall(heading) && !nextSpace.hasWall(heading.opposite())) {
+                Player otherPlayer = nextSpace.getPlayer();
+
+                // If the next space is empty, move the player into it
+                if (otherPlayer == null) {
+                    currentSpace.setPlayer(null);
+                    nextSpace.setPlayer(player);
+                } else {
+                    // If the next space is occupied, attempt to push the other player if possible
+                    Space spaceAfterNext = board.getNeighbour(nextSpace, heading);
+                    if (spaceAfterNext != null && !nextSpace.hasWall(heading) && !spaceAfterNext.hasWall(heading.opposite()) && spaceAfterNext.getPlayer() == null) {
+                        // Free the previous spaces, push the other player, and move the current player
+                        nextSpace.setPlayer(null);
+                        spaceAfterNext.setPlayer(otherPlayer);
+                        currentSpace.setPlayer(null);
+                        nextSpace.setPlayer(player);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Makes it possible to shoot laser and damage a player up to two spaces away from the shooter.
+     * @author s235459
+     * @param player
+     */
+
+    public void shootLaser(@NotNull Player player ){
+        Space space = player.getSpace();
+        Heading heading = player.getHeading();
+
+        Space nextSpace = board.getNeighbour(space, heading);
+        Space nextnextSpace = board.getNeighbour(nextSpace, heading);
+
+        Player shootingPlayer = space.getPlayer();
+        Player nextSpacePlayer = (nextSpace != null) ? nextSpace.getPlayer() : null;
+        Player nextnextSpacePlayer = (nextnextSpace != null) ? nextnextSpace.getPlayer() : null;
+
+
+        if (nextSpacePlayer != null) {
+            nextSpacePlayer.reduceHealth(10, this);
+
+        }
+        if (nextnextSpacePlayer != null) {
+            nextnextSpacePlayer.reduceHealth(5, this);
+        }
+
+    }
+
+
+    public void healthPotion(@NotNull Player player) {
+        Space space = player.getSpace();
+        Heading heading = player.getHeading();
+
+        if (space != null) {
+            player.addHealth(10);
+        }
+    }
+
+
+
+
+    public boolean moveToSpace(Player player, Space targetSpace, Heading heading) throws ImpossibleMoveException {
+        Space currentSpace = player.getSpace();
+
+
+            Player other = targetSpace.getPlayer();
+            if (other != null) {
+                Space target = board.getNeighbour(targetSpace, heading);
+                if (target != null) {
+                    moveToSpace(other, target, heading);
+                    assert target.getPlayer() == null : target;
+                } else {
+                    throw new ImpossibleMoveException(player, targetSpace, heading);
+                }
+            }
+
+            // Check if there are walls in the current space and the target space
+            if (!currentSpace.hasWall(heading) && !targetSpace.hasWall(heading.opposite())) {
+                player.setSpace(targetSpace);
+            } else {
+                throw new ImpossibleMoveException(player, targetSpace, heading);
+            }
+
+        return false;
+    }
+
+    // To be able to show an alert when a player has reached all the checkpoints
+    private void showAlert(AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public void checkForWinCondition(Player player) {
+        int totalCheckpoints = board.totalCheckpoints();
+        if (player.getCurrentCheckpoint() == totalCheckpoints) {
+            String message = "Congratulations " + player.getName() + "! \nYou have successfully collected all the checkpoints." + "\nYou have won the game!";
+            showAlert(AlertType.INFORMATION, "Game Over", message);
+            board.setPhase(Phase.GAME_OVER);
+        }
+    }
 }
+
+
+

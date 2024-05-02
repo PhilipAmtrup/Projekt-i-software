@@ -6,7 +6,7 @@
 
     <groupId>dk.dtu.compute.se.pisd</groupId>
     <artifactId>roborally</artifactId>
-    <version>1.1.3a-SNAPSHOT</version>
+    <version>1.1.4a-SNAPSHOT</version>
     <description>
         RoboRally demo with database access and loading
         some game boards from a files for the course

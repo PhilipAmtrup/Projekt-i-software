@@ -39,6 +39,14 @@ public enum Command {
     RIGHT("Turn Right"),
     LEFT("Turn Left"),
     FAST_FORWARD("Fast Fwd"),
+    MOVE_BACK("Move Back"),
+    U_TURN("U Turn"),
+    SHOOT_LASER("SHOOT LASER"),
+    HEALTH_POTION("Health Potion"),
+
+    //diagonal moves added in cards
+    FRONT_RIGHT("Diagonal Right"),
+    FRONT_LEFT("Diagonal Left"),
 
     // XXX Assignment V3 (step 1)
     OPTION_LEFT_RIGHT("Left OR Right", LEFT, RIGHT);
@@ -54,9 +62,13 @@ public enum Command {
 
     final private List<Command> options;
 
+
     Command(String displayName, Command... options) {
         this.displayName = displayName;
         this.options = Collections.unmodifiableList(Arrays.asList(options));
+
+
+
     }
 
     public boolean isInteractive() {
@@ -66,5 +78,6 @@ public enum Command {
     public List<Command> getOptions() {
         return options;
     }
+
 
 }

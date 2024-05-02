@@ -33,13 +33,32 @@ import org.jetbrains.annotations.NotNull;
 public class CommandCard extends Subject {
 
     final public Command command;
+    final Type type;
+    private String name;
 
     public CommandCard(@NotNull Command command) {
         this.command = command;
+        this.type = Type.COMMAND_CARD;
+        this.name = command.displayName;
     }
+
 
     public String getName() {
         return command.displayName;
+    }
+    public String setName(String name) {
+        this.name = name;
+        return name;
+    }
+
+    public Command getCommand() {
+        return command;
+    }
+
+
+
+    public Type getType() {
+        return type;
     }
 
 

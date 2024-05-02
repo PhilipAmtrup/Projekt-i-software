@@ -26,8 +26,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
-import dk.dtu.compute.se.pisd.roborally.model.Board;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.dal.*;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -36,6 +36,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -53,56 +56,138 @@ public class AppController implements Observer {
 
     final private RoboRally roboRally;
 
+    Board board = LoadBoard.loadBoard("defaultboard");  // loading board from defaultboard.json
+
     private GameController gameController;
 
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
     }
 
+    /**
+     * Denne method starter et nyt spil i starten når man trykker "new game".
+     * Man har derefter mulighed for at vælge hvilket board man vil spille på gennem choicedialog og metoden "getAvailableBoards();"
+     * Efter boarded er valgt, vælger man antal spillere, gennem choicedialog også.
+     * Når man har gået disse trin igennem, starter spillet med metoden setupPlayersAndGame();
+     * @author s226870
+     * @return Start af nyt spil
+     */
     public void newGame() {
-        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
-        dialog.setTitle("Player number");
-        dialog.setHeaderText("Select number of players");
-        Optional<Integer> result = dialog.showAndWait();
-
-        if (result.isPresent()) {
-            if (gameController != null) {
-                // The UI should not allow this, but in case this happens anyway.
-                // give the user the option to save the game or abort this operation!
-                if (!stopGame()) {
-                    return;
-                }
-            }
-
-            // XXX the board should eventually be created programmatically or loaded from a file
-            //     here we just create an empty board with the required number of players.
-            Board board = new Board(8,8);
-            gameController = new GameController(board);
-            int no = result.get();
-            for (int i = 0; i < no; i++) {
-                Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
-                board.addPlayer(player);
-                player.setSpace(board.getSpace(i % board.width, i));
-            }
-
-            // XXX: V2
-            // board.setCurrentPlayer(board.getPlayer(0));
-            gameController.startProgrammingPhase();
-
-            roboRally.createBoardView(gameController);
+        // Get available boards
+        List<String> availableBoards = LoadBoard.getAvailableBoards();
+        if (availableBoards.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No board files found!");
+            alert.showAndWait();
+            return;
         }
+
+        // Create a dialog to choose the board
+        ChoiceDialog<String> boardDialog = new ChoiceDialog<>(availableBoards.get(0), availableBoards);
+        boardDialog.setTitle("Select Board");
+        boardDialog.setHeaderText("Choose a board to play on:");
+        Optional<String> boardChoice = boardDialog.showAndWait();
+
+        if (!boardChoice.isPresent()) {
+            return; // Exit if no selection is made
+        }
+
+        // Load the selected board
+        try {
+            this.board = LoadBoard.loadBoard(boardChoice.get());// Do not append .json; getAvailableBoards() already strips it
+            this.board.setBoardName(boardChoice.get());
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error loading board: " + e.getMessage());
+            alert.showAndWait();
+            return; // Important to return here if the board could not be loaded
+        }
+
+        // Continue with player number selection
+        ChoiceDialog<Integer> playerNumberDialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
+        playerNumberDialog.setTitle("Player Number");
+        playerNumberDialog.setHeaderText("Select number of players:");
+        Optional<Integer> playerNumber = playerNumberDialog.showAndWait();
+
+        if (!playerNumber.isPresent()) {
+            return; // Exit if no selection is made
+        }
+
+        setupPlayersAndGame(playerNumber.get()); // Setup the game with the number of players
     }
 
+    private void setupPlayersAndGame(int no) {
+        if (gameController != null) {
+            if (!stopGame()) {
+                return; // Ensure current game is stopped before setting up a new one
+            }
+        }
+
+
+
+
+
+        gameController = new GameController(board);
+        int middleColumn = board.width / 2; // Calculate the middle column
+        int startColumn = middleColumn - (no / 2);  // Calculate the starting column for the leftmost player
+
+        for (int i = 0; i < no; i++) {
+            String color = PLAYER_COLORS.get(i % PLAYER_COLORS.size()); // Ensure cycling through colors
+            Player player = new Player(board, color, "Player " + (i + 1), 50);
+            board.addPlayer(player);
+            player.setSpace(board.getSpace(startColumn + i, 0)); // Assumes 0 is a valid row
+        }
+
+        gameController.startProgrammingPhase();
+        roboRally.createBoardView(gameController); // Assuming this sets up the view
+    }
+
+
+
+
+    /**
+     * @author s235459
+     * Makes it possible to save the game to the database.
+     */
     public void saveGame() {
         // XXX needs to be implemented eventually
+        //Connector connector= new Connector();
+        Repository repo = new Repository(new Connector());
+
+
+        if (this.board.getGameId() != null) {
+            repo.updateGameInDB(this.gameController.board);
+        } else {
+        repo.createGameInDB(this.gameController.board);
+        }
+
+
     }
 
+    /**
+     * @author s235459
+     * Makes it possible to see the saved games, that are possible to load. The player is able to choose himself what game to load
+     *
+     */
     public void loadGame() {
         // XXX needs to be implememted eventually
         // for now, we just create a new game
-        if (gameController == null) {
-            newGame();
+
+        Repository gameRepo = new Repository(new Connector());
+        List< GameInDB> games = gameRepo.getGames();
+
+        ChoiceDialog<GameInDB> LoadChoice = new ChoiceDialog<>();
+        LoadChoice.setTitle("Load Game");
+        LoadChoice.setHeaderText("Choose a game to load");
+        LoadChoice.getItems().addAll(games);
+        LoadChoice.showAndWait();
+
+
+        if (LoadChoice.getSelectedItem() != null) {
+            this.board = gameRepo.loadGameFromDB(LoadChoice.getSelectedItem().id);
+            this.gameController = new GameController(this.board);
+            roboRally.createBoardView(this.gameController);
+
         }
+        roboRally.createBoardView(this.gameController);
     }
 
     /**
