@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS Player (
 
   name varchar(255),
   colour varchar(31),
+    health int,
+
 
 
   positionX int,

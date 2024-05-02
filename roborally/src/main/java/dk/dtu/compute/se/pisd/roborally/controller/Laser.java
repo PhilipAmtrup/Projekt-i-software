@@ -24,6 +24,7 @@ public class Laser extends FieldAction{
     public int getY() { return this.y;}
 
     public void setReduceHealth(int reduceHealth) {this.reduceHealth = reduceHealth;}
+
     public int getReduceHealth() { return reduceHealth;}
 
     @Override
