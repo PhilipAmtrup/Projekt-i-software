@@ -59,14 +59,8 @@ public class Board extends Subject {
     private int step = 0;
 
     private boolean stepMode;
-    private int health;
 
 
-    /* 
-     * counter for the number of moves (but only for assigment v1)
-     * Mangler en get og set!!! (er blevet løst kig lige nede under)
-     */
-    
 
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
@@ -80,40 +74,11 @@ public class Board extends Subject {
             }
         }
         this.stepMode = false;
-
-        // Adding checkpoints and walls during board initialization
-       // addCheckPoints();
-
     }
-    /**
- * @author s230577, s235462
- * Walls being added during board initialization with their specific coordinates
- * Can also add more if needed
- */
-
-private void addCheckPoints() {
-    // Specifying checkpoints with x and y coordinates
-
-        CheckPoint checkpoint1 = new CheckPoint(0, 5, 1);
-        getSpace(0, 7).setCheckPoint(checkpoint1);
-        getSpace(0, 7).setCheckpointNumber(checkpoint1.getNumber());
-
-        CheckPoint checkpoint2 = new CheckPoint(6, 2, 2);
-        getSpace(7, 0).setCheckPoint(checkpoint2);
-        getSpace(7, 0).setCheckpointNumber(checkpoint2.getNumber());
-
-        CheckPoint checkpoint3 = new CheckPoint(6, 2, 3);
-        getSpace(7, 7).setCheckPoint(checkpoint3);
-        getSpace(7, 7).setCheckpointNumber(checkpoint3.getNumber());
-        // Add additional checkpoints as needed
 
 
-    // Add additional checkpoints as needed
-}
 
-    public Board(int width, int height) {
-        this(width, height, "defaultboard");
-    }
+
 
     public Integer getGameId() {
         return gameId;
@@ -314,13 +279,13 @@ private void addCheckPoints() {
     public int getCounter() {
         return counter;
     }
-    
+
     public void setCounter(int counter) {
         if (counter != this.counter){
             this.counter = counter;
             notifyChange();
         }
-        
+
     }
 
     public void setBoardName(String boardName) {

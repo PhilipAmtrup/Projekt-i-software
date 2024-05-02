@@ -103,30 +103,8 @@ public class Space extends Subject {
         return walls;
     }
 
-    private int checkpointNumber = -1; // Initialize with -1 indicating no checkpoint
 
-    /**
-     * Retrieves the list of checkpoint numbers. If there is a valid checkpoint number, it adds it to the list.
-     *
-     * @return A list of integers representing the checkpoint numbers
-     */
-    public List<Integer> getCheckpointNumbers() {
-        List<Integer> checkpointNumbers = new ArrayList<>();
-        if (checkpointNumber != -1) {
-            checkpointNumbers.add(checkpointNumber);
-        }
-        return checkpointNumbers;
-    }
 
-    /**
-     * Sets the checkpoint number and notifies observers of the change.
-     *
-     * @param checkpointNumber The updated checkpoint number
-     */
-    public void setCheckpointNumber(int checkpointNumber) {
-        this.checkpointNumber = checkpointNumber;
-        notifyChange();
-    }
     /**
      * Retrieves the CheckPoint object.
      *
