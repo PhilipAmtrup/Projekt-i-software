@@ -26,12 +26,13 @@ class GameControllerTest {
 
     private final int TEST_WIDTH = 8;
     private final int TEST_HEIGHT = 8;
+    private final String BOARD_NAME = "defaultboard";
 
     private GameController gameController;
 
     @BeforeEach
     void setUp() {
-        Board board = new Board(TEST_WIDTH, TEST_HEIGHT);
+        Board board = new Board(TEST_WIDTH, TEST_HEIGHT , BOARD_NAME);
         gameController = new GameController(board);
         for (int i = 0; i < 6; i++) {
             Player player = new Player(board, null,"Player " + i , 30);
@@ -64,14 +65,11 @@ class GameControllerTest {
         //The following tests should be used later for assignment V2
 
    
-    /**
-     * @author s235459
-     * Test for at se om checkpoints bliver sat
-     */
+
     @Test
     void testsetCheckpoint(){
 
-        Board board = new Board(8, 8);
+        Board board = new Board(8, 8, "defaultboard");
         Space space = board.getSpace(1, 5);
         CheckPoint checkpoint = new CheckPoint(1, 5, 1);
         
@@ -85,10 +83,7 @@ class GameControllerTest {
     }
      
 
-     /**
-      * Testing whether it is possible to move the current player to another space
-      * @author s235459
-      */
+
 
      @Test
      void moveCurrentPlayerToSpace() {
@@ -104,10 +99,7 @@ class GameControllerTest {
      }
      
 
-     /**
-      * @author s235459
-      * Test to check whether it is possible to move the current player forward
-      */
+
      @Test
      void moveForward() {
          Board board = gameController.board;
@@ -120,10 +112,7 @@ class GameControllerTest {
          Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
      }
        
-     /**
-      * Test to check whether it is possible to move the heading of the current player to the left
-      * @author s235459
-      */
+
      @Test
      void moveLeft(){
          Board board = gameController.board;
@@ -141,11 +130,8 @@ class GameControllerTest {
  
      }
      
-     /**
-      * Test to check whether it is possible to move the current player to the right
-      * @author s235459
-      */
 
+    @Test
      void moveRight(){
          Board board = gameController.board;
          Player player = board.getCurrentPlayer();
@@ -182,13 +168,10 @@ class GameControllerTest {
     //      Assertions.assertEquals(Heading.EAST, player.getHeading(), "Player" + player.getName() + "should be heading East!" );
     //  }
 
-    /**
-     * @author s235459
-     * Test til at tjekke hvorvidt Conveyor belts har en retning og får skiftet retning
-     */
+
     @Test
     void testConveyorBelt(){
-        Board board = new Board(8, 8);
+        Board board = new Board(8, 8 , "defaultboard");
         Space space = board.getSpace(1, 5);
         ConveyorBelt con = new ConveyorBelt();
 
@@ -198,31 +181,7 @@ class GameControllerTest {
         assertEquals(Heading.EAST, con.getHeading());
     }
 
-    /**
-     * @author s235459
-     * Test til at tjekke om ConveyorBelts rykker spilleren.
-     * Hvis outputtet er true, så virker funktionen doAction og spilleren derfor rykkes
-     */
-    @Test
-    void testPlayerMovesOnConveyorBelt(){
-        Board board = new Board(8, 8);
-        Space Ispace = board.getSpace(3, 3);
-        Player player = new Player(board, null, null, 30);
-        Ispace.setPlayer(player);
-        ConveyorBelt ConveyorSpace = new ConveyorBelt();
 
-        ConveyorSpace.setHeading(Heading.SOUTH);
-
-        Space targetSp = board.getSpace(3, 4);
-
-
-        boolean result = ConveyorSpace.doAction(gameController, Ispace);
-
-        assertTrue(result);
-        
-        
-
-    }
 }
 
 

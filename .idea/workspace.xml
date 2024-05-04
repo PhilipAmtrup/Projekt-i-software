@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0b33b757-db36-4148-911e-6cc21a43cf0e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Space.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/model/Space.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/main/resources/schemas/createschema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/resources/schemas/createschema.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/roborally/src/test/java/dk/dtu/compute/se/pisd/roborally/controller/GameControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/test/java/dk/dtu/compute/se/pisd/roborally/controller/GameControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -71,8 +68,6 @@
     "Application.RoboRally.executor": "Run",
     "Application.StartRoboRally.executor": "Run",
     "JUnit.GameControllerTest.executor": "Run",
-    "JUnit.GameControllerTest.testPlayerMovesOnConveyorBelt.executor": "Debug",
-    "JUnit.JDBC_test.executor": "Run",
     "Maven.roborally [compile].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -107,7 +102,7 @@
       <recent name="$PROJECT_DIR$/roborally/src/main" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.StartRoboRally">
+  <component name="RunManager" selected="JUnit.GameControllerTest">
     <configuration name="RoboRally" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dk.dtu.compute.se.pisd.roborally.RoboRally" />
       <module name="roborally" />
@@ -149,43 +144,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GameControllerTest.testPlayerMovesOnConveyorBelt" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="roborally" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dk.dtu.compute.se.pisd.roborally.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="dk.dtu.compute.se.pisd.roborally.controller" />
-      <option name="MAIN_CLASS_NAME" value="dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest" />
-      <option name="METHOD_NAME" value="testPlayerMovesOnConveyorBelt" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="JDBC_test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="roborally" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dk.dtu.compute.se.pisd.roborally.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="dk.dtu.compute.se.pisd.roborally.controller" />
-      <option name="MAIN_CLASS_NAME" value="dk.dtu.compute.se.pisd.roborally.controller.JDBC_test" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.StartRoboRally" />
-        <item itemvalue="JUnit.GameControllerTest.testPlayerMovesOnConveyorBelt" />
         <item itemvalue="JUnit.GameControllerTest" />
-        <item itemvalue="JUnit.JDBC_test" />
+        <item itemvalue="Application.StartRoboRally" />
         <item itemvalue="Application.RoboRally" />
       </list>
     </recent_temporary>
@@ -238,6 +200,9 @@
       <workItem from="1714551126462" duration="9226000" />
       <workItem from="1714568580496" duration="2515000" />
       <workItem from="1714593580318" duration="92000" />
+      <workItem from="1714593675495" duration="44000" />
+      <workItem from="1714638396596" duration="13428000" />
+      <workItem from="1714740615285" duration="7111000" />
     </task>
     <servers />
   </component>
