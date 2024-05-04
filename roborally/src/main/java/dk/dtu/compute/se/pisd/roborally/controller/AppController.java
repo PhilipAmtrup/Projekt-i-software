@@ -56,7 +56,7 @@ public class AppController implements Observer {
 
     final private RoboRally roboRally;
 
-    Board board = LoadBoard.loadBoard("defaultboard");  // loading board from defaultboard.json
+    Board board = LoadBoard.loadBoard("defaultboard");
 
     private GameController gameController;
 
@@ -93,7 +93,7 @@ public class AppController implements Observer {
 
         // Load the selected board
         try {
-            this.board = LoadBoard.loadBoard(boardChoice.get());// Do not append .json; getAvailableBoards() already strips it
+            this.board = LoadBoard.loadBoard(boardChoice.get());
             this.board.setBoardName(boardChoice.get());
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error loading board: " + e.getMessage());
@@ -120,11 +120,6 @@ public class AppController implements Observer {
                 return; // Ensure current game is stopped before setting up a new one
             }
         }
-
-
-
-
-
         gameController = new GameController(board);
         int middleColumn = board.width / 2; // Calculate the middle column
         int startColumn = middleColumn - (no / 2);  // Calculate the starting column for the leftmost player
@@ -231,14 +226,9 @@ public class AppController implements Observer {
         }
     }
 
-    public boolean isGameRunning() {
-        return gameController != null;
-    }
-
-
     @Override
     public void update(Subject subject) {
-        // XXX do nothing for now
+
     }
 
 }

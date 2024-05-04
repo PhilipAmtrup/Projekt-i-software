@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="0b33b757-db36-4148-911e-6cc21a43cf0e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/roborally/src/test/java/dk/dtu/compute/se/pisd/roborally/controller/GameControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/test/java/dk/dtu/compute/se/pisd/roborally/controller/GameControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/AppController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/BoardFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/BoardFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/fileaccess/LoadBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/fileaccess/LoadBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/view/SpaceView.java" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/java/dk/dtu/compute/se/pisd/roborally/view/SpaceView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/roborally/src/main/resources/boards/board2.json" beforeDir="false" afterPath="$PROJECT_DIR$/roborally/src/main/resources/boards/board2.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,35 +68,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.RoboRally.executor": "Run",
-    "Application.StartRoboRally.executor": "Run",
-    "JUnit.GameControllerTest.executor": "Run",
-    "Maven.roborally [compile].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/45601/OneDrive/Skrivebord/Projekt-i-software/roborally/src/main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "terminal",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.RoboRally.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StartRoboRally.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameControllerTest.testPlayerMovesOnConveyorBelt.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.JDBC_test.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.roborally [compile].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/45601/OneDrive/Skrivebord/Projekt-i-software/roborally/src/main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\45601\OneDrive\Skrivebord\Projekt-i-software\roborally\src\main" />
@@ -102,7 +109,7 @@
       <recent name="$PROJECT_DIR$/roborally/src/main" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.GameControllerTest">
+  <component name="RunManager" selected="Application.StartRoboRally">
     <configuration name="RoboRally" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dk.dtu.compute.se.pisd.roborally.RoboRally" />
       <module name="roborally" />
@@ -144,10 +151,43 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GameControllerTest.testPlayerMovesOnConveyorBelt" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="roborally" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dk.dtu.compute.se.pisd.roborally.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dk.dtu.compute.se.pisd.roborally.controller" />
+      <option name="MAIN_CLASS_NAME" value="dk.dtu.compute.se.pisd.roborally.controller.GameControllerTest" />
+      <option name="METHOD_NAME" value="testPlayerMovesOnConveyorBelt" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JDBC_test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="roborally" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dk.dtu.compute.se.pisd.roborally.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="dk.dtu.compute.se.pisd.roborally.controller" />
+      <option name="MAIN_CLASS_NAME" value="dk.dtu.compute.se.pisd.roborally.controller.JDBC_test" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.GameControllerTest" />
         <item itemvalue="Application.StartRoboRally" />
+        <item itemvalue="JUnit.JDBC_test" />
+        <item itemvalue="JUnit.GameControllerTest" />
+        <item itemvalue="JUnit.GameControllerTest.testPlayerMovesOnConveyorBelt" />
         <item itemvalue="Application.RoboRally" />
       </list>
     </recent_temporary>
@@ -200,9 +240,6 @@
       <workItem from="1714551126462" duration="9226000" />
       <workItem from="1714568580496" duration="2515000" />
       <workItem from="1714593580318" duration="92000" />
-      <workItem from="1714593675495" duration="44000" />
-      <workItem from="1714638396596" duration="13428000" />
-      <workItem from="1714740615285" duration="7111000" />
     </task>
     <servers />
   </component>

@@ -255,7 +255,6 @@ public class GameController {
 
     }
 
-    // XXX: V2
 
     /**
      * Executer den kommando som bliver kaldt (option - fw, left, right, fastfw)
@@ -266,9 +265,6 @@ public class GameController {
      */
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
-            // XXX This is a very simplistic way of dealing with some basic cards and
-            //     their execution. This should eventually be done in a more elegant way
-            //     (this concerns the way cards are modelled as well as the way they are executed).
 
             switch (command) {
                 case FORWARD:
@@ -490,6 +486,8 @@ public class GameController {
             }
         }
     }
+
+
     public void uTurn(@NotNull Player player) {
 
         Heading heading = player.getHeading();
@@ -544,8 +542,6 @@ public class GameController {
      * It makes the current player's heading turns right
      * @param player turns right
      */
-
-    // TODO Assignment V2
     public void turnRight(@NotNull Player player) {
         Heading heading = player.getHeading();
         Heading nextHeading = heading.next();
@@ -556,8 +552,6 @@ public class GameController {
      * It makes the current player's heading turns left
      * @param player turns left
      */
-    
-    // TODO Assignment V2
     public void turnLeft(@NotNull Player player) {
         Heading heading = player.getHeading();
         Heading prevHeading = heading.prev();
@@ -586,15 +580,6 @@ public class GameController {
         } else {
             return false;
         }
-    }
-
-    /**
-     * A method called when no corresponding controller operation is implemented yet. This
-     * should eventually be removed.
-     */
-    public void notImplemented() {
-        // XXX just for now to indicate that the actual method is not yet implemented
-        assert false;
     }
 
 
@@ -710,11 +695,19 @@ public class GameController {
         alert.showAndWait();
     }
 
+    /**
+     * This method is used to check if a player has reached all checkpoints.
+     * If all checkpoints is reached the game ends and that player have won
+     * An alert will show up on the screen so that there is no doubt the player won
+     * And then the phase changes to GAME_OVER where nothing can be done on the screen.
+     * @author s226870
+     * @param player
+     */
     public void checkForWinCondition(Player player) {
         int totalCheckpoints = board.totalCheckpoints();
         if (player.getCurrentCheckpoint() == totalCheckpoints) {
             String message = "Congratulations " + player.getName() + "! \nYou have successfully collected all the checkpoints." + "\nYou have won the game!";
-            showAlert(AlertType.INFORMATION, "Game Over", message);
+            showAlert(AlertType.INFORMATION, "Win", message);
             board.setPhase(Phase.GAME_OVER);
         }
     }
