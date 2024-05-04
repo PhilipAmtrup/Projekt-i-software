@@ -24,13 +24,14 @@ public class Laser extends FieldAction{
     public int getY() { return this.y;}
 
     public void setReduceHealth(int reduceHealth) {this.reduceHealth = reduceHealth;}
+
     public int getReduceHealth() { return reduceHealth;}
 
     @Override
     public boolean doAction(GameController gameController, Space space) {
         Player player =  space.getPlayer();
         if (player != null){
-            player.reduceHealth(reduceHealth);
+            player.reduceHealth(reduceHealth, gameController);
             return true;
         }
         return false;

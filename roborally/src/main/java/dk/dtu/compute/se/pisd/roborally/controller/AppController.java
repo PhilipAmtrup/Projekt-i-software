@@ -131,7 +131,7 @@ public class AppController implements Observer {
 
         for (int i = 0; i < no; i++) {
             String color = PLAYER_COLORS.get(i % PLAYER_COLORS.size()); // Ensure cycling through colors
-            Player player = new Player(board, color, "Player " + (i + 1), 30);
+            Player player = new Player(board, color, "Player " + (i + 1), 50);
             board.addPlayer(player);
             player.setSpace(board.getSpace(startColumn + i, 0)); // Assumes 0 is a valid row
         }
@@ -173,7 +173,6 @@ public class AppController implements Observer {
 
         Repository gameRepo = new Repository(new Connector());
         List< GameInDB> games = gameRepo.getGames();
-        //board = BoardFactory.getInstance().createBoard("defaultboard");
 
         ChoiceDialog<GameInDB> LoadChoice = new ChoiceDialog<>();
         LoadChoice.setTitle("Load Game");
@@ -184,9 +183,7 @@ public class AppController implements Observer {
 
         if (LoadChoice.getSelectedItem() != null) {
             this.board = gameRepo.loadGameFromDB(LoadChoice.getSelectedItem().id);
-            //this.board = BoardFactory.getInstance().createBoard("defaultboard");
             this.gameController = new GameController(this.board);
-            //Player player = board.getPlayer(this.board.getPlayersNumber());
             roboRally.createBoardView(this.gameController);
 
         }
