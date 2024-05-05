@@ -148,25 +148,6 @@ class GameControllerTest {
  
  
      }
-     
- 
-    //  @Test
-    //  void optionButton(){
-    //      Board board = gameController.board;
-    //      Player player = board.getCurrentPlayer();
-    //      Space spaceCurrentPlayer = player.getSpace();
-         
-    //      Heading heading = player.getHeading();
- 
-         
-    //      gameController.executeNextStep();
- 
- 
- 
-    //      Assertions.assertEquals(player , spaceCurrentPlayer.getPlayer(), "Player" + player.getName() + "should be Space (0,0)!" );
-    //      Assertions.assertEquals(Heading.WEST, player.getHeading(), "Player" + player.getName() + "should be heading West!");
-    //      Assertions.assertEquals(Heading.EAST, player.getHeading(), "Player" + player.getName() + "should be heading East!" );
-    //  }
 
 
     @Test
@@ -179,6 +160,44 @@ class GameControllerTest {
 
         con.setHeading(Heading.EAST);
         assertEquals(Heading.EAST, con.getHeading());
+    }
+    @Test
+    void Uturn(){
+        Board board = gameController.board;
+        Player player = board.getCurrentPlayer();
+        Space spaceCurrentPlayer = player.getSpace();
+
+        Heading heading = player.getHeading();
+
+
+
+        gameController.uTurn(player);
+
+        Assertions.assertEquals(player, spaceCurrentPlayer.getPlayer(), "Player " + player.getName() + " should beSpace (0,0)!");
+        Assertions.assertEquals(Heading.NORTH, player.getHeading(), "Player" + player.getName() + "should be heading North!");
+
+    }
+
+    /**
+     * @author s235459
+     * Checks if the shooting player damages the other players standing in front
+     */
+    @Test
+    void ShootLaser(){
+        Board board = gameController.board;
+        Player shooter = board.getPlayer(0);
+        Player target1 = board.getPlayer(1);
+        Player target2 = board.getPlayer(2);
+
+        shooter.setSpace(board.getSpace(0, 0));
+        target1.setSpace(board.getSpace(0, 1));
+        target2.setSpace(board.getSpace(0, 2));
+
+        gameController.shootLaser(shooter);
+
+        Assertions.assertEquals(20 , target1.getHealth());
+        Assertions.assertEquals(25 , target2.getHealth());
+
     }
 
 
