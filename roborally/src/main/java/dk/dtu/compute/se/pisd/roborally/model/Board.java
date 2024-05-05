@@ -264,29 +264,9 @@ public class Board extends Subject {
     }
 
     public String getStatusMessage() {
-        // this is actually a view aspect, but for making assignment V1 easy for
-        // the students, this method gives a string representation of the current
-        // status of the game
-
-        // XXX: V1 add the move count to the status message
-        // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
-        return "Player = " + getCurrentPlayer().getName() + "Player's health: " + getCurrentPlayer().getHealth()+ ", number of moves " + getCounter() + ", current phase: " + getPhase() + ", points: " + getCurrentPlayer().getCurrentCheckpoint();
+        return " Player:  " + getCurrentPlayer().getName() + ",  Player's health:  " + getCurrentPlayer().getHealth()+ ",  Current phase:  " + getPhase() + ",  Checkpoints:  " + getCurrentPlayer().getCurrentCheckpoint();
     }
 
-
-    private int counter;
-
-    public int getCounter() {
-        return counter;
-    }
-
-    public void setCounter(int counter) {
-        if (counter != this.counter){
-            this.counter = counter;
-            notifyChange();
-        }
-
-    }
 
     public void setBoardName(String boardName) {
         this.boardName = boardName;
